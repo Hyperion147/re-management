@@ -72,9 +72,9 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center bg-muted rounded-full px-1.5 py-1.5 gap-0.5 text-[13px] font-semibold">
             <NavLink href="/" isActive={pathname === '/' && !isCoverageActive}>Home</NavLink>
             <NavLink href="/#services" isActive={false}>Services</NavLink>
-            <NavLink href="/coverage" isActive={isCoverageActive}>Coverage</NavLink>
-            <NavLink href="/how-it-works" isActive={pathname === '/how-it-works'}>How It Works</NavLink>
-            <NavLink href="/faq" isActive={pathname === '/faq'}>FAQ</NavLink>
+            <NavLink href="/#how-it-works" isActive={false}>How It Works</NavLink>
+            <NavLink href="/#coverage" isActive={false}>Coverage</NavLink>
+            <NavLink href="/#faq" isActive={false}>FAQ</NavLink>
             <NavLink href="/docs" isActive={pathname === '/docs'}>Docs</NavLink>
             <NavLink href="/assistant" isActive={pathname === '/assistant'}>Assistant</NavLink>
             {sessionUser ? (
@@ -130,8 +130,8 @@ export default function Navbar() {
                   <div className="lg:hidden border-b border-border py-2">
                     <DropdownLink href="/" onClick={() => setIsMenuOpen(false)}>Home</DropdownLink>
                     <DropdownLink href="/#services" onClick={() => setIsMenuOpen(false)}>Services</DropdownLink>
-                    <DropdownLink href="/coverage" onClick={() => setIsMenuOpen(false)}>Coverage</DropdownLink>
                     <DropdownLink href="/#how-it-works" onClick={() => setIsMenuOpen(false)}>How It Works</DropdownLink>
+                    <DropdownLink href="/#coverage" onClick={() => setIsMenuOpen(false)}>Coverage</DropdownLink>
                     <DropdownLink href="/#faq" onClick={() => setIsMenuOpen(false)}>FAQ</DropdownLink>
                     <DropdownLink href="/docs" onClick={() => setIsMenuOpen(false)}>Docs</DropdownLink>
                   </div>

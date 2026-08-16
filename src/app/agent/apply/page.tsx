@@ -3,6 +3,8 @@
 import React, { useState, useRef } from 'react';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 
 const SERVICES = [
   'Home Showings', 'Multi-Home Tours', 'Virtual Tours', 'Writing Offers',
@@ -154,66 +156,70 @@ export default function AgentApplyPage() {
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-[#f5f3ef] flex items-center justify-center px-4">
-        <div className="max-w-md w-full bg-white rounded-3xl p-10 text-center shadow-sm border border-gray-100 space-y-6">
-          <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto">
-            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-            </svg>
+      <div className="min-h-screen bg-[#F5F7F5] flex flex-col">
+        <Navbar />
+        <div className="flex-1 flex items-center justify-center px-4 pt-24">
+          <div className="max-w-md w-full bg-white rounded-3xl p-12 text-center shadow-xl border border-[#000101]/5 space-y-6">
+            <div className="w-20 h-20 bg-gradient-to-br from-[#39FF14] to-[#087A32] rounded-full flex items-center justify-center mx-auto shadow-lg">
+              <svg className="w-10 h-10 text-[#000101]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <div className="space-y-3">
+              <h2 className="text-3xl font-black text-[#000101]">Application Submitted!</h2>
+              <p className="text-[#013D1F]/60 text-base font-medium">
+                Thank you, {form.fullName.split(' ')[0]}! We'll review your application and get back to you within 24–48 hours.
+              </p>
+            </div>
+            <Link href="/" className="inline-block bg-[#39FF14] hover:bg-[#087A32] text-[#000101] hover:text-white px-8 py-4 rounded-2xl font-bold text-sm transition-all shadow-lg hover:-translate-y-0.5">
+              Back to Home
+            </Link>
           </div>
-          <div className="space-y-2">
-            <h2 className="text-2xl font-bold text-foreground">Application Submitted!</h2>
-            <p className="text-gray-500 text-sm font-medium">
-              Thank you, {form.fullName.split(' ')[0]}! We'll review your application and get back to you within 24–48 hours.
-            </p>
-          </div>
-          <Link href="/" className="inline-block bg-primary text-white px-6 py-3 rounded-2xl font-bold text-sm hover:bg-primary transition-all">
-            Back to Home
-          </Link>
         </div>
+        <Footer />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#f5f3ef] font-sans">
-      {/* Header */}
-      <div className="text-center pt-10 pb-6 px-4">
-        <Link href="/" className="inline-flex items-center gap-2 mb-6">
-          <span className="font-bold text-lg text-foreground">Veyro</span>
-        </Link>
-        <h1 className="text-2xl lg:text-3xl font-bold text-foreground">Become an Agent on Veyro</h1>
-        <p className="text-sm text-primary font-medium mt-1">Earn by helping buyers, sellers, and renters with on-demand real estate services.</p>
-      </div>
+    <div className="min-h-screen bg-[#F5F7F5] font-sans flex flex-col">
+      <Navbar />
+      
+      <div className="flex-1 pt-24 pb-12">
+        {/* Header */}
+        <div className="text-center pt-6 pb-8 px-4">
+          <h1 className="text-4xl lg:text-5xl font-black text-[#000101] mb-3">Become an Agent on Veyro</h1>
+          <p className="text-lg text-[#087A32] font-semibold">Earn by helping buyers, sellers, and renters with on-demand real estate services.</p>
+        </div>
 
-      {/* Progress */}
-      <div className="max-w-lg mx-auto px-4 mb-6">
-        <div className="flex items-center justify-between mb-2 text-xs font-bold text-gray-500">
-          <span>Step {step + 1} of {totalSteps}</span>
-          <span className="text-primary">{STEP_LABELS[step]}</span>
+        {/* Progress */}
+        <div className="max-w-2xl mx-auto px-4 mb-8">
+          <div className="flex items-center justify-between mb-3 text-sm font-bold text-[#013D1F]/60">
+            <span>Step {step + 1} of {totalSteps}</span>
+            <span className="text-[#087A32]">{STEP_LABELS[step]}</span>
+          </div>
+          <div className="w-full h-2 bg-white rounded-full overflow-hidden shadow-inner">
+            <div className="h-full bg-gradient-to-r from-[#39FF14] to-[#087A32] rounded-full transition-all duration-500" style={{ width: `${progress}%` }} />
+          </div>
+          <div className="flex items-center justify-between mt-6">
+            {STEP_ICONS.map((icon, i) => (
+              <div
+                key={i}
+                className={`w-10 h-10 rounded-2xl flex items-center justify-center border-2 transition-all shadow-sm ${
+                  i < step ? 'bg-gradient-to-br from-[#39FF14] to-[#087A32] border-[#39FF14] text-[#000101]'
+                    : i === step ? 'bg-white border-[#39FF14] text-[#087A32]'
+                    : 'bg-white border-[#000101]/20 text-[#013D1F]/30'
+                }`}
+              >
+                {icon}
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
-          <div className="h-full bg-primary rounded-full transition-all duration-500" style={{ width: `₹{progress}%` }} />
-        </div>
-        <div className="flex items-center justify-between mt-4">
-          {STEP_ICONS.map((icon, i) => (
-            <div
-              key={i}
-              className={`w-9 h-9 rounded-full flex items-center justify-center border-2 transition-all ₹{
-                i < step ? 'bg-primary border-primary text-white'
-                  : i === step ? 'bg-white border-primary text-primary'
-                  : 'bg-white border-gray-200 text-gray-300'
-              }`}
-            >
-              {icon}
-            </div>
-          ))}
-        </div>
-      </div>
 
-      {/* Card */}
-      <div className="max-w-lg mx-auto px-4 pb-20">
-        <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-7">
+        {/* Card */}
+        <div className="max-w-2xl mx-auto px-4 pb-12">
+          <div className="bg-white rounded-3xl shadow-xl border border-[#000101]/5 p-8 lg:p-10">
           {step === 0 && <Step1 form={form} update={update} />}
           {step === 1 && <Step2 form={form} update={update} />}
           {step === 2 && <Step3 form={form} toggleService={toggleService} />}
@@ -224,17 +230,17 @@ export default function AgentApplyPage() {
         </div>
 
         {error && (
-          <div className="mt-4 bg-red-50 border border-red-100 rounded-2xl p-4 text-xs text-red-600 font-bold">{error}</div>
+          <div className="mt-6 bg-red-50 border border-red-200 rounded-2xl p-5 text-sm text-red-700 font-bold">{error}</div>
         )}
 
         {/* Navigation */}
-        <div className="flex items-center justify-between mt-6">
+        <div className="flex items-center justify-between mt-8">
           <button
             onClick={() => setStep(s => s - 1)}
             disabled={step === 0}
-            className="flex items-center gap-1.5 text-sm font-bold text-gray-500 hover:text-gray-900 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+            className="flex items-center gap-2 text-sm font-bold text-[#013D1F]/60 hover:text-[#087A32] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
             </svg>
             Back
@@ -242,10 +248,10 @@ export default function AgentApplyPage() {
           {step < totalSteps - 1 ? (
             <button
               onClick={() => setStep(s => s + 1)}
-              className="flex items-center gap-2 bg-primary text-white px-7 py-3 rounded-2xl text-sm font-bold hover:bg-primary transition-all"
+              className="flex items-center gap-2 bg-[#39FF14] hover:bg-[#087A32] text-[#000101] hover:text-white px-8 py-4 rounded-2xl text-sm font-bold transition-all shadow-lg hover:-translate-y-0.5"
             >
               Continue
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
               </svg>
             </button>
@@ -253,14 +259,17 @@ export default function AgentApplyPage() {
             <button
               onClick={handleSubmit}
               disabled={submitting || !allTermsAgreed}
-              className="flex items-center gap-2 bg-primary hover:bg-primary text-white px-7 py-3 rounded-2xl text-sm font-bold transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+              className="flex items-center gap-2 bg-[#39FF14] hover:bg-[#087A32] text-[#000101] hover:text-white px-8 py-4 rounded-2xl text-sm font-bold transition-all shadow-lg disabled:opacity-40 disabled:cursor-not-allowed hover:-translate-y-0.5"
             >
               {submitting ? 'Submitting...' : 'Submit Application'}
             </button>
           )}
         </div>
       </div>
+      
+      <Footer />
     </div>
+  </div>
   );
 }
 

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/db';
 import { agentApplications } from '@/db/schema';
+import { sendAgentApplicationReceivedEmail, sendAdminNewApplicationAlert } from '@/lib/email';
 
 export async function POST(req: NextRequest) {
   try {
@@ -9,13 +10,17 @@ export async function POST(req: NextRequest) {
       fullName, email, phone,
       licenseNumber, licenseState, brokerageName, mlsId,
       services,
-      zipCode, radiusMiles, willingToTravel,
+      // accept both 'zip' (legacy form field) and 'zipCode'
+      zip, zipCode,
+      radiusMiles, willingToTravel,
       availableDays, acceptSameDay,
       photoUrl,
       bio, specialties, languages, yearsOfExperience,
     } = body;
 
-    if (!fullName || !email || !phone || !licenseNumber || !licenseState || !brokerageName || !zipCode) {
+    const resolvedZip = zipCode ?? zip ?? '';
+
+    if (!fullName || !email || !phone || !licenseNumber || !licenseState || !brokerageName || !resolvedZip) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
@@ -28,7 +33,7 @@ export async function POST(req: NextRequest) {
       brokerageName,
       mlsId: mlsId || null,
       services: services || [],
-      zipCode,
+      zipCode: resolvedZip,
       radiusMiles: radiusMiles || 25,
       willingToTravel: willingToTravel || false,
       availableDays: availableDays || [],
@@ -40,6 +45,12 @@ export async function POST(req: NextRequest) {
       yearsOfExperience: yearsOfExperience || null,
       status: 'PENDING',
     }).returning();
+
+    // Send emails — fire-and-forget, never block the response
+    Promise.all([
+      sendAgentApplicationReceivedEmail(email, fullName),
+      sendAdminNewApplicationAlert(fullName, email, services || []),
+    ]).catch(err => console.error('[Email] Failed to send application emails:', err));
 
     return NextResponse.json({ success: true, id: application.id });
   } catch (err) {

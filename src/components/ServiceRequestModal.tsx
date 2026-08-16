@@ -2,6 +2,10 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNewRequest, type ServiceType } from '@/hooks/useNewRequest';
+import {
+  X, MapPin, Calendar, Clock, FileText, IndianRupee,
+  ChevronDown, Home, CheckCircle2, ArrowRight
+} from 'lucide-react';
 
 type ServiceRequestModalProps = {
   isOpen: boolean;
@@ -11,39 +15,12 @@ type ServiceRequestModalProps = {
 };
 
 const STATES = [
-  'Andhra Pradesh',
-  'Arunachal Pradesh',
-  'Assam',
-  'Bihar',
-  'Chhattisgarh',
-  'Goa',
-  'Gujarat',
-  'Haryana',
-  'Himachal Pradesh',
-  'Jharkhand',
-  'Karnataka',
-  'Kerala',
-  'Madhya Pradesh',
-  'Maharashtra',
-  'Manipur',
-  'Meghalaya',
-  'Mizoram',
-  'Nagaland',
-  'Odisha',
-  'Punjab',
-  'Rajasthan',
-  'Sikkim',
-  'Tamil Nadu',
-  'Telangana',
-  'Tripura',
-  'Uttar Pradesh',
-  'Uttarakhand',
-  'West Bengal',
-  'Delhi',
-  'Puducherry',
-  'Chandigarh',
-  'Jammu and Kashmir',
-  'Ladakh',
+  'Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chhattisgarh','Goa',
+  'Gujarat','Haryana','Himachal Pradesh','Jharkhand','Karnataka','Kerala',
+  'Madhya Pradesh','Maharashtra','Manipur','Meghalaya','Mizoram','Nagaland',
+  'Odisha','Punjab','Rajasthan','Sikkim','Tamil Nadu','Telangana','Tripura',
+  'Uttar Pradesh','Uttarakhand','West Bengal','Delhi','Puducherry','Chandigarh',
+  'Jammu and Kashmir','Ladakh',
 ];
 
 type FormState = {
@@ -61,455 +38,432 @@ type FormState = {
 };
 
 const INITIAL_FORM: FormState = {
-  streetAddress: '',
-  unit: '',
-  city: '',
-  state: '',
-  zip: '',
-  mlsNumber: '',
-  preferredDate: '',
-  preferredTime: '',
-  notes: '',
-  customAmount: '',
-  allowCounterOffer: false,
+  streetAddress: '', unit: '', city: '', state: '', zip: '',
+  mlsNumber: '', preferredDate: '', preferredTime: '',
+  notes: '', customAmount: '', allowCounterOffer: false,
 };
 
-function buildQuickAmounts(minimumCompensation: number) {
-  return [
-    minimumCompensation,
-    minimumCompensation + 10,
-    minimumCompensation + 20,
-    minimumCompensation + 35,
-    minimumCompensation + 60,
-  ];
+function buildQuickAmounts(min: number) {
+  return [min, min + 500, min + 1000, min + 2000, min + 3500];
 }
 
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
+function inputCls(error?: string) {
+  return [
+    'w-full rounded-xl border bg-white px-4 py-3 text-sm font-medium text-[#000101]',
+    'placeholder:text-[#013D1F]/30 outline-none transition-all',
+    'focus:border-[#39FF14] focus:ring-2 focus:ring-[#39FF14]/20',
+    error ? 'border-red-400 bg-red-50/30' : 'border-[#000101]/10 hover:border-[#000101]/20',
+  ].filter(Boolean).join(' ');
+}
+
+function selectCls(error?: string) {
+  return inputCls(error) + ' appearance-none pr-10 cursor-pointer';
+}
+
+function SectionHeader({ icon: Icon, title }: { icon: React.ElementType; title: string }) {
+  return (
+    <div className="flex items-center gap-2.5 mb-4">
+      <div className="w-7 h-7 rounded-lg bg-[#39FF14]/10 flex items-center justify-center">
+        <Icon className="w-3.5 h-3.5 text-[#087A32]" strokeWidth={2.5} />
+      </div>
+      <h3 className="text-sm font-black text-[#000101] uppercase tracking-wide">{title}</h3>
+    </div>
+  );
+}
+
+function FieldLabel({ children, required, error }: { children: React.ReactNode; required?: boolean; error?: string }) {
+  return (
+    <label className="block space-y-1.5">
+      <span className="text-xs font-bold text-[#013D1F]/70 uppercase tracking-wide">
+        {children}{required && <span className="text-red-500 ml-0.5">*</span>}
+      </span>
+      {error && <span className="block text-xs font-medium text-red-500">{error}</span>}
+    </label>
+  );
+}
+
+// ─── Main Component ───────────────────────────────────────────────────────────
+
 export default function ServiceRequestModal({
-  isOpen,
-  serviceType,
-  minimumCompensation,
-  onClose,
+  isOpen, serviceType, minimumCompensation, onClose,
 }: ServiceRequestModalProps) {
   const { submitRequest, loading, error } = useNewRequest();
   const [form, setForm] = useState<FormState>(INITIAL_FORM);
   const [selectedAmount, setSelectedAmount] = useState<number>(minimumCompensation);
   const [fieldErrors, setFieldErrors] = useState<Partial<Record<keyof FormState, string>>>({});
+  const [submitted, setSubmitted] = useState(false);
 
-  const quickAmounts = useMemo(
-    () => buildQuickAmounts(minimumCompensation),
-    [minimumCompensation]
-  );
+  const quickAmounts = useMemo(() => buildQuickAmounts(minimumCompensation), [minimumCompensation]);
 
+  // Lock body scroll
   useEffect(() => {
-    if (!isOpen) {
-      return;
-    }
-
-    const previousOverflow = document.body.style.overflow;
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        onClose();
-      }
-    };
-
+    if (!isOpen) return;
+    const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    window.addEventListener('keydown', onKeyDown);
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener('keydown', onKeyDown);
-    };
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', onKey);
+    return () => { document.body.style.overflow = prev; window.removeEventListener('keydown', onKey); };
   }, [isOpen, onClose]);
 
   const finalAmount = useMemo(() => {
     const parsed = Number(form.customAmount);
-    if (Number.isFinite(parsed) && parsed >= minimumCompensation) {
-      return parsed;
-    }
-
-    return selectedAmount;
+    return Number.isFinite(parsed) && parsed >= minimumCompensation ? parsed : selectedAmount;
   }, [form.customAmount, minimumCompensation, selectedAmount]);
 
-  const handleChange = <K extends keyof FormState>(key: K, value: FormState[K]) => {
-    setForm((current) => ({ ...current, [key]: value }));
-    setFieldErrors((current) => {
-      if (!current[key]) {
-        return current;
-      }
-
-      const next = { ...current };
-      delete next[key];
-      return next;
-    });
+  const set = <K extends keyof FormState>(key: K, value: FormState[K]) => {
+    setForm(f => ({ ...f, [key]: value }));
+    setFieldErrors(e => { const n = { ...e }; delete n[key]; return n; });
   };
 
   const validate = () => {
-    const nextErrors: Partial<Record<keyof FormState, string>> = {};
-
-    if (!form.streetAddress.trim()) nextErrors.streetAddress = 'Required';
-    if (!form.city.trim()) nextErrors.city = 'Required';
-    if (!form.state.trim()) nextErrors.state = 'Required';
-    if (!form.zip.trim()) nextErrors.zip = 'Required';
-    else if (form.zip.trim().length !== 5) nextErrors.zip = 'Use 5 digits';
-    if (!form.preferredDate) nextErrors.preferredDate = 'Required';
-    if (!form.preferredTime) nextErrors.preferredTime = 'Required';
-    if (form.customAmount && finalAmount < minimumCompensation) {
-      nextErrors.customAmount = `Minimum is ₹₹{minimumCompensation}`;
-    }
-
-    setFieldErrors(nextErrors);
-    return Object.keys(nextErrors).length === 0;
+    const errs: Partial<Record<keyof FormState, string>> = {};
+    if (!form.streetAddress.trim()) errs.streetAddress = 'Required';
+    if (!form.city.trim()) errs.city = 'Required';
+    if (!form.state) errs.state = 'Required';
+    if (!form.zip.trim()) errs.zip = 'Required';
+    else if (form.zip.trim().length !== 6) errs.zip = 'Must be 6 digits';
+    if (!form.preferredDate) errs.preferredDate = 'Required';
+    if (!form.preferredTime) errs.preferredTime = 'Required';
+    if (form.customAmount && finalAmount < minimumCompensation)
+      errs.customAmount = `Minimum is ₹${minimumCompensation.toLocaleString('en-IN')}`;
+    setFieldErrors(errs);
+    return Object.keys(errs).length === 0;
   };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!validate()) return;
 
-    if (!validate()) {
-      return;
-    }
-
-    const [hoursText, minutesText] = form.preferredTime.split(':');
-    const endDate = new Date();
-    endDate.setHours(Number(hoursText) || 0, Number(minutesText) || 0, 0, 0);
-    endDate.setHours(endDate.getHours() + 1);
-
-    const endTime = `₹{String(endDate.getHours()).padStart(2, '0')}:₹{String(
-      endDate.getMinutes()
-    ).padStart(2, '0')}`;
+    const [h, m] = form.preferredTime.split(':');
+    const end = new Date();
+    end.setHours(Number(h) + 1, Number(m), 0, 0);
+    const endTime = `${String(end.getHours()).padStart(2, '0')}:${String(end.getMinutes()).padStart(2, '0')}`;
 
     const combinedNotes = [
       form.notes.trim(),
       form.allowCounterOffer ? 'Counter offers allowed before acceptance.' : '',
-    ]
-      .filter(Boolean)
-      .join('\n\n');
+    ].filter(Boolean).join('\n\n');
 
     try {
       await submitRequest(serviceType, finalAmount, {
         address: form.unit.trim()
-          ? `₹{form.streetAddress.trim()}, Unit ₹{form.unit.trim()}`
+          ? `${form.streetAddress.trim()}, Unit ${form.unit.trim()}`
           : form.streetAddress.trim(),
         city: form.city.trim(),
         state: form.state,
         zip: form.zip.trim(),
         mlsNumber: form.mlsNumber.trim(),
-        clientName: '',
-        clientPhone: '',
-        accessNotes: '',
-        lockboxCode: '',
+        clientName: '', clientPhone: '', accessNotes: '', lockboxCode: '',
         additionalNotes: combinedNotes,
         date: form.preferredDate,
         startTime: form.preferredTime,
         endTime,
       });
-
-      onClose();
-      window.location.href = '/client/requests';
+      setSubmitted(true);
     } catch {
-      // surfaced by hook error state
+      // error surfaced by hook
     }
   };
 
-  if (!isOpen) {
-    return null;
+  if (!isOpen) return null;
+
+  // ── Success state ──
+  if (submitted) {
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm px-4">
+        <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md p-12 text-center">
+          <div className="w-20 h-20 bg-gradient-to-br from-[#39FF14] to-[#087A32] rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+            <CheckCircle2 className="w-10 h-10 text-white" strokeWidth={2.5} />
+          </div>
+          <h2 className="text-2xl font-black text-[#000101] mb-3">Request Submitted!</h2>
+          <p className="text-[#013D1F]/60 text-sm font-medium mb-8 leading-relaxed">
+            Your <strong className="text-[#000101]">{serviceType}</strong> request is live.
+            Verified agents in your area have been notified and will respond shortly.
+          </p>
+          <button
+            onClick={() => { setSubmitted(false); onClose(); window.location.href = '/client/requests'; }}
+            className="w-full py-4 bg-[#39FF14] hover:bg-[#087A32] text-[#000101] hover:text-white rounded-2xl font-bold text-sm transition-all flex items-center justify-center gap-2"
+          >
+            View My Requests <ArrowRight className="w-4 h-4" />
+          </button>
+          <button onClick={() => { setSubmitted(false); onClose(); }} className="mt-3 w-full py-3 text-sm font-semibold text-[#013D1F]/50 hover:text-[#013D1F] transition-colors">
+            Back to Home
+          </button>
+        </div>
+      </div>
+    );
   }
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(20,24,24,0.48)] px-4 py-6 backdrop-blur-[3px]"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm px-4 py-6"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-[446px] overflow-hidden rounded-[18px] bg-background shadow-[0_30px_80px_rgba(0,0,0,0.28)]"
-        onClick={(event) => event.stopPropagation()}
+        className="w-full max-w-2xl bg-[#F5F7F5] rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh]"
+        onClick={e => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between border-b border-border px-6 py-5">
-          <h2 className="text-[18px] font-semibold tracking-[-0.03em] text-primary">
-            Book: {serviceType}
-          </h2>
+        {/* ── Header ── */}
+        <div className="flex items-center justify-between px-8 py-6 bg-white border-b border-[#000101]/8 shrink-0">
+          <div>
+            <p className="text-xs font-bold text-[#013D1F]/50 uppercase tracking-widest mb-1">New Booking</p>
+            <h2 className="text-xl font-black text-[#000101] tracking-tight">{serviceType}</h2>
+          </div>
           <button
-            type="button"
             onClick={onClose}
-            aria-label={`Close ₹{serviceType} form`}
-            className="rounded-full p-1 text-muted-foreground transition hover:bg-muted hover:text-primary"
+            aria-label="Close"
+            className="w-9 h-9 rounded-xl bg-[#F5F7F5] hover:bg-[#000101]/10 flex items-center justify-center text-[#013D1F]/60 hover:text-[#000101] transition-all"
           >
-            <svg className="h-5 w-5" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-              <path
-                d="M5 5 15 15M15 5 5 15"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-              />
-            </svg>
+            <X className="w-5 h-5" strokeWidth={2} />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="max-h-[86vh] overflow-y-auto px-6 py-5">
-          <section className="space-y-4">
-            <h3 className="text-[15px] font-semibold text-foreground">Property Address</h3>
+        {/* ── Scrollable Body ── */}
+        <form onSubmit={handleSubmit} className="overflow-y-auto flex-1">
+          <div className="px-8 py-6 space-y-8">
 
-            <div className="grid grid-cols-[minmax(0,1fr)_102px] gap-3">
-              <Field label="Street Address" required error={fieldErrors.streetAddress}>
-                <input
-                  type="text"
-                  value={form.streetAddress}
-                  onChange={(event) => handleChange('streetAddress', event.target.value)}
-                  placeholder="123 Main St"
-                  className={inputClass(fieldErrors.streetAddress)}
-                />
-              </Field>
-              <Field label="Unit">
-                <input
-                  type="text"
-                  value={form.unit}
-                  onChange={(event) => handleChange('unit', event.target.value)}
-                  placeholder="Apt 4B"
-                  className={inputClass()}
-                />
-              </Field>
-            </div>
+            {/* Property Address */}
+            <div className="bg-white rounded-2xl p-6 border border-[#000101]/8 shadow-sm">
+              <SectionHeader icon={Home} title="Property Address" />
 
-            <Field label="City" required error={fieldErrors.city}>
-              <input
-                type="text"
-                value={form.city}
-                onChange={(event) => handleChange('city', event.target.value)}
-                placeholder="Austin"
-                className={inputClass(fieldErrors.city)}
-              />
-            </Field>
-
-            <div className="grid grid-cols-2 gap-3">
-              <Field label="State" required error={fieldErrors.state}>
-                <div className="relative">
-                  <select
-                    value={form.state}
-                    onChange={(event) => handleChange('state', event.target.value)}
-                    className={inputClass(fieldErrors.state, true)}
-                  >
-                    <option value="">State</option>
-                    {STATES.map((state) => (
-                      <option key={state} value={state}>
-                        {state}
-                      </option>
-                    ))}
-                  </select>
-                  <svg
-                    className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="m4 6 4 4 4-4"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
+              <div className="space-y-4">
+                <div className="grid grid-cols-[1fr_140px] gap-3">
+                  <div>
+                    <FieldLabel required error={fieldErrors.streetAddress}>Street Address</FieldLabel>
+                    <input
+                      type="text"
+                      value={form.streetAddress}
+                      onChange={e => set('streetAddress', e.target.value)}
+                      placeholder="123 MG Road"
+                      className={inputCls(fieldErrors.streetAddress)}
                     />
-                  </svg>
+                  </div>
+                  <div>
+                    <FieldLabel>Unit / Flat</FieldLabel>
+                    <input
+                      type="text"
+                      value={form.unit}
+                      onChange={e => set('unit', e.target.value)}
+                      placeholder="Flat 4B"
+                      className={inputCls()}
+                    />
+                  </div>
                 </div>
-              </Field>
 
-              <Field label="PIN code" required error={fieldErrors.zip}>
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  maxLength={5}
-                  value={form.zip}
-                  onChange={(event) =>
-                    handleChange('zip', event.target.value.replace(/\D/g, '').slice(0, 6))
-                  }
-                  placeholder="78701"
-                  className={inputClass(fieldErrors.zip)}
-                />
-              </Field>
-            </div>
+                <div className="grid grid-cols-3 gap-3">
+                  <div>
+                    <FieldLabel required error={fieldErrors.city}>City</FieldLabel>
+                    <input
+                      type="text"
+                      value={form.city}
+                      onChange={e => set('city', e.target.value)}
+                      placeholder="Mumbai"
+                      className={inputCls(fieldErrors.city)}
+                    />
+                  </div>
+                  <div>
+                    <FieldLabel required error={fieldErrors.state}>State</FieldLabel>
+                    <div className="relative">
+                      <select
+                        value={form.state}
+                        onChange={e => set('state', e.target.value)}
+                        className={selectCls(fieldErrors.state)}
+                      >
+                        <option value="">Select state</option>
+                        {STATES.map(s => <option key={s} value={s}>{s}</option>)}
+                      </select>
+                      <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#013D1F]/40" strokeWidth={2} />
+                    </div>
+                  </div>
+                  <div>
+                    <FieldLabel required error={fieldErrors.zip}>PIN Code</FieldLabel>
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      maxLength={6}
+                      value={form.zip}
+                      onChange={e => set('zip', e.target.value.replace(/\D/g, '').slice(0, 6))}
+                      placeholder="400001"
+                      className={inputCls(fieldErrors.zip)}
+                    />
+                  </div>
+                </div>
 
-            <Field label="MLS Number (optional)">
-              <input
-                type="text"
-                value={form.mlsNumber}
-                onChange={(event) => handleChange('mlsNumber', event.target.value)}
-                placeholder="e.g. MLS-1234567"
-                className={inputClass()}
-              />
-            </Field>
-
-            <div className="grid grid-cols-2 gap-3">
-              <Field label="Preferred Date" required error={fieldErrors.preferredDate}>
-                <input
-                  type="date"
-                  value={form.preferredDate}
-                  onChange={(event) => handleChange('preferredDate', event.target.value)}
-                  className={inputClass(fieldErrors.preferredDate)}
-                />
-              </Field>
-
-              <Field label="Preferred Time" required error={fieldErrors.preferredTime}>
-                <input
-                  type="time"
-                  value={form.preferredTime}
-                  onChange={(event) => handleChange('preferredTime', event.target.value)}
-                  className={inputClass(fieldErrors.preferredTime)}
-                />
-              </Field>
-            </div>
-
-            <Field label="Notes (optional)">
-              <textarea
-                rows={4}
-                value={form.notes}
-                onChange={(event) => handleChange('notes', event.target.value)}
-                placeholder="Any details about your request..."
-                className={`₹{inputClass()} min-h-[110px] resize-y py-3`}
-              />
-            </Field>
-          </section>
-
-          <section className="mt-6 rounded-[16px] border border-border bg-background px-4 py-4">
-            <h3 className="text-[15px] font-semibold text-foreground">
-              Payout Amount <span className="text-destructive">*</span>
-            </h3>
-            <p className="mt-1 text-[13px] text-muted-foreground">
-              Minimum ₹{minimumCompensation}. Offer more to get accepted faster.
-            </p>
-
-            <div className="mt-4 flex flex-wrap gap-2">
-              {quickAmounts.map((amount) => {
-                const active = !form.customAmount && selectedAmount === amount;
-
-                return (
-                  <button
-                    key={amount}
-                    type="button"
-                    onClick={() => {
-                      setSelectedAmount(amount);
-                      handleChange('customAmount', '');
-                    }}
-                    className={`min-w-[64px] rounded-[12px] border px-4 py-2 text-[14px] font-semibold transition ₹{
-                      active
-                        ? 'border-primary bg-primary text-primary-foreground'
-                        : 'border-border bg-background text-foreground hover:border-muted'
-                    }`}
-                  >
-                    ₹{amount}
-                  </button>
-                );
-              })}
-            </div>
-
-            <div className="mt-3">
-              <div className="relative">
-                <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[22px] text-muted-foreground">
-                  ₹
-                </span>
-                <input
-                  type="number"
-                  min={minimumCompensation}
-                  step={1}
-                  value={form.customAmount}
-                  onChange={(event) => handleChange('customAmount', event.target.value)}
-                  placeholder={`Custom amount (min ₹₹{minimumCompensation})`}
-                  className={`₹{inputClass(fieldErrors.customAmount)} pl-9`}
-                />
+                <div>
+                  <FieldLabel>MLS / Property ID (optional)</FieldLabel>
+                  <input
+                    type="text"
+                    value={form.mlsNumber}
+                    onChange={e => set('mlsNumber', e.target.value)}
+                    placeholder="e.g. MLS-1234567"
+                    className={inputCls()}
+                  />
+                </div>
               </div>
-              {fieldErrors.customAmount ? (
-                <p className="mt-1 text-[11px] font-medium text-destructive">
-                  {fieldErrors.customAmount}
-                </p>
-              ) : null}
+            </div>
+
+            {/* Schedule */}
+            <div className="bg-white rounded-2xl p-6 border border-[#000101]/8 shadow-sm">
+              <SectionHeader icon={Calendar} title="Schedule" />
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <FieldLabel required error={fieldErrors.preferredDate}>Preferred Date</FieldLabel>
+                  <input
+                    type="date"
+                    value={form.preferredDate}
+                    onChange={e => set('preferredDate', e.target.value)}
+                    min={new Date().toISOString().split('T')[0]}
+                    className={inputCls(fieldErrors.preferredDate)}
+                  />
+                </div>
+                <div>
+                  <FieldLabel required error={fieldErrors.preferredTime}>Preferred Time</FieldLabel>
+                  <div className="relative">
+                    <input
+                      type="time"
+                      value={form.preferredTime}
+                      onChange={e => set('preferredTime', e.target.value)}
+                      className={inputCls(fieldErrors.preferredTime)}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Notes */}
+            <div className="bg-white rounded-2xl p-6 border border-[#000101]/8 shadow-sm">
+              <SectionHeader icon={FileText} title="Additional Notes" />
+              <textarea
+                rows={3}
+                value={form.notes}
+                onChange={e => set('notes', e.target.value)}
+                placeholder="Any specific requirements, access instructions, or details about the property..."
+                className={inputCls() + ' resize-none leading-relaxed'}
+              />
+            </div>
+
+            {/* Payout Amount */}
+            <div className="bg-white rounded-2xl p-6 border border-[#000101]/8 shadow-sm">
+              <SectionHeader icon={IndianRupee} title="Agent Payout" />
+
+              <p className="text-xs text-[#013D1F]/60 font-medium mb-5">
+                Minimum ₹{minimumCompensation.toLocaleString('en-IN')}. Higher offers get accepted faster.
+              </p>
+
+              {/* Quick amount chips */}
+              <div className="flex flex-wrap gap-2 mb-4">
+                {quickAmounts.map(amount => {
+                  const active = !form.customAmount && selectedAmount === amount;
+                  return (
+                    <button
+                      key={amount}
+                      type="button"
+                      onClick={() => { setSelectedAmount(amount); set('customAmount', ''); }}
+                      className={`px-5 py-2.5 rounded-xl text-sm font-bold transition-all ${
+                        active
+                          ? 'bg-[#39FF14] text-[#000101] shadow-md shadow-[#39FF14]/20'
+                          : 'bg-[#F5F7F5] text-[#013D1F] border border-[#000101]/10 hover:border-[#39FF14]/50 hover:bg-[#39FF14]/5'
+                      }`}
+                    >
+                      ₹{amount.toLocaleString('en-IN')}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Custom amount */}
+              <div>
+                <FieldLabel error={fieldErrors.customAmount}>Custom Amount</FieldLabel>
+                <div className="relative mt-1.5">
+                  <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-base text-[#013D1F]/40 font-bold">₹</span>
+                  <input
+                    type="number"
+                    min={minimumCompensation}
+                    step={100}
+                    value={form.customAmount}
+                    onChange={e => set('customAmount', e.target.value)}
+                    placeholder={`Enter amount (min ₹${minimumCompensation.toLocaleString('en-IN')})`}
+                    className={inputCls(fieldErrors.customAmount) + ' pl-8'}
+                  />
+                </div>
+              </div>
+
+              {/* Counter offer toggle */}
+              <button
+                type="button"
+                onClick={() => set('allowCounterOffer', !form.allowCounterOffer)}
+                className={`mt-4 w-full flex items-start gap-3 rounded-xl border px-4 py-4 text-left transition-all ${
+                  form.allowCounterOffer
+                    ? 'border-[#39FF14]/40 bg-[#39FF14]/5'
+                    : 'border-[#000101]/8 bg-[#F5F7F5] hover:bg-white hover:border-[#000101]/15'
+                }`}
+              >
+                <span className={`mt-0.5 w-5 h-5 rounded-md border-2 flex items-center justify-center shrink-0 transition-all ${
+                  form.allowCounterOffer ? 'border-[#087A32] bg-[#087A32]' : 'border-[#013D1F]/30'
+                }`}>
+                  {form.allowCounterOffer && (
+                    <svg className="w-3 h-3 text-white" viewBox="0 0 12 12" fill="none">
+                      <path d="M2.3 6.1 4.7 8.5 9.7 3.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  )}
+                </span>
+                <div>
+                  <p className="text-sm font-bold text-[#000101]">Allow counter offer</p>
+                  <p className="text-xs text-[#013D1F]/60 mt-0.5 leading-relaxed">
+                    Agents can propose a different rate before accepting your request.
+                  </p>
+                </div>
+              </button>
+            </div>
+
+          </div>
+
+          {/* ── Footer ── */}
+          <div className="px-8 pb-8 shrink-0">
+            {error && (
+              <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-xs font-semibold text-red-600">
+                {error}
+              </div>
+            )}
+
+            {/* Summary pill */}
+            <div className="flex items-center justify-between px-5 py-3.5 bg-white rounded-2xl border border-[#000101]/8 mb-4 shadow-sm">
+              <div className="flex items-center gap-2 text-sm text-[#013D1F]/60 font-medium">
+                <MapPin className="w-4 h-4 text-[#087A32]" strokeWidth={2.5} />
+                {form.city || 'City not set'}
+              </div>
+              <div className="flex items-center gap-2 text-sm text-[#013D1F]/60 font-medium">
+                <Clock className="w-4 h-4 text-[#087A32]" strokeWidth={2.5} />
+                {form.preferredDate ? new Date(form.preferredDate).toLocaleDateString('en-IN', { month: 'short', day: 'numeric' }) : 'Date not set'}
+              </div>
+              <div className="flex items-center gap-1.5 font-black text-[#000101]">
+                <IndianRupee className="w-4 h-4 text-[#39FF14]" strokeWidth={2.5} />
+                {finalAmount.toLocaleString('en-IN')}
+              </div>
             </div>
 
             <button
-              type="button"
-              onClick={() => handleChange('allowCounterOffer', !form.allowCounterOffer)}
-              className={`mt-4 flex w-full items-start gap-3 rounded-[14px] border px-4 py-4 text-left transition ₹{
-                form.allowCounterOffer
-                  ? 'border-primary/30 bg-primary/5'
-                  : 'border-border bg-background'
-              }`}
+              type="submit"
+              disabled={loading}
+              className="w-full py-4 bg-[#39FF14] hover:bg-[#087A32] text-[#000101] hover:text-white rounded-2xl font-bold text-sm transition-all shadow-lg shadow-[#39FF14]/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 hover:-translate-y-0.5"
             >
-              <span
-                className={`mt-0.5 flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[4px] border ₹{
-                  form.allowCounterOffer
-                    ? 'border-primary bg-primary'
-                    : 'border-border bg-background'
-                }`}
-              >
-                {form.allowCounterOffer ? (
-                  <svg className="h-3 w-3 text-white" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                    <path
-                      d="M2.3 6.1 4.7 8.5 9.7 3.5"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
+              {loading ? (
+                <>
+                  <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
                   </svg>
-                ) : null}
-              </span>
-              <span>
-                <span className="block text-[14px] font-semibold text-foreground">
-                  Allow counter offer
-                </span>
-                <span className="mt-1 block text-[13px] leading-5 text-muted-foreground">
-                  Agents may propose a different rate before accepting.
-                </span>
-              </span>
+                  Submitting...
+                </>
+              ) : (
+                <>Confirm Booking <ArrowRight className="w-4 h-4" /></>
+              )}
             </button>
-          </section>
-
-          {error ? (
-            <div className="mt-4 rounded-[14px] border border-destructive bg-destructive/10 px-4 py-3 text-[12px] font-medium text-destructive">
-              {error}
-            </div>
-          ) : null}
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="mt-6 flex h-[52px] w-full items-center justify-center rounded-[14px] bg-primary text-[15px] font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {loading ? 'Submitting...' : 'Submit & Pay ->'}
-          </button>
+          </div>
         </form>
       </div>
     </div>
   );
-}
-
-function Field({
-  label,
-  required = false,
-  error,
-  children,
-}: {
-  label: string;
-  required?: boolean;
-  error?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <label className="block space-y-1.5">
-      <span className="text-[14px] font-medium text-foreground">
-        {label}
-        {required ? <span className="text-destructive"> *</span> : null}
-      </span>
-      {children}
-      {error ? <span className="text-[11px] font-medium text-destructive">{error}</span> : null}
-    </label>
-  );
-}
-
-function inputClass(error?: string, isSelect = false) {
-  return [
-    'h-[44px] w-full rounded-[14px] border bg-background px-4 text-[14px] text-foreground outline-none transition',
-    'placeholder:text-muted-foreground focus:border-primary focus:ring-3 focus:ring-primary/10',
-    isSelect ? 'appearance-none pr-10 text-muted-foreground' : '',
-    error ? 'border-destructive' : 'border-border',
-  ]
-    .filter(Boolean)
-    .join(' ');
 }

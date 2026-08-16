@@ -68,26 +68,29 @@ export default function SignupPage() {
   return (
     <div className="min-h-screen flex font-sans">
       {/* Left Column: Brand & Features */}
-      <div className="hidden lg:flex w-1/2 bg-primary p-24 flex-col justify-center relative overflow-hidden">
+      <div className="hidden lg:flex w-1/2 bg-gradient-to-br from-[#013D1F] to-[#087A32] p-24 flex-col justify-center relative overflow-hidden">
         {/* Grid Pattern */}
-        <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
+        <div className="absolute inset-0 opacity-[0.05] pointer-events-none" 
           style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
+        
+        <div className="absolute top-20 right-20 w-96 h-96 bg-[#39FF14]/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 left-20 w-80 h-80 bg-white/5 rounded-full blur-3xl" />
         
         <div className="relative z-10 space-y-12">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center shadow-lg shadow-green-900/20">
-              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg shadow-black/10">
+              <svg className="w-6 h-6 text-[#087A32]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
               </svg>
             </div>
-            <span className="text-white font-bold text-xl tracking-tight">Veyro</span>
+            <span className="text-white font-black text-2xl tracking-tight">Veyro</span>
           </div>
 
           <div className="space-y-6">
-            <h1 className="text-5xl font-bold text-white leading-tight tracking-tight">
+            <h1 className="text-6xl font-black text-white leading-tight tracking-tight">
               Join thousands of real estate professionals
             </h1>
-            <p className="text-lg text-white/60 font-medium leading-relaxed max-w-md">
+            <p className="text-xl text-white/80 font-medium leading-relaxed max-w-md">
               One account to manage showings, hosts, open houses, and property reports — all in one dashboard.
             </p>
           </div>
@@ -102,12 +105,12 @@ export default function SignupPage() {
       </div>
 
       {/* Right Column: Auth Form */}
-      <div className="flex-1 bg-muted flex items-center justify-center p-8 overflow-y-auto">
+      <div className="flex-1 bg-[#F5F7F5] flex items-center justify-center p-8 overflow-y-auto">
         <div className="w-full max-w-md space-y-8 my-12">
-          <div className="bg-white rounded-[2.5rem] p-10 lg:p-12 shadow-sm border border-gray-50/50 space-y-10">
+          <div className="bg-white rounded-3xl p-10 lg:p-12 shadow-xl border border-[#000101]/5 space-y-10">
             <div className="space-y-2">
-              <h2 className="text-3xl font-bold text-foreground tracking-tight">Create Account</h2>
-              <p className="text-sm text-gray-400 font-medium">Free to join. No credit card required.</p>
+              <h2 className="text-4xl font-black text-[#000101] tracking-tight">Create Account</h2>
+              <p className="text-sm text-[#013D1F]/60 font-medium">Free to join. No credit card required.</p>
             </div>
 
             {error && (
@@ -177,20 +180,20 @@ export default function SignupPage() {
                 <button 
                   type="submit" 
                   disabled={loading}
-                  className="w-full bg-primary hover:bg-primary/90 text-white py-4 rounded-2xl text-sm font-bold shadow-xl shadow-green-900/10 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
+                  className="w-full bg-[#39FF14] hover:bg-[#087A32] text-[#000101] hover:text-white py-4 rounded-2xl text-sm font-bold shadow-xl shadow-[#39FF14]/20 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
                 >
                   {loading ? 'Creating account...' : 'Create Free Account'}
                 </button>
               </div>
 
-              <p className="text-[10px] text-gray-400 text-center leading-relaxed">
-                By creating an account you agree to our <a href="#" className="text-green-700 hover:underline">Terms</a> and <a href="#" className="text-green-700 hover:underline">Privacy Policy</a>.
+              <p className="text-[10px] text-[#013D1F]/50 text-center leading-relaxed">
+                By creating an account you agree to our <a href="#" className="text-[#087A32] hover:underline">Terms</a> and <a href="#" className="text-[#087A32] hover:underline">Privacy Policy</a>.
               </p>
             </form>
 
             <div className="text-center">
-              <p className="text-xs text-gray-400 font-medium">
-                Already have an account? <a href="/login" className="text-green-700 font-bold hover:underline">Sign In</a>
+              <p className="text-xs text-[#013D1F]/50 font-medium">
+                Already have an account? <a href="/login" className="text-[#087A32] font-bold hover:underline">Sign In</a>
               </p>
             </div>
           </div>
@@ -214,12 +217,12 @@ function GoogleIcon() {
 function FeatureItem({ text }: { text: string }) {
   return (
     <li className="flex items-center gap-4 group">
-      <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center shrink-0 shadow-lg shadow-green-500/20 group-hover:scale-110 transition-transform">
-        <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center shrink-0 shadow-lg shadow-black/10 group-hover:scale-110 transition-transform">
+        <svg className="w-3.5 h-3.5 text-[#087A32]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
         </svg>
       </div>
-      <span className="text-sm text-white/80 font-medium tracking-wide group-hover:text-white transition-colors">{text}</span>
+      <span className="text-base text-white/90 font-medium tracking-wide group-hover:text-white transition-colors">{text}</span>
     </li>
   );
 }
