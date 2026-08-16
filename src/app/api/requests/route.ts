@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { desc, ne, eq } from 'drizzle-orm';
+import { desc, eq } from 'drizzle-orm';
 import { db } from '@/db';
 import { requests, users } from '@/db/schema';
-import { sendPushNotification } from '@/lib/notifications';
 import { sendBookingConfirmationEmail } from '@/lib/email';
 import { getCurrentUserRole } from '@/lib/auth';
 
@@ -52,30 +51,6 @@ export async function POST(req: NextRequest) {
 
     const newRequest = await db.insert(requests).values(payload).returning();
     const created = newRequest[0];
-
-    // --- Push notification to all agents (non-blocking) ---
-    try {
-      const creatorRows = await db
-        .select({ fcmToken: users.fcmToken })
-        .from(users)
-        .where(ne(users.id, auth.userId));
-
-      const tokens = creatorRows
-        .map(r => r.fcmToken)
-        .filter((t): t is string => !!t && t.trim() !== '');
-
-      if (tokens.length > 0) {
-        const label = SERVICE_LABEL[created.serviceType] ?? 'Job';
-        await sendPushNotification({
-          tokens,
-          title: `New ${label} request available`,
-          body: `${created.address}, ${created.city} — ₹${Number(created.compensation).toLocaleString('en-IN')}`,
-          data: { requestId: created.id, type: 'new_opening' },
-        });
-      }
-    } catch (notifErr) {
-      console.error('[FCM] Failed to send push notification:', notifErr);
-    }
 
     // --- Booking confirmation email to client (non-blocking) ---
     try {

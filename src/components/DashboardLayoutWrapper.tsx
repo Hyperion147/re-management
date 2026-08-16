@@ -1,7 +1,6 @@
 'use client';
 
 import { ReactNode } from 'react';
-import { usePushNotifications } from '@/hooks/usePushNotifications';
 import DashboardNavbar from '@/components/DashboardNavbar';
 import DashboardFooter from '@/components/DashboardFooter';
 
@@ -10,8 +9,6 @@ export default function DashboardLayoutWrapper({
 }: {
   children: ReactNode;
 }) {
-  usePushNotifications();
-
   return (
     <div className="min-h-screen bg-background flex flex-col font-sans selection:bg-orange-100 selection:text-orange-900">
       <DashboardNavbar />

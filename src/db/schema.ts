@@ -13,7 +13,6 @@ export const users = pgTable('users', {
   activeRequests: integer('active_requests').default(0),
   totalEarned: decimal('total_earned', { precision: 10, scale: 2 }).default('0'),
   completedShowings: integer('completed_showings').default(0),
-  fcmToken: text('fcm_token'),
   // Stripe
   stripeCustomerId: text('stripe_customer_id'),       // for paying as client
   stripeConnectId: text('stripe_connect_id'),         // for receiving as agent

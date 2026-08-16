@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { getAuthCallbackUrl } from '@/lib/authRedirect';
-import { ensurePushNotificationsRegistered } from '@/lib/pushNotifications';
 import { supabase } from '@/lib/supabase';
 
 export default function LoginPage() {
@@ -20,7 +19,6 @@ export default function LoginPage() {
       setError(error.message);
       setLoading(false);
     } else {
-      await ensurePushNotificationsRegistered();
       window.location.href = '/client';
     }
   };

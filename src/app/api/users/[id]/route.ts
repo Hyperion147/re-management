@@ -14,27 +14,6 @@ export async function PATCH(
     if (!caller) return unauthorized();
 
     const body = await req.json();
-    const { fcmToken, ...userFields } = body;
-
-    // ── FCM token update ──────────────────────────────────────────────────────
-    // Any authenticated user can update their own FCM token (needed for push
-    // notifications). No role restriction here — just must be the same user.
-    if (fcmToken !== undefined && Object.keys(userFields).length === 0) {
-      if (caller.userId !== id && caller.role !== 'SUPERADMIN') {
-        return forbidden();
-      }
-
-      const updated = await db
-        .update(users)
-        .set({ fcmToken })
-        .where(eq(users.id, id))
-        .returning();
-
-      if (updated.length === 0) {
-        return NextResponse.json({ error: 'User not found' }, { status: 404 });
-      }
-      return NextResponse.json(updated[0]);
-    }
 
     // ── User field updates (role, status, name, etc.) ─────────────────────────
     // Only SUPERADMIN can change user information
@@ -43,7 +22,7 @@ export async function PATCH(
     }
 
     // SUPERADMIN role cannot be assigned via the API — must be set directly in DB
-    if (userFields.role === 'SUPERADMIN') {
+    if (body.role === 'SUPERADMIN') {
       return NextResponse.json(
         { error: 'SUPERADMIN role cannot be assigned via the API. Set it directly in the database.' },
         { status: 403 }
@@ -51,12 +30,11 @@ export async function PATCH(
     }
 
     const fieldsToUpdate: Record<string, any> = {};
-    if (userFields.fullName !== undefined) fieldsToUpdate.fullName = userFields.fullName;
-    if (userFields.email !== undefined) fieldsToUpdate.email = userFields.email;
-    if (userFields.role !== undefined) fieldsToUpdate.role = userFields.role;
-    if (userFields.status !== undefined) fieldsToUpdate.status = userFields.status;
-    if (userFields.jobTitle !== undefined) fieldsToUpdate.jobTitle = userFields.jobTitle;
-    if (fcmToken !== undefined) fieldsToUpdate.fcmToken = fcmToken;
+    if (body.fullName !== undefined) fieldsToUpdate.fullName = body.fullName;
+    if (body.email !== undefined) fieldsToUpdate.email = body.email;
+    if (body.role !== undefined) fieldsToUpdate.role = body.role;
+    if (body.status !== undefined) fieldsToUpdate.status = body.status;
+    if (body.jobTitle !== undefined) fieldsToUpdate.jobTitle = body.jobTitle;
 
     if (Object.keys(fieldsToUpdate).length === 0) {
       return NextResponse.json({ error: 'No valid fields to update' }, { status: 400 });
