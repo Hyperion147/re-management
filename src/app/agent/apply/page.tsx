@@ -29,7 +29,7 @@ const TERMS = [
   "I agree to Veyro's platform rules and agent code of conduct.",
   "I confirm I am operating as an independent contractor, not an employee of Veyro.",
   "I confirm I am in compliance with my brokerage, local real estate laws, and licensing requirements.",
-  "I agree to pay Veyro's Platform Success Fee for transactions successfully completed through the platform. Fee structure: Under $300k → $199 | $300k–$700k → $399 | $700k+ → $699.",
+  "I agree to pay Veyro's Platform Success Fee for transactions successfully completed through the platform. Fee structure: Under ₹2.5 Cr → ₹16,500 | ₹2.5 Cr–₹5.8 Cr → ₹33,000 | ₹5.8 Cr+ → ₹58,000.",
 ];
 
 type FormData = {
@@ -40,7 +40,7 @@ type FormData = {
   // Step 3
   services: string[];
   // Step 4
-  zipCode: string; radiusMiles: number; willingToTravel: boolean;
+  PINCode: string; radiusMiles: number; willingToTravel: boolean;
   // Step 5
   availableDays: string[]; acceptSameDay: boolean;
   // Step 6 — Agent Profile
@@ -54,7 +54,7 @@ const INITIAL: FormData = {
   fullName: '', email: '', phone: '',
   licenseNumber: '', licenseState: '', brokerageName: '', mlsId: '',
   services: [],
-  zipCode: '', radiusMiles: 25, willingToTravel: false,
+  PINCode: '', radiusMiles: 25, willingToTravel: false,
   availableDays: [], acceptSameDay: false,
   photoUrl: '', photoFile: null,
   bio: '', specialties: [], languages: '', yearsOfExperience: '',
@@ -117,7 +117,7 @@ export default function AgentApplyPage() {
       let uploadedPhotoUrl = '';
       if (form.photoFile) {
         const ext = form.photoFile.name.split('.').pop();
-        const filename = `agent-photos/${Date.now()}.${ext}`;
+        const filename = `agent-photos/₹{Date.now()}.₹{ext}`;
         const { data, error: uploadErr } = await supabase.storage
           .from('avatars')
           .upload(filename, form.photoFile, { upsert: true });
@@ -135,7 +135,7 @@ export default function AgentApplyPage() {
           licenseNumber: form.licenseNumber, licenseState: form.licenseState,
           brokerageName: form.brokerageName, mlsId: form.mlsId,
           services: form.services,
-          zipCode: form.zipCode, radiusMiles: form.radiusMiles, willingToTravel: form.willingToTravel,
+          zip: form.PINCode, radiusMiles: form.radiusMiles, willingToTravel: form.willingToTravel,
           availableDays: form.availableDays, acceptSameDay: form.acceptSameDay,
           photoUrl: uploadedPhotoUrl,
           bio: form.bio, specialties: form.specialties,
@@ -156,18 +156,18 @@ export default function AgentApplyPage() {
     return (
       <div className="min-h-screen bg-[#f5f3ef] flex items-center justify-center px-4">
         <div className="max-w-md w-full bg-white rounded-3xl p-10 text-center shadow-sm border border-gray-100 space-y-6">
-          <div className="w-16 h-16 bg-[#1a362d] rounded-full flex items-center justify-center mx-auto">
+          <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto">
             <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
             </svg>
           </div>
           <div className="space-y-2">
-            <h2 className="text-2xl font-bold text-[#1a2a2a]">Application Submitted!</h2>
+            <h2 className="text-2xl font-bold text-foreground">Application Submitted!</h2>
             <p className="text-gray-500 text-sm font-medium">
               Thank you, {form.fullName.split(' ')[0]}! We'll review your application and get back to you within 24–48 hours.
             </p>
           </div>
-          <Link href="/" className="inline-block bg-[#1a362d] text-white px-6 py-3 rounded-2xl font-bold text-sm hover:bg-[#112424] transition-all">
+          <Link href="/" className="inline-block bg-primary text-white px-6 py-3 rounded-2xl font-bold text-sm hover:bg-primary transition-all">
             Back to Home
           </Link>
         </div>
@@ -180,28 +180,28 @@ export default function AgentApplyPage() {
       {/* Header */}
       <div className="text-center pt-10 pb-6 px-4">
         <Link href="/" className="inline-flex items-center gap-2 mb-6">
-          <span className="font-bold text-lg text-[#1a2a2a]">Veyro</span>
+          <span className="font-bold text-lg text-foreground">Veyro</span>
         </Link>
-        <h1 className="text-2xl lg:text-3xl font-bold text-[#1a2a2a]">Become an Agent on Veyro</h1>
-        <p className="text-sm text-[#1a362d] font-medium mt-1">Earn by helping buyers, sellers, and renters with on-demand real estate services.</p>
+        <h1 className="text-2xl lg:text-3xl font-bold text-foreground">Become an Agent on Veyro</h1>
+        <p className="text-sm text-primary font-medium mt-1">Earn by helping buyers, sellers, and renters with on-demand real estate services.</p>
       </div>
 
       {/* Progress */}
       <div className="max-w-lg mx-auto px-4 mb-6">
         <div className="flex items-center justify-between mb-2 text-xs font-bold text-gray-500">
           <span>Step {step + 1} of {totalSteps}</span>
-          <span className="text-[#1a362d]">{STEP_LABELS[step]}</span>
+          <span className="text-primary">{STEP_LABELS[step]}</span>
         </div>
         <div className="w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
-          <div className="h-full bg-[#1a362d] rounded-full transition-all duration-500" style={{ width: `${progress}%` }} />
+          <div className="h-full bg-primary rounded-full transition-all duration-500" style={{ width: `₹{progress}%` }} />
         </div>
         <div className="flex items-center justify-between mt-4">
           {STEP_ICONS.map((icon, i) => (
             <div
               key={i}
-              className={`w-9 h-9 rounded-full flex items-center justify-center border-2 transition-all ${
-                i < step ? 'bg-[#1a362d] border-[#1a362d] text-white'
-                  : i === step ? 'bg-white border-[#1a362d] text-[#1a362d]'
+              className={`w-9 h-9 rounded-full flex items-center justify-center border-2 transition-all ₹{
+                i < step ? 'bg-primary border-primary text-white'
+                  : i === step ? 'bg-white border-primary text-primary'
                   : 'bg-white border-gray-200 text-gray-300'
               }`}
             >
@@ -242,7 +242,7 @@ export default function AgentApplyPage() {
           {step < totalSteps - 1 ? (
             <button
               onClick={() => setStep(s => s + 1)}
-              className="flex items-center gap-2 bg-[#1a362d] text-white px-7 py-3 rounded-2xl text-sm font-bold hover:bg-[#112424] transition-all"
+              className="flex items-center gap-2 bg-primary text-white px-7 py-3 rounded-2xl text-sm font-bold hover:bg-primary transition-all"
             >
               Continue
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -253,7 +253,7 @@ export default function AgentApplyPage() {
             <button
               onClick={handleSubmit}
               disabled={submitting || !allTermsAgreed}
-              className="flex items-center gap-2 bg-[#1a362d] hover:bg-[#112424] text-white px-7 py-3 rounded-2xl text-sm font-bold transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+              className="flex items-center gap-2 bg-primary hover:bg-primary text-white px-7 py-3 rounded-2xl text-sm font-bold transition-all disabled:opacity-40 disabled:cursor-not-allowed"
             >
               {submitting ? 'Submitting...' : 'Submit Application'}
             </button>
@@ -268,7 +268,7 @@ export default function AgentApplyPage() {
 
 function FieldLabel({ children, required }: { children: React.ReactNode; required?: boolean }) {
   return (
-    <label className="block text-sm font-bold text-[#1a2a2a] mb-1.5">
+    <label className="block text-sm font-bold text-foreground mb-1.5">
       {children} {required && <span className="text-red-500">*</span>}
     </label>
   );
@@ -283,7 +283,7 @@ function TextInput({ value, onChange, placeholder, type = 'text' }: {
       value={value}
       onChange={e => onChange(e.target.value)}
       placeholder={placeholder}
-      className="w-full px-4 py-3 rounded-2xl border border-gray-200 text-[#1a2a2a] text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#1a362d]/20 focus:border-[#1a362d] transition-all bg-white"
+      className="w-full px-4 py-3 rounded-2xl border border-gray-200 text-foreground text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#1a362d]/20 focus:border-primary transition-all bg-white"
     />
   );
 }
@@ -293,7 +293,7 @@ function TextInput({ value, onChange, placeholder, type = 'text' }: {
 function Step1({ form, update }: { form: FormData; update: (p: Partial<FormData>) => void }) {
   return (
     <div className="space-y-5">
-      <h2 className="text-xl font-bold text-[#1a2a2a]">Basic Information</h2>
+      <h2 className="text-xl font-bold text-foreground">Basic Information</h2>
       <div><FieldLabel required>Full Name</FieldLabel><TextInput value={form.fullName} onChange={v => update({ fullName: v })} placeholder="Jane Smith" /></div>
       <div><FieldLabel required>Email</FieldLabel><TextInput type="email" value={form.email} onChange={v => update({ email: v })} placeholder="jane@example.com" /></div>
       <div><FieldLabel required>Phone Number</FieldLabel><TextInput type="tel" value={form.phone} onChange={v => update({ phone: v })} placeholder="(555) 000-0000" /></div>
@@ -304,14 +304,14 @@ function Step1({ form, update }: { form: FormData; update: (p: Partial<FormData>
 function Step2({ form, update }: { form: FormData; update: (p: Partial<FormData>) => void }) {
   return (
     <div className="space-y-5">
-      <h2 className="text-xl font-bold text-[#1a2a2a]">License Verification</h2>
+      <h2 className="text-xl font-bold text-foreground">License Verification</h2>
       <div><FieldLabel required>License Number</FieldLabel><TextInput value={form.licenseNumber} onChange={v => update({ licenseNumber: v })} placeholder="e.g. CA-DRE-12345678" /></div>
       <div>
         <FieldLabel required>License State</FieldLabel>
         <select
           value={form.licenseState}
           onChange={e => update({ licenseState: e.target.value })}
-          className="w-full px-4 py-3 rounded-2xl border border-gray-200 text-[#1a2a2a] text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#1a362d]/20 focus:border-[#1a362d] transition-all bg-white"
+          className="w-full px-4 py-3 rounded-2xl border border-gray-200 text-foreground text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#1a362d]/20 focus:border-primary transition-all bg-white"
         >
           <option value="">e.g. California</option>
           {US_STATES.map(s => <option key={s} value={s}>{s}</option>)}
@@ -327,7 +327,7 @@ function Step3({ form, toggleService }: { form: FormData; toggleService: (s: str
   return (
     <div className="space-y-5">
       <div>
-        <h2 className="text-xl font-bold text-[#1a2a2a]">Services You Offer</h2>
+        <h2 className="text-xl font-bold text-foreground">Services You Offer</h2>
         <p className="text-xs text-gray-500 font-medium mt-1">Select all that apply. You can update this later.</p>
       </div>
       <div className="grid grid-cols-2 gap-2.5">
@@ -335,11 +335,11 @@ function Step3({ form, toggleService }: { form: FormData; toggleService: (s: str
           const checked = form.services.includes(s);
           return (
             <button key={s} type="button" onClick={() => toggleService(s)}
-              className={`flex items-center gap-2.5 px-4 py-3 rounded-2xl border text-sm font-semibold text-left transition-all ${
-                checked ? 'border-[#1a362d] bg-[#1a362d]/5 text-[#1a362d]' : 'border-gray-200 text-gray-600 hover:border-gray-300'
+              className={`flex items-center gap-2.5 px-4 py-3 rounded-2xl border text-sm font-semibold text-left transition-all ₹{
+                checked ? 'border-primary bg-primary/5 text-primary' : 'border-gray-200 text-gray-600 hover:border-gray-300'
               }`}
             >
-              <span className={`w-4 h-4 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-all ${checked ? 'border-[#1a362d] bg-[#1a362d]' : 'border-gray-300'}`}>
+              <span className={`w-4 h-4 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-all ₹{checked ? 'border-primary bg-primary' : 'border-gray-300'}`}>
                 {checked && <svg className="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>}
               </span>
               {s}
@@ -354,29 +354,29 @@ function Step3({ form, toggleService }: { form: FormData; toggleService: (s: str
 function Step4({ form, update }: { form: FormData; update: (p: Partial<FormData>) => void }) {
   return (
     <div className="space-y-5">
-      <h2 className="text-xl font-bold text-[#1a2a2a]">Service Area</h2>
-      <p className="text-xs text-[#1a362d] font-semibold">Enter a ZIP code and select how far you'll travel.</p>
+      <h2 className="text-xl font-bold text-foreground">Service Area</h2>
+      <p className="text-xs text-primary font-semibold">Enter a PIN code and select how far you'll travel.</p>
 
       <div className="rounded-2xl overflow-hidden border border-gray-200 bg-[#e8eeea] h-44 flex items-center justify-center relative">
         <div className="absolute inset-0 opacity-20" style={{
           backgroundImage: `repeating-linear-gradient(0deg,#1a362d 0px,#1a362d 1px,transparent 1px,transparent 40px),repeating-linear-gradient(90deg,#1a362d 0px,#1a362d 1px,transparent 1px,transparent 40px)`,
         }} />
         <div className="relative text-center space-y-2">
-          <svg className="w-8 h-8 text-[#1a362d]/40 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-8 h-8 text-primary/40 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
-          <p className="text-xs text-[#1a362d]/50 font-medium">Coverage map preview</p>
+          <p className="text-xs text-primary/50 font-medium">Coverage map preview</p>
         </div>
       </div>
 
       <div className="border border-gray-200 rounded-2xl p-4 space-y-4">
         <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest">Coverage Zone</p>
         <div>
-          <FieldLabel>ZIP Code</FieldLabel>
+          <FieldLabel>PIN code</FieldLabel>
           <div className="flex gap-2">
-            <input type="text" value={form.zipCode} onChange={e => update({ zipCode: e.target.value })} placeholder="e.g. 75025" maxLength={5}
-              className="flex-1 px-4 py-3 rounded-2xl border border-gray-200 text-[#1a2a2a] text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#1a362d]/20 focus:border-[#1a362d] transition-all" />
+            <input type="text" value={form.PINCode} onChange={e => update({ PINCode: e.target.value })} placeholder="e.g. 400001" maxLength={6}
+              className="flex-1 px-4 py-3 rounded-2xl border border-gray-200 text-foreground text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#1a362d]/20 focus:border-primary transition-all" />
             <button className="flex items-center gap-1.5 px-4 py-3 rounded-2xl border border-gray-200 text-sm font-semibold text-gray-600 hover:bg-gray-50 transition-colors">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
               Find
@@ -386,7 +386,7 @@ function Step4({ form, update }: { form: FormData; update: (p: Partial<FormData>
         <div>
           <div className="flex items-center justify-between mb-2">
             <FieldLabel>Radius</FieldLabel>
-            <span className="text-sm font-bold text-[#1a362d]">{form.radiusMiles} miles</span>
+            <span className="text-sm font-bold text-primary">{form.radiusMiles} miles</span>
           </div>
           <div className="flex items-center gap-3">
             <span className="text-xs text-gray-400 font-medium">5 mi</span>
@@ -397,14 +397,14 @@ function Step4({ form, update }: { form: FormData; update: (p: Partial<FormData>
       </div>
 
       <button type="button" onClick={() => update({ willingToTravel: !form.willingToTravel })}
-        className={`w-full flex items-center gap-3 px-4 py-4 rounded-2xl border text-sm font-semibold text-left transition-all ${form.willingToTravel ? 'border-[#d69e5e] bg-[#d69e5e]/5' : 'border-gray-200'}`}
+        className={`w-full flex items-center gap-3 px-4 py-4 rounded-2xl border text-sm font-semibold text-left transition-all ₹{form.willingToTravel ? 'border-accent bg-accent/5' : 'border-gray-200'}`}
       >
-        <span className={`w-5 h-5 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-all ${form.willingToTravel ? 'border-[#d69e5e] bg-[#d69e5e]' : 'border-gray-300'}`}>
+        <span className={`w-5 h-5 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-all ₹{form.willingToTravel ? 'border-accent bg-accent' : 'border-gray-300'}`}>
           {form.willingToTravel && <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>}
         </span>
         <div>
-          <p className="font-bold text-[#1a2a2a]">Willing to travel farther for higher pay</p>
-          <p className="text-xs text-[#d69e5e] font-medium mt-0.5">You'll see requests outside your radius with a travel premium</p>
+          <p className="font-bold text-foreground">Willing to travel farther for higher pay</p>
+          <p className="text-xs text-accent font-medium mt-0.5">You'll see requests outside your radius with a travel premium</p>
         </div>
       </button>
     </div>
@@ -415,7 +415,7 @@ function Step5({ form, update, toggleDay }: { form: FormData; update: (p: Partia
   return (
     <div className="space-y-5">
       <div>
-        <h2 className="text-xl font-bold text-[#1a2a2a]">Availability</h2>
+        <h2 className="text-xl font-bold text-foreground">Availability</h2>
         <p className="text-xs text-gray-500 font-medium mt-1">Which days are you generally available?</p>
       </div>
       <div className="grid grid-cols-2 gap-2.5">
@@ -423,24 +423,24 @@ function Step5({ form, update, toggleDay }: { form: FormData; update: (p: Partia
           const checked = form.availableDays.includes(d);
           return (
             <button key={d} type="button" onClick={() => toggleDay(d)}
-              className={`flex items-center gap-3 px-4 py-3.5 rounded-2xl border text-sm font-semibold transition-all ${
-                checked ? 'border-[#1a362d] bg-[#1a362d]/5 text-[#1a362d]' : 'border-gray-200 text-gray-600 hover:border-gray-300'
+              className={`flex items-center gap-3 px-4 py-3.5 rounded-2xl border text-sm font-semibold transition-all ₹{
+                checked ? 'border-primary bg-primary/5 text-primary' : 'border-gray-200 text-gray-600 hover:border-gray-300'
               }`}
             >
-              <span className={`w-4 h-4 rounded-full border-2 flex-shrink-0 transition-all ${checked ? 'border-[#1a362d] bg-[#1a362d]' : 'border-gray-300'}`} />
+              <span className={`w-4 h-4 rounded-full border-2 flex-shrink-0 transition-all ₹{checked ? 'border-primary bg-primary' : 'border-gray-300'}`} />
               {d}
             </button>
           );
         })}
       </div>
       <button type="button" onClick={() => update({ acceptSameDay: !form.acceptSameDay })}
-        className={`w-full flex items-center gap-3 px-4 py-4 rounded-2xl border text-sm font-semibold text-left transition-all ${form.acceptSameDay ? 'border-[#d69e5e] bg-[#d69e5e]/5' : 'border-gray-200'}`}
+        className={`w-full flex items-center gap-3 px-4 py-4 rounded-2xl border text-sm font-semibold text-left transition-all ₹{form.acceptSameDay ? 'border-accent bg-accent/5' : 'border-gray-200'}`}
       >
-        <span className={`w-5 h-5 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-all ${form.acceptSameDay ? 'border-[#d69e5e] bg-[#d69e5e]' : 'border-gray-300'}`}>
+        <span className={`w-5 h-5 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-all ₹{form.acceptSameDay ? 'border-accent bg-accent' : 'border-gray-300'}`}>
           {form.acceptSameDay && <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>}
         </span>
         <div>
-          <p className="font-bold text-[#1a2a2a]">Accept same-day requests</p>
+          <p className="font-bold text-foreground">Accept same-day requests</p>
           <p className="text-xs text-gray-500 font-medium mt-0.5">You'll be notified and can accept or decline</p>
         </div>
       </button>
@@ -457,15 +457,15 @@ function Step6Profile({ form, update, fileInputRef, handlePhotoChange, toggleSpe
 }) {
   return (
     <div className="space-y-6">
-      <h2 className="text-xl font-bold text-[#1a2a2a]">Your Agent Profile</h2>
+      <h2 className="text-xl font-bold text-foreground">Your Agent Profile</h2>
 
       {/* Photo */}
       <div>
-        <p className="text-sm font-bold text-[#1a2a2a] mb-3">Profile Photo</p>
+        <p className="text-sm font-bold text-foreground mb-3">Profile Photo</p>
         <div className="flex items-center gap-4">
           <div
             onClick={() => fileInputRef.current?.click()}
-            className="w-16 h-16 rounded-full bg-gray-100 border-2 border-dashed border-gray-300 flex items-center justify-center flex-shrink-0 cursor-pointer hover:border-[#1a362d]/40 transition-colors overflow-hidden"
+            className="w-16 h-16 rounded-full bg-gray-100 border-2 border-dashed border-gray-300 flex items-center justify-center flex-shrink-0 cursor-pointer hover:border-primary/40 transition-colors overflow-hidden"
           >
             {form.photoUrl ? (
               <img src={form.photoUrl} alt="Preview" className="w-full h-full object-cover" />
@@ -480,7 +480,7 @@ function Step6Profile({ form, update, fileInputRef, handlePhotoChange, toggleSpe
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-200 text-sm font-semibold text-[#1a2a2a] hover:bg-gray-50 transition-colors"
+              className="flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-200 text-sm font-semibold text-foreground hover:bg-gray-50 transition-colors"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
@@ -502,7 +502,7 @@ function Step6Profile({ form, update, fileInputRef, handlePhotoChange, toggleSpe
           onChange={e => update({ bio: e.target.value })}
           placeholder="Tell clients about your experience and approach..."
           rows={4}
-          className="w-full px-4 py-3 rounded-2xl border border-gray-200 text-[#1a2a2a] text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#1a362d]/20 focus:border-[#1a362d] transition-all resize-none"
+          className="w-full px-4 py-3 rounded-2xl border border-gray-200 text-foreground text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#1a362d]/20 focus:border-primary transition-all resize-none"
         />
       </div>
 
@@ -517,9 +517,9 @@ function Step6Profile({ form, update, fileInputRef, handlePhotoChange, toggleSpe
                 key={s}
                 type="button"
                 onClick={() => toggleSpecialty(s)}
-                className={`px-4 py-1.5 rounded-full border text-xs font-bold transition-all ${
+                className={`px-4 py-1.5 rounded-full border text-xs font-bold transition-all ₹{
                   active
-                    ? 'border-[#1a362d] bg-[#1a362d] text-white'
+                    ? 'border-primary bg-primary text-white'
                     : 'border-gray-200 text-gray-600 hover:border-gray-300'
                 }`}
               >
@@ -548,7 +548,7 @@ function Step6Profile({ form, update, fileInputRef, handlePhotoChange, toggleSpe
 function Step7Terms({ form, toggleTerm }: { form: FormData; toggleTerm: (i: number) => void }) {
   return (
     <div className="space-y-5">
-      <h2 className="text-xl font-bold text-[#1a2a2a]">Terms & Compliance</h2>
+      <h2 className="text-xl font-bold text-foreground">Terms & Compliance</h2>
       <div className="space-y-3">
         {TERMS.map((term, i) => {
           const checked = form.agreedTerms[i];
@@ -557,12 +557,12 @@ function Step7Terms({ form, toggleTerm }: { form: FormData; toggleTerm: (i: numb
               key={i}
               type="button"
               onClick={() => toggleTerm(i)}
-              className={`w-full flex items-start gap-3 px-4 py-4 rounded-2xl border text-left transition-all ${
-                checked ? 'border-[#1a362d]/30 bg-[#1a362d]/5' : 'border-gray-200 hover:border-gray-300'
+              className={`w-full flex items-start gap-3 px-4 py-4 rounded-2xl border text-left transition-all ₹{
+                checked ? 'border-primary/30 bg-primary/5' : 'border-gray-200 hover:border-gray-300'
               }`}
             >
-              <span className={`w-5 h-5 rounded-full border-2 flex-shrink-0 flex items-center justify-center mt-0.5 transition-all ${
-                checked ? 'border-[#1a362d] bg-[#1a362d]' : 'border-gray-300'
+              <span className={`w-5 h-5 rounded-full border-2 flex-shrink-0 flex items-center justify-center mt-0.5 transition-all ₹{
+                checked ? 'border-primary bg-primary' : 'border-gray-300'
               }`}>
                 {checked && (
                   <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">

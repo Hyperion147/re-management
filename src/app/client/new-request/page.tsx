@@ -18,20 +18,20 @@ import { TimePicker } from '@/components/ui/time-picker';
 // ── Service catalogue ─────────────────────────────────────────────────────────
 
 const ALL_SERVICES: { name: ServiceType; description: string; price: string; emoji: string }[] = [
-  { name: 'Private Home Showing',        emoji: '🏠', price: '$40+',        description: 'Get a licensed agent to show you any property at a time that works for you.' },
-  { name: 'Multi-Home Tour',             emoji: '📍', price: '$40+/home',   description: 'Tour 2–6 properties in one booking. Bundle & save vs. separate showings.' },
-  { name: 'Request a Task',             emoji: '✅', price: '$40+',        description: 'Book a local agent to complete a quick task at your property.' },
-  { name: 'Virtual Walkthrough',        emoji: '📹', price: '$50+',        description: "Can't visit? Get a live video walkthrough with an agent." },
-  { name: 'Buyer Consultation',         emoji: '🤝', price: '$99+',        description: 'One-on-one strategy session about your buying journey.' },
+  { name: 'Private Home Showing',        emoji: '🏠', price: '₹40+',        description: 'Get a licensed agent to show you any property at a time that works for you.' },
+  { name: 'Multi-Home Tour',             emoji: '📍', price: '₹40+/home',   description: 'Tour 2–6 properties in one booking. Bundle & save vs. separate showings.' },
+  { name: 'Request a Task',             emoji: '✅', price: '₹40+',        description: 'Book a local agent to complete a quick task at your property.' },
+  { name: 'Virtual Walkthrough',        emoji: '📹', price: '₹50+',        description: "Can't visit? Get a live video walkthrough with an agent." },
+  { name: 'Buyer Consultation',         emoji: '🤝', price: '₹99+',        description: 'One-on-one strategy session about your buying journey.' },
   { name: 'Flat Fee Agent',             emoji: '🪪', price: 'Success Fee', description: 'Full transaction agent. Pay a small platform fee at closing.' },
-  { name: 'Market Analysis (CMA)',      emoji: '📊', price: '$60+',        description: 'Detailed comparative market analysis report for any property.' },
-  { name: 'Listing Consultation',       emoji: '📋', price: '$99+',        description: 'Expert advice on pricing, staging, and selling your home.' },
-  { name: 'Open House Hosting',         emoji: '🏡', price: '$60+',        description: 'Professionally host your open house — greet visitors, collect leads.' },
-  { name: 'Property Photography',       emoji: '📸', price: '$99+',        description: 'Professional real estate photography to showcase your home.' },
-  { name: 'Move-In / Move-Out Cleaning',emoji: '🧹', price: '$75+',        description: 'Thorough professional cleaning for move-in or move-out transitions.' },
-  { name: 'Home Staging',               emoji: '🛋️', price: '$150+',       description: 'Expert staging to attract buyers and maximize your sale price.' },
-  { name: 'Inspection Coordination',    emoji: '🔍', price: '$75+',        description: 'Coordinate property inspections with qualified inspectors.' },
-  { name: 'Lockbox Access Support',     emoji: '🔑', price: '$45+',        description: 'Licensed agent to assist with property access where legally allowed.' },
+  { name: 'Market Analysis (CMA)',      emoji: '📊', price: '₹60+',        description: 'Detailed comparative market analysis report for any property.' },
+  { name: 'Listing Consultation',       emoji: '📋', price: '₹99+',        description: 'Expert advice on pricing, staging, and selling your home.' },
+  { name: 'Open House Hosting',         emoji: '🏡', price: '₹60+',        description: 'Professionally host your open house — greet visitors, collect leads.' },
+  { name: 'Property Photography',       emoji: '📸', price: '₹99+',        description: 'Professional real estate photography to showcase your home.' },
+  { name: 'Move-In / Move-Out Cleaning',emoji: '🧹', price: '₹75+',        description: 'Thorough professional cleaning for move-in or move-out transitions.' },
+  { name: 'Home Staging',               emoji: '🛋️', price: '₹150+',       description: 'Expert staging to attract buyers and maximize your sale price.' },
+  { name: 'Inspection Coordination',    emoji: '🔍', price: '₹75+',        description: 'Coordinate property inspections with qualified inspectors.' },
+  { name: 'Lockbox Access Support',     emoji: '🔑', price: '₹45+',        description: 'Licensed agent to assist with property access where legally allowed.' },
 ];
 
 const VALID_TYPES = ALL_SERVICES.map((s) => s.name as string);
@@ -93,7 +93,7 @@ function NewRequestContent() {
         return next;
       });
     }
-    if (field === 'zip') {
+    if (field === 'PIN') {
       setFormData((prev) => ({ ...prev, [field]: value.replace(/\D/g, '').slice(0, 5) }));
       return;
     }
@@ -106,8 +106,8 @@ function NewRequestContent() {
       if (!formData.address) newErrors.address = 'Address is required';
       if (!formData.city)    newErrors.city    = 'City is required';
       if (!formData.state)   newErrors.state   = 'State is required';
-      if (!formData.zip)     newErrors.zip     = 'ZIP code is required';
-      else if (formData.zip.length !== 5) newErrors.zip = 'ZIP code must be 5 digits';
+      if (!formData.zip)     newErrors.zip     = 'PIN code is required';
+      else if (formData.zip.length !== 5) newErrors.zip = 'PIN code must be 5 digits';
     }
     if (step === 3) {
       if (!formData.date)      newErrors.date      = 'Date is required';
@@ -149,7 +149,7 @@ function NewRequestContent() {
           <ArrowLeft className="w-4 h-4" />
           BACK
         </button>
-        <h2 className="text-2xl font-bold text-[#1a2a2a] tracking-tight">
+        <h2 className="text-2xl font-bold text-foreground tracking-tight">
           New {selectedService} Request
         </h2>
       </div>
@@ -171,7 +171,7 @@ function NewRequestContent() {
           {step === 1 && (
             <div className="space-y-8">
               <div className="space-y-2">
-                <h3 className="text-2xl font-bold text-[#1a2a2a] tracking-tight">What service do you need?</h3>
+                <h3 className="text-2xl font-bold text-foreground tracking-tight">What service do you need?</h3>
                 <p className="text-gray-400 font-medium text-sm">Select the type of assistance you require for your property.</p>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -193,13 +193,13 @@ function NewRequestContent() {
           {/* ── Step 2: Property Details ────────────────────────────────── */}
           {step === 2 && (
             <div className="space-y-10">
-              <h3 className="text-2xl font-bold text-[#1a2a2a] tracking-tight">Property details</h3>
+              <h3 className="text-2xl font-bold text-foreground tracking-tight">Property details</h3>
               <div className="grid grid-cols-1 gap-6 max-w-2xl">
                 <Input label="Street Address" placeholder="123 Main St" required value={formData.address} onChange={(v) => handleInputChange('address', v)} error={errors.address} />
                 <div className="grid grid-cols-3 gap-4">
                   <Input label="City"     placeholder="Miami"  required value={formData.city}  onChange={(v) => handleInputChange('city', v)}  error={errors.city} />
                   <Input label="State"    placeholder="FL"     required value={formData.state} onChange={(v) => handleInputChange('state', v)} error={errors.state} />
-                  <Input label="ZIP Code" placeholder="33101"  required value={formData.zip}   onChange={(v) => handleInputChange('zip', v)}   error={errors.zip} />
+                  <Input label="PIN code" placeholder="33101"  required value={formData.zip}   onChange={(v) => handleInputChange('PIN', v)}   error={errors.zip} />
                 </div>
                 <Input    label="MLS Number (optional)"       placeholder="A1234567"           value={formData.mlsNumber}      onChange={(v) => handleInputChange('mlsNumber', v)}      error={errors.mlsNumber} />
                 <Input    label="Client Name (optional)"      placeholder="Jane Smith"          value={formData.clientName}     onChange={(v) => handleInputChange('clientName', v)}     error={errors.clientName} />
@@ -214,7 +214,7 @@ function NewRequestContent() {
           {/* ── Step 3: Schedule & Fee ──────────────────────────────────── */}
           {step === 3 && (
             <div className="space-y-10">
-              <h3 className="text-2xl font-bold text-[#1a2a2a] tracking-tight">Schedule & compensation</h3>
+              <h3 className="text-2xl font-bold text-foreground tracking-tight">Schedule & compensation</h3>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl">
                 {/* Date picker */}
@@ -229,7 +229,7 @@ function NewRequestContent() {
                         className={cn(
                           'w-full px-5 py-6 justify-start text-left font-bold rounded-xl border transition-all',
                           errors.date ? 'border-red-500 bg-red-50/10' : 'border-gray-100 bg-gray-50/30',
-                          !formData.date ? 'text-muted-foreground' : 'text-[#1a2a2a] text-sm',
+                          !formData.date ? 'text-muted-foreground' : 'text-foreground text-sm',
                         )}
                       >
                         <CalendarIcon className={cn('mr-2 h-4 w-4', errors.date ? 'text-red-500' : 'text-gray-400')} />
@@ -260,7 +260,7 @@ function NewRequestContent() {
               <div className="space-y-6 max-w-2xl pt-4">
                 <div className="space-y-1">
                   <label className="text-xs font-bold text-gray-700 uppercase tracking-wide">Agent Compensation</label>
-                  <div className="text-4xl font-extrabold text-[#1a2a2a] tracking-tight">${compensation}</div>
+                  <div className="text-4xl font-extrabold text-foreground tracking-tight">₹{compensation}</div>
                 </div>
                 <div className="space-y-3">
                   <input
@@ -270,7 +270,7 @@ function NewRequestContent() {
                     className="w-full h-2 bg-gray-100 rounded-lg appearance-none cursor-pointer accent-[#416450]"
                   />
                   <div className="flex justify-between text-[10px] font-bold text-gray-400">
-                    <span>$35</span><span>$150</span>
+                    <span>₹35</span><span>₹150</span>
                   </div>
                 </div>
                 <p className="text-xs text-gray-400 font-medium leading-relaxed">
@@ -283,7 +283,7 @@ function NewRequestContent() {
           {/* ── Step 4: Review & Submit ─────────────────────────────────── */}
           {step === 4 && (
             <div className="space-y-10">
-              <h3 className="text-2xl font-bold text-[#1a2a2a] tracking-tight">Review your request</h3>
+              <h3 className="text-2xl font-bold text-foreground tracking-tight">Review your request</h3>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-y-8 gap-x-12 max-w-3xl">
                 <ReviewItem label="Service" value={
@@ -292,11 +292,11 @@ function NewRequestContent() {
                     <span>{selectedService}</span>
                   </div>
                 } />
-                <ReviewItem label="Address" value={`${formData.address}, ${formData.city}, ${formData.state} ${formData.zip}`} />
+                <ReviewItem label="Address" value={`₹{formData.address}, ₹{formData.city}, ₹{formData.state} ₹{formData.zip}`} />
                 <ReviewItem label="Date"        value={formData.date} />
-                <ReviewItem label="Time Window" value={`${formData.startTime} – ${formData.endTime}`} />
+                <ReviewItem label="Time Window" value={`₹{formData.startTime} – ₹{formData.endTime}`} />
                 <div className="col-span-full">
-                  <ReviewItem label="Agent Fee" value={<span className="text-2xl font-extrabold text-[#1a2a2a]">${compensation}</span>} />
+                  <ReviewItem label="Agent Fee" value={<span className="text-2xl font-extrabold text-foreground">₹{compensation}</span>} />
                 </div>
               </div>
 
@@ -318,7 +318,7 @@ function NewRequestContent() {
         <div className="flex justify-between items-center pt-10 mt-10 border-t border-gray-50">
           <button
             onClick={handleBack}
-            className={`text-sm font-bold text-gray-400 hover:text-gray-600 transition-colors flex items-center gap-2 ${step === 1 ? 'invisible' : ''}`}
+            className={`text-sm font-bold text-gray-400 hover:text-gray-600 transition-colors flex items-center gap-2 ₹{step === 1 ? 'invisible' : ''}`}
           >
             <ArrowLeft className="w-4 h-4" />
             {step === 4 ? 'Edit' : 'Back'}
@@ -326,10 +326,10 @@ function NewRequestContent() {
           <button
             onClick={handleContinue}
             disabled={loading}
-            className={`px-12 py-4 rounded-2xl text-sm font-bold shadow-xl transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center gap-3 disabled:opacity-50 ${
+            className={`px-12 py-4 rounded-2xl text-sm font-bold shadow-xl transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center gap-3 disabled:opacity-50 ₹{
               step === 4
-                ? 'bg-[#d69e5e] hover:bg-[#c58d4d] text-white shadow-orange-900/10'
-                : 'bg-[#416450] hover:bg-[#345140] text-white shadow-green-900/10'
+                ? 'bg-accent hover:bg-accent/90 text-white shadow-orange-900/10'
+                : 'bg-primary hover:bg-primary/90 text-white shadow-green-900/10'
             }`}
           >
             {loading ? 'Submitting…' : step === 3 ? 'Review' : step === 4 ? 'Submit Request' : 'Continue'}
@@ -346,11 +346,11 @@ function NewRequestContent() {
 function Step({ number, label, active, completed }: { number: number; label: string; active?: boolean; completed?: boolean }) {
   return (
     <div className="flex flex-col items-center gap-4 text-center min-w-[100px]">
-      <div className={`w-11 h-11 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-500 ${
+      <div className={`w-11 h-11 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-500 ₹{
         completed
-          ? 'bg-[#416450] text-white shadow-md'
+          ? 'bg-primary text-white shadow-md'
           : active
-            ? 'bg-[#416450] text-white ring-[6px] ring-green-50 shadow-lg shadow-green-900/10'
+            ? 'bg-primary text-white ring-[6px] ring-green-50 shadow-lg shadow-green-900/10'
             : 'bg-white text-gray-300 border-2 border-gray-100'
       }`}>
         {completed ? (
@@ -359,7 +359,7 @@ function Step({ number, label, active, completed }: { number: number; label: str
           </svg>
         ) : number}
       </div>
-      <p className={`text-[11px] font-bold tracking-wider uppercase transition-colors duration-300 ${active || completed ? 'text-[#1a2a2a]' : 'text-gray-400'}`}>
+      <p className={`text-[11px] font-bold tracking-wider uppercase transition-colors duration-300 ₹{active || completed ? 'text-foreground' : 'text-gray-400'}`}>
         {label}
       </p>
     </div>
@@ -372,7 +372,7 @@ function ServiceOption({ emoji, title, description, price, selected, onClick }: 
   return (
     <div
       onClick={onClick}
-      className={`group p-5 rounded-[1.5rem] border-2 transition-all duration-300 cursor-pointer hover:shadow-xl hover:-translate-y-1 ${
+      className={`group p-5 rounded-[1.5rem] border-2 transition-all duration-300 cursor-pointer hover:shadow-xl hover:-translate-y-1 ₹{
         selected
           ? 'border-[#416450] bg-green-50/10 shadow-lg shadow-green-900/5'
           : 'border-gray-100 bg-white hover:border-gray-200'
@@ -380,10 +380,10 @@ function ServiceOption({ emoji, title, description, price, selected, onClick }: 
     >
       <div className="text-2xl mb-3 group-hover:scale-110 transition-transform duration-300">{emoji}</div>
       <div className="space-y-1.5">
-        <h4 className="font-bold text-xs text-[#1a2a2a] group-hover:text-green-800 transition-colors leading-snug">{title}</h4>
+        <h4 className="font-bold text-xs text-foreground group-hover:text-green-800 transition-colors leading-snug">{title}</h4>
         <p className="text-[10px] text-gray-400 font-medium leading-relaxed line-clamp-2">{description}</p>
         <div className="pt-1">
-          <span className={`text-[9px] font-black tracking-widest uppercase px-2 py-1 rounded-lg ${
+          <span className={`text-[9px] font-black tracking-widest uppercase px-2 py-1 rounded-lg ₹{
             selected ? 'bg-green-100 text-green-700' : 'bg-gray-50 text-gray-400 group-hover:bg-gray-100 group-hover:text-gray-500'
           }`}>{price}</span>
         </div>
@@ -404,7 +404,7 @@ function Input({ label, placeholder, required, type = 'text', value, onChange, e
         type={type} placeholder={placeholder} value={value}
         onChange={(e) => onChange?.(e.target.value)}
         className={cn(
-          'w-full px-5 py-4 rounded-xl border text-sm text-[#1a2a2a] transition-all focus:outline-none focus:ring-2',
+          'w-full px-5 py-4 rounded-xl border text-sm text-foreground transition-all focus:outline-none focus:ring-2',
           error
             ? 'border-red-500 bg-red-50/10 focus:ring-red-500/20'
             : 'border-gray-100 bg-gray-50/30 focus:ring-green-500/20 focus:border-green-500',
@@ -425,7 +425,7 @@ function Textarea({ label, placeholder, value, onChange, error }: {
         placeholder={placeholder} rows={3} value={value}
         onChange={(e) => onChange?.(e.target.value)}
         className={cn(
-          'w-full px-5 py-4 rounded-xl border text-sm text-[#1a2a2a] transition-all resize-none focus:outline-none focus:ring-2',
+          'w-full px-5 py-4 rounded-xl border text-sm text-foreground transition-all resize-none focus:outline-none focus:ring-2',
           error
             ? 'border-red-500 bg-red-50/10 focus:ring-red-500/20'
             : 'border-gray-100 bg-gray-50/30 focus:ring-green-500/20 focus:border-green-500',
@@ -440,7 +440,7 @@ function ReviewItem({ label, value }: { label: string; value: React.ReactNode })
   return (
     <div className="space-y-1">
       <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{label}</p>
-      <div className="text-sm font-bold text-[#1a2a2a] tracking-tight">{value}</div>
+      <div className="text-sm font-bold text-foreground tracking-tight">{value}</div>
     </div>
   );
 }

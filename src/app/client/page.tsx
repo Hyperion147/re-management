@@ -72,7 +72,7 @@ export default function Dashboard() {
             {initial}
           </div>
           <div>
-            <h1 className="text-xl font-bold text-[#1a2a2a]">{currentUser?.fullName || 'Loading...'}</h1>
+            <h1 className="text-xl font-bold text-foreground">{currentUser?.fullName || 'Loading...'}</h1>
             <p className="text-sm text-gray-500 font-medium">{currentUser?.email}</p>
           </div>
         </div>
@@ -90,22 +90,22 @@ export default function Dashboard() {
       {/* Stats Row */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="bg-white rounded-2xl p-8 flex flex-col items-center justify-center border border-gray-100 shadow-sm">
-          <span className="text-3xl font-bold text-[#d69e5e] mb-1">{activeRequests}</span>
+          <span className="text-3xl font-bold text-accent mb-1">{activeRequests}</span>
           <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Active Requests</span>
         </div>
         <div className="bg-white rounded-2xl p-8 flex flex-col items-center justify-center border border-gray-100 shadow-sm">
-          <span className="text-3xl font-bold text-[#1a2a2a] mb-1">{completedRequests}</span>
+          <span className="text-3xl font-bold text-foreground mb-1">{completedRequests}</span>
           <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Completed</span>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-1 bg-[#f4f3ef] p-1.5 rounded-full w-fit">
+      <div className="flex items-center gap-1 bg-muted p-1.5 rounded-full w-fit">
         <button
           onClick={() => setActiveTab('Requests')}
-          className={`flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-full transition-all ${
+          className={`flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-full transition-all ₹{
             activeTab === 'Requests'
-              ? 'bg-white text-[#1a2a2a] shadow-sm ring-1 ring-black/5'
+              ? 'bg-white text-foreground shadow-sm ring-1 ring-black/5'
               : 'text-gray-500 hover:text-gray-800'
           }`}
         >
@@ -117,9 +117,9 @@ export default function Dashboard() {
 
         <button
           onClick={() => setActiveTab('Messages')}
-          className={`flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-full transition-all ${
+          className={`flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-full transition-all ₹{
             activeTab === 'Messages'
-              ? 'bg-white text-[#1a2a2a] shadow-sm ring-1 ring-black/5'
+              ? 'bg-white text-foreground shadow-sm ring-1 ring-black/5'
               : 'text-gray-500 hover:text-gray-800'
           }`}
         >
@@ -131,9 +131,9 @@ export default function Dashboard() {
 
         <button
           onClick={() => setActiveTab('Payments')}
-          className={`flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-full transition-all ${
+          className={`flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-full transition-all ₹{
             activeTab === 'Payments'
-              ? 'bg-white text-[#1a2a2a] shadow-sm ring-1 ring-black/5'
+              ? 'bg-white text-foreground shadow-sm ring-1 ring-black/5'
               : 'text-gray-500 hover:text-gray-800'
           }`}
         >
@@ -144,14 +144,14 @@ export default function Dashboard() {
             </svg>
             Payments
             {paymentDot && connectStatus !== 'active' && (
-              <span className={`w-2 h-2 rounded-full ${paymentDot} shrink-0`} />
+              <span className={`w-2 h-2 rounded-full ₹{paymentDot} shrink-0`} />
             )}
           </span>
         </button>
       </div>
 
       {/* Content Area */}
-      <div className={`bg-white rounded-3xl border border-gray-100 shadow-sm ${
+      <div className={`bg-white rounded-3xl border border-gray-100 shadow-sm ₹{
         activeTab === 'Requests'
           ? 'flex flex-col items-center justify-center min-h-[400px] p-12 text-center'
           : activeTab === 'Messages'
@@ -165,11 +165,11 @@ export default function Dashboard() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
             </div>
-            <h3 className="text-xl font-bold text-[#1a2a2a] mb-2">No service requests</h3>
+            <h3 className="text-xl font-bold text-foreground mb-2">No service requests</h3>
             <p className="text-gray-500 font-medium mb-8">Book an agent for showings, offers, and more.</p>
             <Link
               href="/"
-              className="border border-gray-200 text-[#1a2a2a] font-bold text-sm px-6 py-2.5 rounded-full hover:bg-gray-50 transition-colors"
+              className="border border-gray-200 text-foreground font-bold text-sm px-6 py-2.5 rounded-full hover:bg-gray-50 transition-colors"
             >
               Browse Services
             </Link>
@@ -186,16 +186,16 @@ export default function Dashboard() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-bold text-[#1a2a2a] mb-2">No messages</h3>
+                  <h3 className="text-xl font-bold text-foreground mb-2">No messages</h3>
                   <p className="text-gray-500 font-medium">You don&apos;t have any active conversations.</p>
                 </div>
               ) : (
                 messages.map((msg: any) => (
-                  <div key={msg.id} className={`flex flex-col ${msg.isFromAdmin ? 'items-start' : 'items-end'}`}>
-                    <div className={`max-w-[75%] px-5 py-3.5 rounded-2xl text-[13px] font-medium leading-relaxed ${
+                  <div key={msg.id} className={`flex flex-col ₹{msg.isFromAdmin ? 'items-start' : 'items-end'}`}>
+                    <div className={`max-w-[75%] px-5 py-3.5 rounded-2xl text-[13px] font-medium leading-relaxed ₹{
                       msg.isFromAdmin
                         ? 'bg-white border border-gray-100 text-gray-700 shadow-sm rounded-tl-sm'
-                        : 'bg-[#1c352d] text-white rounded-tr-sm shadow-md'
+                        : 'bg-primary text-white rounded-tr-sm shadow-md'
                     }`}>
                       {msg.message}
                     </div>
@@ -218,7 +218,7 @@ export default function Dashboard() {
                 <button
                   type="submit"
                   disabled={isSending || !newMessage.trim()}
-                  className="bg-[#1c352d] hover:bg-[#152a23] disabled:opacity-50 disabled:cursor-not-allowed text-white px-6 py-3 rounded-full text-sm font-bold transition-all shadow-sm flex items-center gap-2"
+                  className="bg-primary hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed text-white px-6 py-3 rounded-full text-sm font-bold transition-all shadow-sm flex items-center gap-2"
                 >
                   <span>{isSending ? 'Sending...' : 'Send'}</span>
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

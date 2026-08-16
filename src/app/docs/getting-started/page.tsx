@@ -13,14 +13,14 @@ export default function GettingStartedDocs() {
       </div>
 
       <div className="space-y-4">
-        <h1 className="text-4xl lg:text-5xl font-bold text-[#1a2a2a] tracking-tight">Getting Started</h1>
+        <h1 className="text-4xl lg:text-5xl font-bold text-foreground tracking-tight">Getting Started</h1>
         <p className="text-lg text-gray-400 font-medium leading-relaxed">
           Set up your account and book your first showing in under five minutes.
         </p>
       </div>
 
       <div className="space-y-8">
-        <h2 className="text-2xl font-bold text-[#1a2a2a]">Account setup</h2>
+        <h2 className="text-2xl font-bold text-foreground">Account setup</h2>
         <div className="space-y-8">
           <DocsStepLarge 
             num={1} 
@@ -46,7 +46,7 @@ export default function GettingStartedDocs() {
       </div>
 
       <div className="space-y-8">
-        <h2 className="text-2xl font-bold text-[#1a2a2a]">Tips for best results</h2>
+        <h2 className="text-2xl font-bold text-foreground">Tips for best results</h2>
         <ul className="space-y-4 list-disc pl-5 text-gray-500 font-medium text-sm">
           <li>For same-day showings, submit your request at least 3 hours in advance.</li>
           <li>Provide clear access instructions — lockbox code, parking, entry notes.</li>
@@ -64,21 +64,21 @@ export default function GettingStartedDocs() {
       </div>
 
       <div className="space-y-8">
-        <h2 className="text-2xl font-bold text-[#1a2a2a]">Pricing</h2>
+        <h2 className="text-2xl font-bold text-foreground">Pricing</h2>
         <p className="text-gray-500 font-medium leading-relaxed text-sm">
           Veyro is pay-per-showing with no monthly fees or contracts. You set the agent fee when booking. Agents can accept at your rate or counter-propose a different amount.
         </p>
         <ul className="space-y-4 text-gray-500 font-medium text-sm">
-          <li>• Showings: $35–$150</li>
-          <li>• Open Houses: $75–$300</li>
-          <li>• Lockbox Drop: $28–$60</li>
-          <li>• Photography: $50–$200</li>
-          <li>• Property Report: $40–$120</li>
+          <li>• Showings: ₹35–₹150</li>
+          <li>• Open Houses: ₹75–₹300</li>
+          <li>• Lockbox Drop: ₹2,300–₹60</li>
+          <li>• Photography: ₹50–₹200</li>
+          <li>• Property Report: ₹40–₹120</li>
         </ul>
       </div>
 
       <div className="space-y-4">
-        <h3 className="text-xl font-bold text-[#1a2a2a]">Common questions</h3>
+        <h3 className="text-xl font-bold text-foreground">Common questions</h3>
         <p className="text-sm text-gray-500 font-medium">
           See the site <a href="/#faq" className="text-green-700 underline underline-offset-4 decoration-green-100 font-bold">FAQ</a> for quick answers about coverage, agents, and payment.
         </p>
@@ -94,14 +94,14 @@ export default function GettingStartedDocs() {
           </div>
           <div className="text-left">
             <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">Previous</span>
-            <span className="text-sm font-bold text-[#1a2a2a]">Overview</span>
+            <span className="text-sm font-bold text-foreground">Overview</span>
           </div>
         </a>
 
-        <a href="/docs/showing-agents" className="group flex items-center gap-6 p-6 rounded-2xl border border-gray-100 hover:border-green-100 hover:bg-[#f0f9f9]/50 transition-all">
+        <a href="/docs/showing-agents" className="group flex items-center gap-6 p-6 rounded-2xl border border-gray-100 hover:border-green-100 hover:bg-muted/50 transition-all">
           <div className="text-right">
             <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">Next</span>
-            <span className="text-sm font-bold text-[#1a2a2a]">For Showing Agents</span>
+            <span className="text-sm font-bold text-foreground">For Showing Agents</span>
           </div>
           <div className="w-10 h-10 bg-white rounded-xl shadow-sm flex items-center justify-center text-green-600 group-hover:translate-x-1 transition-transform">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -117,11 +117,11 @@ export default function GettingStartedDocs() {
 function DocsStepLarge({ num, title, desc }: { num: number; title: string; desc: React.ReactNode }) {
   return (
     <div className="flex gap-6 items-start pb-8 border-b border-gray-50 last:border-0 last:pb-0">
-      <div className="w-10 h-10 rounded-xl bg-[#112424] text-white flex items-center justify-center font-bold text-sm shrink-0 shadow-lg shadow-black/5">
+      <div className="w-10 h-10 rounded-xl bg-primary text-white flex items-center justify-center font-bold text-sm shrink-0 shadow-lg shadow-black/5">
         {num}
       </div>
       <div className="space-y-2">
-        <h4 className="font-bold text-[#1a2a2a] text-base">{title}</h4>
+        <h4 className="font-bold text-foreground text-base">{title}</h4>
         <p className="text-sm text-gray-500 font-medium leading-relaxed">{desc}</p>
       </div>
     </div>

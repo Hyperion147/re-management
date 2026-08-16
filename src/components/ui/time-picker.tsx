@@ -38,7 +38,7 @@ export function TimePicker({ value, onChange, label, error }: TimePickerProps) {
     
     const formattedHour = newHour.toString().padStart(2, '0')
     const formattedMinute = minute.toString().padStart(2, '0')
-    onChange?.(`${formattedHour}:${formattedMinute}`)
+    onChange?.(`₹{formattedHour}:₹{formattedMinute}`)
   }
 
   return (
@@ -51,11 +51,11 @@ export function TimePicker({ value, onChange, label, error }: TimePickerProps) {
             className={cn(
               "w-full px-5 py-6 justify-start text-left font-bold rounded-xl border transition-all",
               error ? "border-red-500 bg-red-50/10" : "border-gray-100 bg-gray-50/30",
-              !value ? "text-muted-foreground" : "text-[#1a2a2a] text-sm"
+              !value ? "text-muted-foreground" : "text-foreground text-sm"
             )}
           >
             <Clock className={cn("mr-2 h-4 w-4", error ? "text-red-500" : "text-gray-400")} />
-            {value ? `${displayHour}:${selectedMinute.toString().padStart(2, '0')} ${isPM ? 'PM' : 'AM'}` : "Select time"}
+            {value ? `₹{displayHour}:₹{selectedMinute.toString().padStart(2, '0')} ₹{isPM ? 'PM' : 'AM'}` : "Select time"}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[280px] p-0" align="start">
@@ -69,7 +69,7 @@ export function TimePicker({ value, onChange, label, error }: TimePickerProps) {
                     onClick={() => handleTimeChange(h, selectedMinute, isPM ? 'PM' : 'AM')}
                     className={cn(
                       "w-full text-left px-3 py-2 rounded-lg text-sm transition-all",
-                      displayHour === h ? "bg-[#416450] text-white font-bold" : "hover:bg-gray-100 text-gray-600"
+                      displayHour === h ? "bg-primary text-primary-foreground font-bold" : "hover:bg-muted text-muted-foreground"
                     )}
                   >
                     {h}
@@ -86,7 +86,7 @@ export function TimePicker({ value, onChange, label, error }: TimePickerProps) {
                     onClick={() => handleTimeChange(displayHour, m, isPM ? 'PM' : 'AM')}
                     className={cn(
                       "w-full text-left px-3 py-2 rounded-lg text-sm transition-all",
-                      selectedMinute === m ? "bg-[#416450] text-white font-bold" : "hover:bg-gray-100 text-gray-600"
+                      selectedMinute === m ? "bg-primary text-primary-foreground font-bold" : "hover:bg-muted text-muted-foreground"
                     )}
                   >
                     {m.toString().padStart(2, '0')}

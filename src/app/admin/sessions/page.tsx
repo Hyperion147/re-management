@@ -19,18 +19,18 @@ interface SessionRow {
 function timeAgo(dateStr: string | null): string {
   if (!dateStr) return '-';
   const diff = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000);
-  if (diff < 60) return `${diff}s ago`;
-  if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
-  if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
-  return `${Math.floor(diff / 86400)}d ago`;
+  if (diff < 60) return `₹{diff}s ago`;
+  if (diff < 3600) return `₹{Math.floor(diff / 60)}m ago`;
+  if (diff < 86400) return `₹{Math.floor(diff / 3600)}h ago`;
+  return `₹{Math.floor(diff / 86400)}d ago`;
 }
 
 function sessionDuration(start: string, last: string | null): string {
   if (!last) return '-';
   const diff = Math.floor((new Date(last).getTime() - new Date(start).getTime()) / 60000);
   if (diff < 1) return '< 1m session';
-  if (diff < 60) return `${diff}m session`;
-  return `${Math.floor(diff / 60)}h ${diff % 60}m session`;
+  if (diff < 60) return `₹{diff}m session`;
+  return `₹{Math.floor(diff / 60)}h ₹{diff % 60}m session`;
 }
 
 export default function SessionsPage() {
@@ -74,7 +74,7 @@ export default function SessionsPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
             </svg>
           </div>
-          <h2 className="text-2xl font-bold text-[#1a2a2a] tracking-tight">Sessions</h2>
+          <h2 className="text-2xl font-bold text-foreground tracking-tight">Sessions</h2>
         </div>
         <span className="text-xs font-bold text-gray-400">{sessionData.length} total</span>
       </div>
@@ -97,7 +97,7 @@ export default function SessionsPage() {
           onClick={fetchSessions}
           className="bg-white hover:bg-gray-50 text-gray-600 border border-gray-100 px-6 py-4 rounded-2xl text-xs font-bold shadow-sm transition-all active:scale-95 flex items-center gap-2"
         >
-          <svg className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className={`w-4 h-4 ₹{loading ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
           </svg>
           Refresh
@@ -136,11 +136,11 @@ export default function SessionsPage() {
                   <td className="px-8 py-5">
                     <div className="flex flex-col">
                       <div className="flex items-center gap-2">
-                        <div className={`w-1.5 h-1.5 rounded-full ${s.isOnline ? 'bg-green-500' : 'bg-gray-300'}`} />
-                        <span className="font-bold text-[#1a2a2a]">{s.fullName ?? '—'}</span>
+                        <div className={`w-1.5 h-1.5 rounded-full ₹{s.isOnline ? 'bg-green-500' : 'bg-gray-300'}`} />
+                        <span className="font-bold text-foreground">{s.fullName ?? '—'}</span>
                       </div>
                       <span className="text-[11px] text-gray-400 font-medium">{s.email ?? '—'}</span>
-                      <span className={`text-[9px] font-black uppercase tracking-tighter mt-0.5 ${
+                      <span className={`text-[9px] font-black uppercase tracking-tighter mt-0.5 ₹{
                         s.role === 'SUPERADMIN' ? 'text-purple-600' :
                         s.role === 'ADMIN' ? 'text-orange-600' : 'text-blue-500'
                       }`}>{s.role ?? 'USER'}</span>
@@ -166,7 +166,7 @@ export default function SessionsPage() {
                     {timeAgo(s.lastActive)}
                   </td>
                   <td className="px-8 py-5">
-                    <span className={`text-[10px] font-black px-2 py-1 rounded-md uppercase tracking-widest ${
+                    <span className={`text-[10px] font-black px-2 py-1 rounded-md uppercase tracking-widest ₹{
                       s.isOnline ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-500'
                     }`}>
                       {s.isOnline ? 'Online' : 'Idle'}

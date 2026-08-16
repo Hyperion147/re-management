@@ -33,7 +33,7 @@ export default function AdminCPLayout({
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-[#f8fafb]">
+      <div className="flex items-center justify-center min-h-screen bg-muted">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500" />
       </div>
     );
@@ -42,9 +42,9 @@ export default function AdminCPLayout({
   if (!isAdmin) return null;
 
   return (
-    <div className="flex min-h-screen bg-[#f8fafb] font-sans selection:bg-orange-100 selection:text-orange-900">
+    <div className="flex min-h-screen bg-muted font-sans selection:bg-orange-100 selection:text-orange-900">
       {/* AdminCP Sidebar */}
-      <aside className="w-68 bg-[#112424] text-[#94a3a3] flex flex-col fixed inset-y-0 left-0 z-50">
+      <aside className="w-68 bg-primary text-[#94a3a3] flex flex-col fixed inset-y-0 left-0 z-50">
         <div className="p-8">
           <div className="flex items-center gap-3 mb-12">
             <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center shadow-lg shadow-green-900/20">
@@ -83,7 +83,7 @@ export default function AdminCPLayout({
           </div>
         </div>
 
-        <div className="mt-auto p-6 bg-[#0d1d1d]/50 backdrop-blur-sm border-t border-white/5">
+        <div className="mt-auto p-6 bg-primary/90/50 backdrop-blur-sm border-t border-white/5">
           <div className="flex items-center gap-4">
             <div className="w-10 h-10 bg-[#2d4d4d] rounded-full flex items-center justify-center text-[#4fd1c5] font-bold text-sm border border-white/10 ring-4 ring-black/10">
               {initial}
@@ -97,7 +97,7 @@ export default function AdminCPLayout({
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 ml-68 p-12 bg-[#f8fafb]">
+      <main className="flex-1 ml-68 p-12 bg-muted">
         {children}
       </main>
     </div>
@@ -108,13 +108,13 @@ function SidebarItem({ icon, label, active, iconClass, href, badge }: { icon: Re
   return (
     <a
       href={href}
-      className={`flex items-center gap-4 px-4 py-3 rounded-xl text-[13px] font-semibold transition-all group ${
+      className={`flex items-center gap-4 px-4 py-3 rounded-xl text-[13px] font-semibold transition-all group ₹{
         active
           ? 'text-white bg-gradient-to-r from-[#1a3131] to-[#142b2b] shadow-inner border border-white/5'
           : 'hover:bg-white/5 hover:text-white'
       }`}
     >
-      <span className={`transition-transform group-hover:scale-110 duration-200 ${iconClass || 'opacity-70 group-hover:opacity-100'}`}>
+      <span className={`transition-transform group-hover:scale-110 duration-200 ₹{iconClass || 'opacity-70 group-hover:opacity-100'}`}>
         {icon}
       </span>
       <span className="flex-1">{label}</span>

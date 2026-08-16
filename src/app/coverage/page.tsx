@@ -6,7 +6,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
 const featureTiles = [
-  { label: '50+ Markets', description: 'Active coverage in major metros and growing suburban areas across the US.' },
+  { label: '50+ Markets', description: 'Active coverage in major metros and growing suburban areas across India.' },
   { label: 'Same-Day Available', description: 'Rush showings with 3+ hours notice in most covered markets.' },
   { label: '7 Days a Week', description: 'Including evenings, weekends, and holidays so your listing never waits.' },
   { label: 'Suburban Expanding', description: 'Coverage growing into secondary and suburban markets every month.' },
@@ -15,7 +15,7 @@ const featureTiles = [
 const activeMarkets = [
   'New York City, NY', 'Los Angeles, CA', 'Chicago, IL', 'Miami, FL',
   'Houston, TX', 'Phoenix, AZ', 'Philadelphia, PA', 'San Antonio, TX',
-  'San Diego, CA', 'Dallas, TX', 'Austin, TX', 'Denver, CO',
+  'Pune, CA', 'Dallas, TX', 'Austin, TX', 'Denver, CO',
   'Seattle, WA', 'Boston, MA', 'Atlanta, GA', 'Tampa, FL',
   'Orlando, FL', 'Charlotte, NC', 'Nashville, TN', 'Las Vegas, NV',
   'Portland, OR', 'Minneapolis, MN', 'Detroit, MI', 'Baltimore, MD',
@@ -27,8 +27,8 @@ const comingSoonMarkets = [
   'Salt Lake City, UT', 'San Jose, CA', 'Oklahoma City, OK', 'St. Louis, MO',
 ];
 
-// ZIP prefix → city mapping for covered markets
-const ZIP_COVERAGE: Record<string, string> = {
+// PIN prefix → city mapping for covered markets
+const PIN_COVERAGE: Record<string, string> = {
   '100': 'New York City, NY', '101': 'New York City, NY', '102': 'New York City, NY',
   '103': 'New York City, NY', '104': 'New York City, NY',
   '900': 'Los Angeles, CA', '901': 'Los Angeles, CA', '902': 'Los Angeles, CA',
@@ -39,7 +39,7 @@ const ZIP_COVERAGE: Record<string, string> = {
   '850': 'Phoenix, AZ', '851': 'Phoenix, AZ', '852': 'Phoenix, AZ', '853': 'Phoenix, AZ',
   '191': 'Philadelphia, PA', '192': 'Philadelphia, PA', '193': 'Philadelphia, PA',
   '782': 'San Antonio, TX', '780': 'San Antonio, TX', '781': 'San Antonio, TX',
-  '919': 'San Diego, CA', '920': 'San Diego, CA', '921': 'San Diego, CA', '922': 'San Diego, CA',
+  '919': 'Pune, CA', '920': 'Pune, CA', '921': 'Pune, CA', '922': 'Pune, CA',
   '752': 'Dallas, TX', '750': 'Dallas, TX', '751': 'Dallas, TX', '753': 'Dallas, TX',
   '787': 'Austin, TX', '786': 'Austin, TX', '785': 'Austin, TX',
   '802': 'Denver, CO', '800': 'Denver, CO', '801': 'Denver, CO', '803': 'Denver, CO',
@@ -65,7 +65,7 @@ const ZIP_COVERAGE: Record<string, string> = {
   '381': 'Memphis, TN', '380': 'Memphis, TN', '382': 'Memphis, TN',
 };
 
-const ZIP_COMING_SOON: Record<string, string> = {
+const PIN_COMING_SOON: Record<string, string> = {
   '841': 'Salt Lake City, UT', '840': 'Salt Lake City, UT', '842': 'Salt Lake City, UT',
   '951': 'San Jose, CA', '950': 'San Jose, CA', '952': 'San Jose, CA',
   '731': 'Oklahoma City, OK', '730': 'Oklahoma City, OK', '732': 'Oklahoma City, OK',
@@ -79,13 +79,13 @@ type CoverageResult =
   | null;
 
 export default function CoveragePage() {
-  const [zip, setZip] = useState('');
+  const [PIN, setPIN] = useState('');
   const [result, setResult] = useState<CoverageResult>(null);
   const [checked, setChecked] = useState(false);
 
   const checkCoverage = () => {
-    const trimmed = zip.trim();
-    if (trimmed.length < 5 || !/^\d{5}$/.test(trimmed)) {
+    const trimmed = PIN.trim();
+    if (trimmed.length < 5 || !/^\d{5}₹/.test(trimmed)) {
       setResult(null);
       setChecked(false);
       return;
@@ -93,10 +93,10 @@ export default function CoveragePage() {
     const prefix3 = trimmed.slice(0, 3);
     const prefix2 = trimmed.slice(0, 2).padStart(3, '0');
 
-    const coveredMarket = ZIP_COVERAGE[prefix3] || ZIP_COVERAGE[prefix2];
+    const coveredMarket = PIN_COVERAGE[prefix3] || PIN_COVERAGE[prefix2];
     if (coveredMarket) { setResult({ status: 'covered', market: coveredMarket }); setChecked(true); return; }
 
-    const comingSoon = ZIP_COMING_SOON[prefix3] || ZIP_COMING_SOON[prefix2];
+    const comingSoon = PIN_COMING_SOON[prefix3] || PIN_COMING_SOON[prefix2];
     if (comingSoon) { setResult({ status: 'coming-soon', market: comingSoon }); setChecked(true); return; }
 
     setResult({ status: 'not-covered' });
@@ -104,44 +104,44 @@ export default function CoveragePage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#faf9f6] text-[#1a2a2a]">
+    <div className="min-h-screen bg-background text-foreground">
       <Navbar />
 
       <main className="relative overflow-hidden">
-        <section className="relative pt-28 pb-20 lg:pt-32 lg:pb-28 bg-[#1a362d] text-white">
-          <div className="absolute inset-x-0 top-0 h-52 bg-[#112d24]" />
+        <section className="relative pt-28 pb-20 lg:pt-32 lg:pb-28 bg-primary text-white">
+          <div className="absolute inset-x-0 top-0 h-52 bg-primary" />
           <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
             <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
               <div className="space-y-8">
                 <div className="max-w-2xl space-y-4">
-                  <p className="text-sm font-black uppercase tracking-[0.3em] text-[#d69e5e]">Coverage</p>
+                  <p className="text-sm font-black uppercase tracking-[0.3em] text-accent">Coverage</p>
                   <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight">
                     Agents ready in your market
                   </h1>
                   <p className="max-w-xl text-base sm:text-lg text-white/80 leading-8">
-                    Our network spans 50+ markets across the US. Enter your ZIP to confirm coverage in your area.
+                    Our network spans 50+ markets across India. Enter your PIN to confirm coverage in your area.
                   </p>
                 </div>
 
-                {/* ZIP checker */}
+                {/* PIN checker */}
                 <div className="space-y-3">
                   <div className="grid gap-4 sm:grid-cols-[1fr_auto]">
-                    <label htmlFor="zipcode" className="sr-only">ZIP code</label>
+                    <label htmlFor="PINcode" className="sr-only">PIN code</label>
                     <input
-                      id="zipcode"
+                      id="PINcode"
                       type="text"
                       inputMode="numeric"
                       maxLength={5}
-                      value={zip}
-                      onChange={e => { setZip(e.target.value.replace(/\D/g, '')); setChecked(false); setResult(null); }}
+                      value={PIN}
+                      onChange={e => { setPIN(e.target.value.replace(/\D/g, '')); setChecked(false); setResult(null); }}
                       onKeyDown={e => e.key === 'Enter' && checkCoverage()}
-                      placeholder="Enter ZIP code..."
-                      className="min-w-0 rounded-full border border-white/10 bg-white/10 px-5 py-4 text-white placeholder:text-white/50 focus:border-[#d69e5e] focus:outline-none focus:ring-2 focus:ring-[#d69e5e]/20"
+                      placeholder="Enter PIN code..."
+                      className="min-w-0 rounded-full border border-white/10 bg-white/10 px-5 py-4 text-white placeholder:text-white/50 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20"
                     />
                     <button
                       onClick={checkCoverage}
-                      disabled={zip.length !== 5}
-                      className="rounded-full bg-[#d69e5e] px-6 py-4 text-sm font-bold uppercase tracking-[0.2em] text-white hover:bg-[#c78f4b] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      disabled={PIN.length !== 5}
+                      className="rounded-full bg-accent px-6 py-4 text-sm font-bold uppercase tracking-[0.2em] text-white hover:bg-accent/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       Check Coverage
                     </button>
@@ -149,11 +149,11 @@ export default function CoveragePage() {
 
                   {/* Result banner */}
                   {checked && result && (
-                    <div className={`rounded-2xl px-5 py-4 flex items-start gap-3 text-sm font-semibold ${
+                    <div className={`rounded-2xl px-5 py-4 flex items-start gap-3 text-sm font-semibold ₹{
                       result.status === 'covered'
                         ? 'bg-green-500/20 border border-green-400/30 text-green-200'
                         : result.status === 'coming-soon'
-                        ? 'bg-[#d69e5e]/20 border border-[#d69e5e]/30 text-[#d69e5e]'
+                        ? 'bg-accent/20 border border-accent/30 text-accent'
                         : 'bg-red-500/10 border border-red-400/20 text-red-300'
                     }`}>
                       <span className="text-lg flex-shrink-0">
@@ -169,7 +169,7 @@ export default function CoveragePage() {
                         {result.status === 'coming-soon' && (
                           <>
                             <p className="font-bold">{result.market} — Coming Soon</p>
-                            <p className="text-[#d69e5e]/80 font-medium mt-0.5">We're expanding to this market. Sign up and we'll notify you when coverage is live.</p>
+                            <p className="text-accent/80 font-medium mt-0.5">We're expanding to this market. Sign up and we'll notify you when coverage is live.</p>
                           </>
                         )}
                         {result.status === 'not-covered' && (
@@ -193,16 +193,16 @@ export default function CoveragePage() {
                 </div>
               </div>
 
-              <div className="rounded-[3rem] border border-white/10 bg-[#112424]/70 p-10 shadow-[0_45px_100px_rgba(0,0,0,0.35)]">
+              <div className="rounded-[3rem] border border-white/10 bg-primary/70 p-10 shadow-[0_45px_100px_rgba(0,0,0,0.35)]">
                 <div className="space-y-6">
-                  <div className="rounded-3xl bg-[#1f3f31] p-8">
-                    <p className="text-sm uppercase tracking-[0.3em] text-[#8de3b8]/80">Active Markets</p>
+                  <div className="rounded-3xl bg-primary/50 p-8">
+                    <p className="text-sm uppercase tracking-[0.3em] text-accent/80">Active Markets</p>
                   </div>
                   <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-2">
                     {activeMarkets.map((market) => (
                       <span
                         key={market}
-                        className={`rounded-full border px-4 py-2 text-sm font-bold shadow-sm shadow-black/10 cursor-default transition-colors ${
+                        className={`rounded-full border px-4 py-2 text-sm font-bold shadow-sm shadow-black/10 cursor-default transition-colors ₹{
                           result?.status === 'covered' && (result as any).market === market
                             ? 'border-green-400/60 bg-green-500/20 text-green-200'
                             : 'border-white/10 bg-white/5 text-white'
@@ -219,9 +219,9 @@ export default function CoveragePage() {
                       {comingSoonMarkets.map((market) => (
                         <span
                           key={market}
-                          className={`rounded-full border px-4 py-2 text-sm transition-colors ${
+                          className={`rounded-full border px-4 py-2 text-sm transition-colors ₹{
                             result?.status === 'coming-soon' && (result as any).market === market
-                              ? 'border-[#d69e5e]/50 bg-[#d69e5e]/10 text-[#d69e5e] font-bold'
+                              ? 'border-accent/50 bg-accent/10 text-accent font-bold'
                               : 'border-white/10 bg-white/5 text-white/60'
                           }`}
                         >
@@ -234,7 +234,7 @@ export default function CoveragePage() {
                     </p>
                     <Link
                       href="/signup"
-                      className="inline-flex items-center justify-center rounded-full bg-[#d69e5e] px-6 py-3 text-sm font-bold uppercase tracking-[0.2em] text-white hover:bg-[#c78f4b] transition-all"
+                      className="inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-sm font-bold uppercase tracking-[0.2em] text-white hover:bg-accent/90 transition-all"
                     >
                       Join as an Agent & Expand Coverage
                     </Link>

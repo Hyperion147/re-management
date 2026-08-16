@@ -123,7 +123,7 @@ export default function PaymentsSection({ userId }: { userId: string }) {
                 <span className="text-white text-[9px] font-black uppercase">{savedCard.brand.slice(0, 4)}</span>
               </div>
               <div>
-                <p className="text-sm font-bold text-[#1a2a2a]">•••• •••• •••• {savedCard.last4}</p>
+                <p className="text-sm font-bold text-foreground">•••• •••• •••• {savedCard.last4}</p>
                 <p className="text-xs text-gray-400 font-medium">
                   Expires {savedCard.expMonth}/{savedCard.expYear}
                 </p>
@@ -148,7 +148,7 @@ export default function PaymentsSection({ userId }: { userId: string }) {
               </svg>
             </div>
             <div>
-              <p className="text-sm font-bold text-[#1a2a2a]">Add a card</p>
+              <p className="text-sm font-bold text-foreground">Add a card</p>
               <p className="text-xs text-gray-400 font-medium">Visa, Mastercard, Amex accepted</p>
             </div>
           </button>
@@ -209,7 +209,7 @@ export default function PaymentsSection({ userId }: { userId: string }) {
               </svg>
             </div>
             <div>
-              <p className="text-sm font-bold text-[#1a2a2a]">
+              <p className="text-sm font-bold text-foreground">
                 {connectLoading ? 'Redirecting to Stripe…' : 'Connect bank account'}
               </p>
               <p className="text-xs text-gray-400 font-medium">Enter your banking details to receive payouts</p>
@@ -241,7 +241,7 @@ export default function PaymentsSection({ userId }: { userId: string }) {
               return (
                 <div key={tx.id} className="flex items-center justify-between py-3">
                   <div className="flex items-center gap-3">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ₹{
                       tx.type === 'ESCROW' ? 'bg-blue-50 text-blue-500' :
                       tx.type === 'RELEASE' ? 'bg-green-50 text-green-600' :
                       'bg-red-50 text-red-500'
@@ -249,7 +249,7 @@ export default function PaymentsSection({ userId }: { userId: string }) {
                       {tx.type === 'ESCROW' ? '↑' : tx.type === 'RELEASE' ? '↓' : '↩'}
                     </div>
                     <div>
-                      <p className="text-sm font-bold text-[#1a2a2a]">
+                      <p className="text-sm font-bold text-foreground">
                         {tx.type === 'ESCROW' ? 'Payment Held' : tx.type === 'RELEASE' ? 'Payment Released' : 'Refund'}
                       </p>
                       <p className="text-[11px] text-gray-400 font-medium">
@@ -258,10 +258,10 @@ export default function PaymentsSection({ userId }: { userId: string }) {
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className={`text-sm font-black ${isIncoming ? 'text-green-600' : 'text-[#1a2a2a]'}`}>
-                      {isIncoming ? '+' : '-'}${Number(tx.amount).toFixed(2)}
+                    <p className={`text-sm font-black ₹{isIncoming ? 'text-green-600' : 'text-foreground'}`}>
+                      {isIncoming ? '+' : '-'}₹{Number(tx.amount).toFixed(2)}
                     </p>
-                    <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${
+                    <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ₹{
                       tx.status === 'COMPLETED' ? 'bg-green-50 text-green-600' : 'bg-gray-100 text-gray-400'
                     }`}>
                       {tx.status}

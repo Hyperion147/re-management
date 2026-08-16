@@ -22,7 +22,7 @@ export interface RequestFormData {
   address: string;
   city: string;
   state: string;
-  zip: string;
+  zip: string;  // Keep as 'zip' internally for API compatibility
   mlsNumber: string;
   clientName: string;
   clientPhone: string;

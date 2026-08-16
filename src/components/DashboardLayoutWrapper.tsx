@@ -13,7 +13,7 @@ export default function DashboardLayoutWrapper({
   usePushNotifications();
 
   return (
-    <div className="min-h-screen bg-[#faf9f6] flex flex-col font-sans selection:bg-orange-100 selection:text-orange-900">
+    <div className="min-h-screen bg-background flex flex-col font-sans selection:bg-orange-100 selection:text-orange-900">
       <DashboardNavbar />
       
       {/* Main Content */}

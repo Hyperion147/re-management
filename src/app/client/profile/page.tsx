@@ -11,7 +11,7 @@ export default function ProfilePage() {
     <div className="max-w-3xl mx-auto space-y-8">
       {/* Header */}
       <div className="space-y-4">
-        <span className={`text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest ${
+        <span className={`text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest ₹{
           user?.role === 'SUPERADMIN' ? 'bg-purple-100 text-purple-700' :
           user?.role === 'ADMIN' ? 'bg-orange-100 text-orange-600' :
           'bg-blue-100 text-blue-600'
@@ -19,7 +19,7 @@ export default function ProfilePage() {
           {user?.role ?? '...'}
         </span>
         <div className="space-y-1">
-          <h2 className="text-3xl font-extrabold text-[#1a2a2a] tracking-tight">My Profile</h2>
+          <h2 className="text-3xl font-extrabold text-foreground tracking-tight">My Profile</h2>
           <p className="text-gray-400 font-medium text-sm">
             Update your name, job title, or password. Changes are saved immediately.
           </p>
@@ -75,7 +75,7 @@ export default function ProfilePage() {
         {/* Security Section */}
         <div className="space-y-6 pt-4 border-t border-gray-50">
           <SectionHeader label="Security" />
-          <button className="flex items-center gap-3 text-sm font-bold text-[#1a2a2a] hover:text-orange-600 transition-colors group">
+          <button className="flex items-center gap-3 text-sm font-bold text-foreground hover:text-orange-600 transition-colors group">
             <div className="w-8 h-8 bg-orange-50 rounded-lg flex items-center justify-center text-orange-400 group-hover:scale-110 transition-transform">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
@@ -128,10 +128,10 @@ function ProfileInput({ label, value, placeholder, disabled }: {
         defaultValue={value}
         placeholder={placeholder}
         disabled={disabled}
-        className={`w-full px-5 py-4 rounded-2xl border transition-all text-sm font-medium ${
+        className={`w-full px-5 py-4 rounded-2xl border transition-all text-sm font-medium ₹{
           disabled
             ? 'bg-gray-50 border-gray-100 text-gray-400 cursor-not-allowed'
-            : 'bg-white border-gray-100 text-[#1a2a2a] focus:ring-4 focus:ring-orange-500/5 focus:border-orange-500'
+            : 'bg-white border-gray-100 text-foreground focus:ring-4 focus:ring-orange-500/5 focus:border-orange-500'
         }`}
       />
     </div>

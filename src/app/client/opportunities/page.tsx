@@ -34,12 +34,12 @@ export default function OpportunitiesPage() {
     <div className="space-y-8 max-w-7xl mx-auto">
       {/* Header */}
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-[#1a2a2a] tracking-tight">Showing Opportunities</h2>
+        <h2 className="text-2xl font-bold text-foreground tracking-tight">Showing Opportunities</h2>
         <button 
           onClick={() => refresh()}
           className="bg-white hover:bg-gray-50 text-gray-600 border border-gray-200 px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 shadow-sm transition-all active:scale-95"
         >
-          <svg className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className={`w-3.5 h-3.5 ₹{loading ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
           </svg>
           Refresh
@@ -69,7 +69,7 @@ export default function OpportunitiesPage() {
               </svg>
             </div>
             <div className="space-y-2">
-              <p className="text-base text-[#1a2a2a] font-bold">No open opportunities match your filter right now.</p>
+              <p className="text-base text-foreground font-bold">No open opportunities match your filter right now.</p>
               <p className="text-sm text-gray-400 font-medium">Check back soon — new requests come in throughout the day.</p>
             </div>
           </div>
@@ -128,7 +128,7 @@ function OpportunityCard({ req, onApply, onChat }: { req: any; onApply: () => Pr
       <div className="bg-white p-8 rounded-[2rem] border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all group flex flex-col justify-between h-full">
         <div className="space-y-6">
           <div className="flex justify-between items-start">
-            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${
+            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ₹{
               req.serviceType === 'Showing' ? 'bg-blue-50 text-blue-500' :
               req.serviceType === 'Open House' ? 'bg-orange-50 text-orange-500' :
               'bg-green-50 text-green-500'
@@ -142,23 +142,23 @@ function OpportunityCard({ req, onApply, onChat }: { req: any; onApply: () => Pr
             </div>
             <div className="text-right">
               <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Fee</p>
-              <p className="text-xl font-black text-green-600 tracking-tight">${req.compensation}</p>
+              <p className="text-xl font-black text-green-600 tracking-tight">₹{req.compensation}</p>
             </div>
           </div>
 
           <div className="space-y-1">
-            <h4 className="text-base font-bold text-[#1a2a2a] group-hover:text-green-800 transition-colors">{req.address}</h4>
+            <h4 className="text-base font-bold text-foreground group-hover:text-green-800 transition-colors">{req.address}</h4>
             <p className="text-xs text-gray-400 font-medium">{req.city}, {req.state}</p>
           </div>
 
           <div className="grid grid-cols-2 gap-4 py-4 border-y border-gray-50">
             <div>
               <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">Date</p>
-              <p className="text-xs font-bold text-[#1a2a2a]">{new Date(req.date).toLocaleDateString()}</p>
+              <p className="text-xs font-bold text-foreground">{new Date(req.date).toLocaleDateString()}</p>
             </div>
             <div>
               <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">Time Window</p>
-              <p className="text-xs font-bold text-[#1a2a2a]">{req.startTime} - {req.endTime}</p>
+              <p className="text-xs font-bold text-foreground">{req.startTime} - {req.endTime}</p>
             </div>
           </div>
         </div>
@@ -183,7 +183,7 @@ function OpportunityCard({ req, onApply, onChat }: { req: any; onApply: () => Pr
 
       <DialogContent className="sm:max-w-[500px] p-8 rounded-[2rem]">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-[#1a2a2a]">{req.serviceType} Details</DialogTitle>
+          <DialogTitle className="text-2xl font-bold text-foreground">{req.serviceType} Details</DialogTitle>
           <DialogDescription className="text-gray-500 font-medium">
             Review the details below before applying for this opportunity.
           </DialogDescription>
@@ -193,17 +193,17 @@ function OpportunityCard({ req, onApply, onChat }: { req: any; onApply: () => Pr
           <div className="bg-gray-50 p-6 rounded-2xl space-y-4">
             <div>
               <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Address</p>
-              <p className="text-sm font-bold text-[#1a2a2a]">{req.address}, {req.city}, {req.state} {req.zip}</p>
+              <p className="text-sm font-bold text-foreground">{req.address}, {req.city}, {req.state} {req.zip}</p>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Schedule</p>
-                <p className="text-sm font-bold text-[#1a2a2a]">{new Date(req.date).toLocaleDateString()}</p>
+                <p className="text-sm font-bold text-foreground">{new Date(req.date).toLocaleDateString()}</p>
                 <p className="text-xs text-gray-500 font-medium">{req.startTime} - {req.endTime}</p>
               </div>
               <div>
                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Compensation</p>
-                <p className="text-xl font-black text-green-600">${req.compensation}</p>
+                <p className="text-xl font-black text-green-600">₹{req.compensation}</p>
               </div>
             </div>
           </div>
@@ -212,7 +212,7 @@ function OpportunityCard({ req, onApply, onChat }: { req: any; onApply: () => Pr
             {req.mlsNumber && (
               <div>
                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">MLS Number</p>
-                <p className="text-sm font-bold text-[#1a2a2a]">{req.mlsNumber}</p>
+                <p className="text-sm font-bold text-foreground">{req.mlsNumber}</p>
               </div>
             )}
             {req.accessNotes && (
@@ -240,7 +240,7 @@ function OpportunityCard({ req, onApply, onChat }: { req: any; onApply: () => Pr
           <button 
             onClick={handleApply}
             disabled={isApplying}
-            className="bg-[#416450] hover:bg-[#345140] text-white px-8 py-3 rounded-xl text-xs font-black uppercase tracking-widest shadow-xl shadow-green-900/20 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
+            className="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-xl text-xs font-black uppercase tracking-widest shadow-xl shadow-green-900/20 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
           >
             {isApplying ? 'Applying...' : 'Confirm & Apply'}
           </button>
@@ -254,7 +254,7 @@ function FilterButton({ label, icon, active, onClick }: { label: string; icon?: 
   return (
     <button 
       onClick={onClick}
-      className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all border whitespace-nowrap ${
+      className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all border whitespace-nowrap ₹{
         active 
           ? 'bg-[#1a2a2a] text-white border-[#1a2a2a] shadow-md' 
           : 'bg-white text-gray-500 border-gray-100 hover:border-gray-200 hover:bg-gray-50'

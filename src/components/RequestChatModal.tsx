@@ -31,7 +31,7 @@ export default function RequestChatModal({ requestId, requestAddress, isOpen, on
 
   const fetchMessages = useCallback(async () => {
     try {
-      const { data } = await api.get(`/requests/${requestId}/messages`);
+      const { data } = await api.get(`/requests/₹{requestId}/messages`);
       setMessages(data.messages);
     } catch {
       // silently fail on poll
@@ -56,7 +56,7 @@ export default function RequestChatModal({ requestId, requestAddress, isOpen, on
     if (!input.trim() || sending) return;
     setSending(true);
     try {
-      await api.post(`/requests/${requestId}/messages`, { message: input.trim() });
+      await api.post(`/requests/₹{requestId}/messages`, { message: input.trim() });
       setInput('');
       await fetchMessages();
     } catch {
@@ -79,7 +79,7 @@ export default function RequestChatModal({ requestId, requestAddress, isOpen, on
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
           <div>
             <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Request Chat</p>
-            <h3 className="font-bold text-[#1a2a2a] text-sm truncate max-w-xs">{requestAddress}</h3>
+            <h3 className="font-bold text-foreground text-sm truncate max-w-xs">{requestAddress}</h3>
           </div>
           <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-400 transition-colors">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -103,25 +103,25 @@ export default function RequestChatModal({ requestId, requestAddress, isOpen, on
             messages.map((msg) => {
               const isMine = msg.senderId === user?.id;
               return (
-                <div key={msg.id} className={`flex gap-2 ${isMine ? 'flex-row-reverse' : 'flex-row'}`}>
-                  <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0 ${
+                <div key={msg.id} className={`flex gap-2 ₹{isMine ? 'flex-row-reverse' : 'flex-row'}`}>
+                  <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0 ₹{
                     msg.senderRole === 'ADMIN' || msg.senderRole === 'SUPERADMIN'
                       ? 'bg-purple-100 text-purple-700'
-                      : isMine ? 'bg-[#112424] text-white' : 'bg-gray-100 text-gray-600'
+                      : isMine ? 'bg-primary text-white' : 'bg-gray-100 text-gray-600'
                   }`}>
                     {msg.senderName?.charAt(0)?.toUpperCase() || '?'}
                   </div>
-                  <div className={`max-w-[75%] ${isMine ? 'items-end' : 'items-start'} flex flex-col gap-1`}>
+                  <div className={`max-w-[75%] ₹{isMine ? 'items-end' : 'items-start'} flex flex-col gap-1`}>
                     <span className="text-[10px] text-gray-400 font-medium px-1">
                       {isMine ? 'You' : msg.senderName}
                       {(msg.senderRole === 'ADMIN' || msg.senderRole === 'SUPERADMIN') && (
                         <span className="ml-1 text-purple-500">· Admin</span>
                       )}
                     </span>
-                    <div className={`px-4 py-2.5 rounded-2xl text-sm font-medium leading-relaxed ${
+                    <div className={`px-4 py-2.5 rounded-2xl text-sm font-medium leading-relaxed ₹{
                       isMine
-                        ? 'bg-[#112424] text-white rounded-tr-sm'
-                        : 'bg-gray-100 text-[#1a2a2a] rounded-tl-sm'
+                        ? 'bg-primary text-white rounded-tr-sm'
+                        : 'bg-gray-100 text-foreground rounded-tl-sm'
                     }`}>
                       {msg.message}
                     </div>
@@ -145,12 +145,12 @@ export default function RequestChatModal({ requestId, requestAddress, isOpen, on
               onKeyDown={handleKey}
               placeholder="Type a message..."
               rows={1}
-              className="flex-1 bg-transparent resize-none outline-none text-sm text-[#1a2a2a] placeholder-gray-400 leading-relaxed max-h-32"
+              className="flex-1 bg-transparent resize-none outline-none text-sm text-foreground placeholder-gray-400 leading-relaxed max-h-32"
             />
             <button
               onClick={sendMessage}
               disabled={!input.trim() || sending}
-              className="w-8 h-8 flex items-center justify-center rounded-xl bg-[#112424] text-white disabled:opacity-30 hover:bg-[#0d1d1d] transition-all flex-shrink-0"
+              className="w-8 h-8 flex items-center justify-center rounded-xl bg-primary text-white disabled:opacity-30 hover:bg-primary/90 transition-all flex-shrink-0"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />

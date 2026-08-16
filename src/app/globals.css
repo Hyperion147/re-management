@@ -57,72 +57,81 @@ html {
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  /* Veyro Brand Colors */
+  --veyro-green: #39FF14;
+  --veyro-emerald: #087A32;
+  --veyro-deep: #013D1F;
+  --veyro-black: #000101;
+  --veyro-white: #F5F7F5;
+
+  /* Light Mode */
+  --background: #F5F7F5;
+  --foreground: #000101;
+  --card: #F5F7F5;
+  --card-foreground: #000101;
+  --popover: #F5F7F5;
+  --popover-foreground: #000101;
+  --primary: #087A32;
+  --primary-foreground: #F5F7F5;
+  --secondary: #39FF14;
+  --secondary-foreground: #000101;
+  --muted: #E8F3F0;
+  --muted-foreground: #556B6B;
+  --accent: #39FF14;
+  --accent-foreground: #000101;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
+  --border: #E8F3F0;
+  --input: #E8F3F0;
+  --ring: #087A32;
+  --chart-1: #39FF14;
+  --chart-2: #087A32;
+  --chart-3: #013D1F;
+  --chart-4: #000101;
+  --chart-5: #F5F7F5;
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --sidebar: #F5F7F5;
+  --sidebar-foreground: #000101;
+  --sidebar-primary: #087A32;
+  --sidebar-primary-foreground: #F5F7F5;
+  --sidebar-accent: #39FF14;
+  --sidebar-accent-foreground: #000101;
+  --sidebar-border: #E8F3F0;
+  --sidebar-ring: #087A32;
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  /* Dark Mode with Veyro Brand Colors */
+  --background: #000101;
+  --foreground: #F5F7F5;
+  --card: #013D1F;
+  --card-foreground: #F5F7F5;
+  --popover: #013D1F;
+  --popover-foreground: #F5F7F5;
+  --primary: #39FF14;
+  --primary-foreground: #000101;
+  --secondary: #087A32;
+  --secondary-foreground: #F5F7F5;
+  --muted: #087A32;
+  --muted-foreground: #B8D4CC;
+  --accent: #39FF14;
+  --accent-foreground: #000101;
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --border: rgba(57, 255, 20, 0.15);
+  --input: rgba(57, 255, 20, 0.1);
+  --ring: #39FF14;
+  --chart-1: #39FF14;
+  --chart-2: #087A32;
+  --chart-3: #013D1F;
+  --chart-4: #000101;
+  --chart-5: #F5F7F5;
+  --sidebar: #000101;
+  --sidebar-foreground: #F5F7F5;
+  --sidebar-primary: #39FF14;
+  --sidebar-primary-foreground: #000101;
+  --sidebar-accent: #087A32;
+  --sidebar-accent-foreground: #F5F7F5;
+  --sidebar-border: rgba(57, 255, 20, 0.15);
+  --sidebar-ring: #39FF14;
 }
 
 @layer base {
@@ -135,4 +144,50 @@ html {
   html {
     @apply font-sans;
   }
+}
+
+/* Veyro Brand Color Utilities */
+@layer components {
+  /* Veyro Brand Colors - Direct Access */
+  .veyro-green { @apply text-[#39FF14]; }
+  .veyro-emerald { @apply text-[#087A32]; }
+  .veyro-deep { @apply text-[#013D1F]; }
+  .veyro-black { @apply text-[#000101]; }
+  .veyro-white { @apply text-[#F5F7F5]; }
+
+  /* Background variants */
+  .bg-veyro-green { @apply bg-[#39FF14]; }
+  .bg-veyro-emerald { @apply bg-[#087A32]; }
+  .bg-veyro-deep { @apply bg-[#013D1F]; }
+  .bg-veyro-black { @apply bg-[#000101]; }
+  .bg-veyro-white { @apply bg-[#F5F7F5]; }
+
+  /* Border variants */
+  .border-veyro-green { @apply border-[#39FF14]; }
+  .border-veyro-emerald { @apply border-[#087A32]; }
+  .border-veyro-deep { @apply border-[#013D1F]; }
+  .border-veyro-black { @apply border-[#000101]; }
+  .border-veyro-white { @apply border-[#F5F7F5]; }
+
+  /* Gradient backgrounds */
+  .bg-veyro-gradient {
+    @apply bg-gradient-to-br from-[#087A32] via-[#39FF14] to-[#013D1F];
+  }
+
+  .bg-veyro-gradient-dark {
+    @apply bg-gradient-to-br from-[#013D1F] via-[#087A32] to-[#000101];
+  }
+
+  /* Primary action buttons using Veyro brand colors */
+  .btn-veyro-primary {
+    @apply bg-[#39FF14] text-[#000101] hover:bg-[#2CE600] font-semibold rounded-lg transition-all;
+  }
+
+  .btn-veyro-secondary {
+    @apply bg-[#087A32] text-[#F5F7F5] hover:bg-[#065A26] font-semibold rounded-lg transition-all;
+  }
+
+  /* Ring styles */
+  .ring-veyro-green { @apply ring-[#39FF14]; }
+  .ring-veyro-emerald { @apply ring-[#087A32]; }
 }

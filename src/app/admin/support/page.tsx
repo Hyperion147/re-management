@@ -44,7 +44,7 @@ export default function AdminSupportRequests() {
 
     setIsClosing(true);
     try {
-      await api.patch(`/support-requests/${selectedRequest.id}`, { status: 'CLOSED' });
+      await api.patch(`/support-requests/₹{selectedRequest.id}`, { status: 'CLOSED' });
       alert('Ticket closed successfully.');
       await refresh();
       setSelectedRequest((prev: any) => ({ ...prev, status: 'CLOSED' }));
@@ -62,7 +62,7 @@ export default function AdminSupportRequests() {
 
     setIsDeleting(true);
     try {
-      await api.delete(`/support-requests/${selectedRequest.id}`);
+      await api.delete(`/support-requests/₹{selectedRequest.id}`);
       alert('Ticket deleted successfully.');
       await refresh();
       setSelectedRequest(null);
@@ -77,7 +77,7 @@ export default function AdminSupportRequests() {
   const loadThreadMessages = async (userId: string) => {
     setMessagesLoading(true);
     try {
-      const response = await api.get(`/messages?userId=${userId}`);
+      const response = await api.get(`/messages?userId=₹{userId}`);
       setThreadMessages(response.data);
     } catch (err) {
       console.error('Failed to load ticket messages', err);
@@ -108,7 +108,7 @@ export default function AdminSupportRequests() {
       {/* Header */}
       <div className="flex justify-between items-center px-2">
         <div>
-          <h2 className="text-2xl font-bold text-[#1a2a2a] tracking-tight mb-1">Support Inbox</h2>
+          <h2 className="text-2xl font-bold text-foreground tracking-tight mb-1">Support Inbox</h2>
           <p className="text-sm font-medium text-gray-500">View and manage customer support tickets.</p>
         </div>
         <button 
@@ -161,7 +161,7 @@ export default function AdminSupportRequests() {
                     </span>
                   </td>
                   <td className="px-8 py-6">
-                    <div className="text-sm font-bold text-[#1a2a2a] mb-1">{req.subject}</div>
+                    <div className="text-sm font-bold text-foreground mb-1">{req.subject}</div>
                     <div className="text-[11px] text-gray-500 font-medium line-clamp-2 pr-4">{req.message}</div>
                   </td>
                   <td className="px-8 py-6">
@@ -185,7 +185,7 @@ export default function AdminSupportRequests() {
                     )}
                   </td>
                   <td className="px-8 py-6">
-                    <span className={`text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-lg ${
+                    <span className={`text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-lg ₹{
                       req.status === 'OPEN' ? 'bg-orange-50 text-orange-600' : 
                       req.status === 'IN_PROGRESS' ? 'bg-blue-50 text-blue-600' : 
                       'bg-green-50 text-green-600'
@@ -213,7 +213,7 @@ export default function AdminSupportRequests() {
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-200">
           <div className="bg-white rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden relative animate-in zoom-in-95 duration-200">
             <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
-              <h3 className="font-bold text-lg text-[#1a2a2a]">Ticket Details</h3>
+              <h3 className="font-bold text-lg text-foreground">Ticket Details</h3>
               <button 
                 onClick={() => setSelectedRequest(null)}
                 className="text-gray-400 hover:text-gray-600 transition-colors bg-white hover:bg-gray-100 p-2 rounded-full shadow-sm"
@@ -228,7 +228,7 @@ export default function AdminSupportRequests() {
               <div className="grid grid-cols-2 gap-6">
                 <div>
                   <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Status</p>
-                  <span className={`text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-lg ${
+                  <span className={`text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-lg ₹{
                     selectedRequest.status === 'OPEN' ? 'bg-orange-50 text-orange-600' : 
                     selectedRequest.status === 'IN_PROGRESS' ? 'bg-blue-50 text-blue-600' : 
                     'bg-green-50 text-green-600'
@@ -238,7 +238,7 @@ export default function AdminSupportRequests() {
                 </div>
                 <div>
                   <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Date Submitted</p>
-                  <p className="text-sm font-bold text-[#1a2a2a]">{new Date(selectedRequest.createdAt).toLocaleString()}</p>
+                  <p className="text-sm font-bold text-foreground">{new Date(selectedRequest.createdAt).toLocaleString()}</p>
                 </div>
                 <div>
                   <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">User ID</p>
@@ -248,7 +248,7 @@ export default function AdminSupportRequests() {
 
               <div className="pt-4 border-t border-gray-100">
                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Subject</p>
-                <p className="text-lg font-bold text-[#1a2a2a]">{selectedRequest.subject}</p>
+                <p className="text-lg font-bold text-foreground">{selectedRequest.subject}</p>
               </div>
 
               <div>
@@ -289,7 +289,7 @@ export default function AdminSupportRequests() {
                     ) : (
                       <div className="space-y-4">
                         {threadMessages.map((msg) => (
-                          <div key={msg.id} className={`p-4 rounded-2xl ${msg.isFromAdmin ? 'bg-blue-50 text-gray-900' : 'bg-gray-100 text-gray-900'}`}>
+                          <div key={msg.id} className={`p-4 rounded-2xl ₹{msg.isFromAdmin ? 'bg-blue-50 text-gray-900' : 'bg-gray-100 text-gray-900'}`}>
                             <div className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 mb-2">
                               {msg.isFromAdmin ? 'Admin' : 'User'} • {new Date(msg.createdAt).toLocaleString()}
                             </div>
@@ -311,7 +311,7 @@ export default function AdminSupportRequests() {
                   <div className="relative mx-auto max-w-6xl bg-white rounded-3xl shadow-2xl border border-gray-200 overflow-hidden">
                     <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4 bg-slate-50">
                       <div>
-                        <p className="text-sm font-bold text-[#1a2a2a]">Ticket Chat</p>
+                        <p className="text-sm font-bold text-foreground">Ticket Chat</p>
                         <p className="text-xs text-gray-500">Full-screen view for {selectedRequest.subject}</p>
                       </div>
                       <button
@@ -332,7 +332,7 @@ export default function AdminSupportRequests() {
                       ) : (
                         <div className="space-y-4">
                           {threadMessages.map((msg) => (
-                            <div key={msg.id} className={`p-5 rounded-3xl ${msg.isFromAdmin ? 'bg-blue-50 text-gray-900' : 'bg-gray-100 text-gray-900'}`}>
+                            <div key={msg.id} className={`p-5 rounded-3xl ₹{msg.isFromAdmin ? 'bg-blue-50 text-gray-900' : 'bg-gray-100 text-gray-900'}`}>
                               <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-gray-500 mb-2">
                                 {msg.isFromAdmin ? 'Admin' : 'User'} • {new Date(msg.createdAt).toLocaleString()}
                               </div>
@@ -361,7 +361,7 @@ export default function AdminSupportRequests() {
                       <button 
                         onClick={handleSendReply}
                         disabled={isReplying || !replyMessage.trim()}
-                        className="bg-[#1c352d] hover:bg-[#152a23] disabled:opacity-50 disabled:cursor-not-allowed text-white px-5 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm"
+                        className="bg-primary hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed text-white px-5 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm"
                       >
                         {isReplying ? 'Sending...' : 'Send Reply'}
                       </button>

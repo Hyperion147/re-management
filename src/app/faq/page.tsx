@@ -53,7 +53,7 @@ const faqs: { category: Exclude<Category, 'All'>; question: string; answer: stri
   {
     category: 'Pricing & Payment',
     question: 'How much does it cost?',
-    answer: 'Pay-per-showing — no monthly fees, no contracts. Fees range from $28 for a lockbox drop to $367 for a complex open house. You set the agent fee when booking; agents can accept or counter-propose.',
+    answer: 'Pay-per-showing — no monthly fees, no contracts. Fees range from ₹2,300 for a lockbox drop to ₹30,000 for a complex open house. You set the agent fee when booking; agents can accept or counter-propose.',
   },
   {
     category: 'Pricing & Payment',
@@ -79,7 +79,7 @@ const faqs: { category: Exclude<Category, 'All'>; question: string; answer: stri
   {
     category: 'For Showing Agents',
     question: 'How much can I earn?',
-    answer: 'Agents earn $28–$367 per service, depending on type. Showings typically pay $35–$150, open houses $75–$300. You keep 97% of the agreed fee — 3% covers payment processing.',
+    answer: 'Agents earn ₹2,300–₹30,000 per service, depending on type. Showings typically pay ₹35–₹150, open houses ₹75–₹300. You keep 97% of the agreed fee — 3% covers payment processing.',
   },
   {
     category: 'For Showing Agents',
@@ -95,7 +95,7 @@ const faqs: { category: Exclude<Category, 'All'>; question: string; answer: stri
   {
     category: 'Coverage & Availability',
     question: 'What markets does Veyro cover?',
-    answer: 'We currently operate in 50+ markets across the US, including all major metros and many suburban areas. Coverage is expanding every month.',
+    answer: 'We currently operate in 50+ markets across India, including all major metros and many suburban areas. Coverage is expanding every month.',
   },
   {
     category: 'Coverage & Availability',
@@ -121,12 +121,12 @@ export default function FAQPage() {
   ) as Exclude<Category, 'All'>[];
 
   return (
-    <div className="min-h-screen bg-white font-sans text-[#1a2a2a]">
+    <div className="min-h-screen bg-white font-sans text-foreground">
       <Navbar />
 
       {/* Hero */}
-      <section className="bg-[#1a362d] pt-36 pb-16 text-center px-6">
-        <p className="text-[10px] font-black text-[#d69e5e] uppercase tracking-[0.2em] mb-4">FAQ</p>
+      <section className="bg-primary pt-36 pb-16 text-center px-6">
+        <p className="text-[10px] font-black text-accent uppercase tracking-[0.2em] mb-4">FAQ</p>
         <h1 className="text-4xl lg:text-6xl font-bold text-white tracking-tight mb-4">Common Questions</h1>
         <p className="text-white/60 font-medium max-w-xl mx-auto text-base lg:text-lg">
           Everything you need to know about booking showings, agent quality, pricing, and coverage.
@@ -140,9 +140,9 @@ export default function FAQPage() {
             <button
               key={cat}
               onClick={() => { setActiveCategory(cat); setOpenIndex(null); }}
-              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
+              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ₹{
                 activeCategory === cat
-                  ? 'bg-[#1a362d] text-white'
+                  ? 'bg-primary text-white'
                   : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
               }`}
             >
@@ -160,7 +160,7 @@ export default function FAQPage() {
           const catIndex = faqs.findIndex(f => f.category === cat);
           return (
             <div key={cat}>
-              <h2 className="text-xl font-bold text-[#1a2a2a] mb-6 pb-3 border-b border-gray-100">{cat}</h2>
+              <h2 className="text-xl font-bold text-foreground mb-6 pb-3 border-b border-gray-100">{cat}</h2>
               <div className="space-y-3">
                 {items.map((item) => {
                   const idx = faqs.indexOf(item);
@@ -174,9 +174,9 @@ export default function FAQPage() {
                         onClick={() => setOpenIndex(isOpen ? null : idx)}
                         className="w-full flex items-center justify-between px-6 py-4 text-left gap-4"
                       >
-                        <span className="font-bold text-sm lg:text-base text-[#1a2a2a]">{item.question}</span>
+                        <span className="font-bold text-sm lg:text-base text-foreground">{item.question}</span>
                         <svg
-                          className={`w-5 h-5 text-gray-400 flex-shrink-0 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+                          className={`w-5 h-5 text-gray-400 flex-shrink-0 transition-transform ₹{isOpen ? 'rotate-180' : ''}`}
                           fill="none" stroke="currentColor" viewBox="0 0 24 24"
                         >
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
@@ -197,24 +197,24 @@ export default function FAQPage() {
       </div>
 
       {/* Agent CTA */}
-      <section className="bg-[#112424] py-14 px-6">
+      <section className="bg-primary py-14 px-6">
         <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-2 text-center md:text-left">
-            <p className="text-[10px] font-black text-[#d69e5e] uppercase tracking-[0.2em]">For Licensed Agents</p>
+            <p className="text-[10px] font-black text-accent uppercase tracking-[0.2em]">For Licensed Agents</p>
             <h2 className="text-xl lg:text-2xl font-bold text-white">Earn on your schedule. No monthly fees.</h2>
-            <p className="text-white/60 font-medium text-sm">$28–$367 per service. Accept only what fits your calendar.</p>
+            <p className="text-white/60 font-medium text-sm">₹2,300–₹30,000 per service. Accept only what fits your calendar.</p>
           </div>
-          <a href="/agent/apply" className="flex-shrink-0 inline-flex items-center gap-2 bg-[#d69e5e] hover:bg-[#c58d4d] text-white px-7 py-3.5 rounded-2xl font-bold transition-all hover:-translate-y-1 whitespace-nowrap">
+          <a href="/agent/apply" className="flex-shrink-0 inline-flex items-center gap-2 bg-accent hover:bg-accent/90 text-white px-7 py-3.5 rounded-2xl font-bold transition-all hover:-translate-y-1 whitespace-nowrap">
             🪪 Join as Agent
           </a>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="bg-[#1a362d] py-16 text-center px-6">
+      <section className="bg-primary py-16 text-center px-6">
         <h2 className="text-2xl lg:text-4xl font-bold text-white mb-4">Still have questions?</h2>
         <p className="text-white/60 font-medium mb-8">Our team is here to help. Reach out anytime.</p>
-        <a href="/signup" className="inline-block bg-[#d69e5e] hover:bg-[#c58d4d] text-white px-8 py-4 rounded-2xl font-bold transition-all hover:-translate-y-1">
+        <a href="/signup" className="inline-block bg-accent hover:bg-accent/90 text-white px-8 py-4 rounded-2xl font-bold transition-all hover:-translate-y-1">
           Get Started Free
         </a>
       </section>

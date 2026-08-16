@@ -32,10 +32,10 @@ export default function BookingsPage() {
     <div className="space-y-8 max-w-7xl mx-auto">
       {/* Header */}
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-[#1a2a2a] tracking-tight">My Bookings</h2>
+        <h2 className="text-2xl font-bold text-foreground tracking-tight">My Bookings</h2>
         <Link 
           href="/client/new-request"
-          className="bg-[#d69e5e] hover:bg-[#c58d4d] text-white px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 shadow-lg shadow-orange-900/10 transition-all hover:scale-[1.02] active:scale-[0.98]"
+          className="bg-accent hover:bg-accent/90 text-white px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 shadow-lg shadow-orange-900/10 transition-all hover:scale-[1.02] active:scale-[0.98]"
         >
           <span className="text-xl leading-none font-light">+</span> New Request
         </Link>
@@ -62,12 +62,12 @@ export default function BookingsPage() {
               </svg>
             </div>
             <div className="space-y-2">
-              <p className="text-base text-[#1a2a2a] font-bold">No bookings found.</p>
+              <p className="text-base text-foreground font-bold">No bookings found.</p>
               <p className="text-sm text-gray-400 font-medium">You haven't made any requests yet.</p>
             </div>
             <Link 
               href="/client/new-request"
-              className="bg-[#416450] hover:bg-[#345140] text-white px-10 py-4 rounded-[1.25rem] text-sm font-bold shadow-xl shadow-green-900/20 transition-all hover:scale-[1.03] active:scale-[0.97]"
+              className="bg-primary hover:bg-primary/90 text-white px-10 py-4 rounded-[1.25rem] text-sm font-bold shadow-xl shadow-green-900/20 transition-all hover:scale-[1.03] active:scale-[0.97]"
             >
               Create your first request
             </Link>
@@ -102,7 +102,7 @@ function BookingRow({ req, onUpdateStatus, onChat }: { req: any; onUpdateStatus:
   return (
     <div className="flex items-center justify-between p-8 hover:bg-gray-50/50 transition-colors">
       <div className="flex items-center gap-6">
-        <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${
+        <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ₹{
           req.serviceType === 'Showing' ? 'bg-blue-50 text-blue-500' :
           req.serviceType === 'Open House' ? 'bg-orange-50 text-orange-500' :
           'bg-green-50 text-green-500'
@@ -110,7 +110,7 @@ function BookingRow({ req, onUpdateStatus, onChat }: { req: any; onUpdateStatus:
           {req.serviceType === 'Showing' ? <HomeIcon /> : <OpenHouseIcon />}
         </div>
         <div className="space-y-1">
-          <h4 className="text-base font-bold text-[#1a2a2a]">{req.address}</h4>
+          <h4 className="text-base font-bold text-foreground">{req.address}</h4>
           <p className="text-xs text-gray-400 font-medium">{req.city}, {req.state} {req.zip}</p>
         </div>
       </div>
@@ -118,21 +118,21 @@ function BookingRow({ req, onUpdateStatus, onChat }: { req: any; onUpdateStatus:
       <div className="flex items-center gap-12">
         <div className="text-center">
           <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Date</p>
-          <p className="text-sm font-bold text-[#1a2a2a]">{new Date(req.date).toLocaleDateString()}</p>
+          <p className="text-sm font-bold text-foreground">{new Date(req.date).toLocaleDateString()}</p>
         </div>
         <div className="text-center">
           <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Time</p>
-          <p className="text-sm font-bold text-[#1a2a2a]">{req.startTime} - {req.endTime}</p>
+          <p className="text-sm font-bold text-foreground">{req.startTime} - {req.endTime}</p>
         </div>
         <div className="text-center">
           <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Fee</p>
-          <p className="text-sm font-bold text-green-600">${req.compensation}</p>
+          <p className="text-sm font-bold text-green-600">₹{req.compensation}</p>
         </div>
         <div className="flex items-center gap-3 justify-end">
           {req.agentId && (
             <button
               onClick={onChat}
-              className="flex items-center gap-1.5 bg-[#e8f3f0] text-[#0b5b41] hover:bg-[#d6f7ee] px-3 py-2 rounded-xl text-[10px] font-bold transition-colors"
+              className="flex items-center gap-1.5 bg-muted text-primary hover:bg-muted/80 px-3 py-2 rounded-xl text-[10px] font-bold transition-colors"
             >
               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
@@ -143,7 +143,7 @@ function BookingRow({ req, onUpdateStatus, onChat }: { req: any; onUpdateStatus:
           <div className="w-36">
             <Select value={req.status} onValueChange={(value) => onUpdateStatus(value)}>
               <SelectTrigger
-                className={`h-8 text-[10px] font-black uppercase tracking-widest px-3 rounded-lg border-none focus:ring-0 focus:ring-offset-0 ${
+                className={`h-8 text-[10px] font-black uppercase tracking-widest px-3 rounded-lg border-none focus:ring-0 focus:ring-offset-0 ₹{
                   req.status === 'PENDING' ? 'bg-orange-50 text-orange-600 hover:bg-orange-100' :
                   req.status === 'ACTIVE' ? 'bg-blue-50 text-blue-600 hover:bg-blue-100' :
                   req.status === 'COMPLETED' ? 'bg-green-50 text-green-600 hover:bg-green-100' :
@@ -170,13 +170,13 @@ function Tab({ label, active, onClick }: { label: string; active?: boolean; onCl
   return (
     <button 
       onClick={onClick}
-      className={`relative pb-4 text-xs font-bold transition-all ${
-        active ? 'text-[#416450]' : 'text-gray-400 hover:text-gray-600'
+      className={`relative pb-4 text-xs font-bold transition-all ₹{
+        active ? 'text-primary' : 'text-gray-400 hover:text-gray-600'
       }`}
     >
       {label}
       {active && (
-        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#416450] rounded-full" />
+        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary rounded-full" />
       )}
     </button>
   );

@@ -41,7 +41,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex font-sans">
       {/* Left Column */}
-      <div className="hidden lg:flex w-1/2 bg-[#112424] p-24 flex-col justify-center relative overflow-hidden">
+      <div className="hidden lg:flex w-1/2 bg-primary p-24 flex-col justify-center relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
           style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
         <div className="relative z-10 space-y-12">
@@ -69,11 +69,11 @@ export default function LoginPage() {
       </div>
 
       {/* Right Column */}
-      <div className="flex-1 bg-[#f8fafb] flex items-center justify-center p-8">
+      <div className="flex-1 bg-muted flex items-center justify-center p-8">
         <div className="w-full max-w-md">
           <div className="bg-white rounded-[2.5rem] p-10 lg:p-12 shadow-sm border border-gray-50/50 space-y-8">
             <div className="space-y-2 text-center lg:text-left">
-              <h2 className="text-3xl font-bold text-[#1a2a2a] tracking-tight">Sign In</h2>
+              <h2 className="text-3xl font-bold text-foreground tracking-tight">Sign In</h2>
               <p className="text-sm text-gray-400 font-medium">Welcome back. Enter your credentials to continue.</p>
             </div>
 
@@ -88,7 +88,7 @@ export default function LoginPage() {
               type="button"
               onClick={handleGoogleLogin}
               disabled={googleLoading || loading}
-              className="w-full flex items-center justify-center gap-3 bg-white hover:bg-gray-50 text-[#1a2a2a] border border-gray-200 py-4 rounded-2xl text-sm font-bold shadow-sm transition-all hover:shadow-md active:scale-[0.98] disabled:opacity-50"
+              className="w-full flex items-center justify-center gap-3 bg-white hover:bg-gray-50 text-foreground border border-gray-200 py-4 rounded-2xl text-sm font-bold shadow-sm transition-all hover:shadow-md active:scale-[0.98] disabled:opacity-50"
             >
               {googleLoading ? (
                 <svg className="w-5 h-5 animate-spin text-gray-400" fill="none" viewBox="0 0 24 24">
@@ -116,7 +116,7 @@ export default function LoginPage() {
                   type="email"
                   name="email"
                   placeholder="you@work.com"
-                  className="w-full px-5 py-4 rounded-2xl border border-gray-100 bg-white text-[#1a2a2a] text-sm font-medium focus:outline-none focus:ring-4 focus:ring-green-500/5 focus:border-green-500 transition-all shadow-sm"
+                  className="w-full px-5 py-4 rounded-2xl border border-gray-100 bg-white text-foreground text-sm font-medium focus:outline-none focus:ring-4 focus:ring-green-500/5 focus:border-green-500 transition-all shadow-sm"
                   required
                 />
               </div>
@@ -129,14 +129,14 @@ export default function LoginPage() {
                   type="password"
                   name="password"
                   placeholder="••••••••"
-                  className="w-full px-5 py-4 rounded-2xl border border-gray-100 bg-white text-[#1a2a2a] text-sm font-medium focus:outline-none focus:ring-4 focus:ring-green-500/5 focus:border-green-500 transition-all shadow-sm"
+                  className="w-full px-5 py-4 rounded-2xl border border-gray-100 bg-white text-foreground text-sm font-medium focus:outline-none focus:ring-4 focus:ring-green-500/5 focus:border-green-500 transition-all shadow-sm"
                   required
                 />
               </div>
               <button
                 type="submit"
                 disabled={loading || googleLoading}
-                className="w-full bg-[#112424] hover:bg-[#0d1d1d] text-white py-4 rounded-2xl text-sm font-bold shadow-xl shadow-green-900/10 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:hover:scale-100"
+                className="w-full bg-primary hover:bg-primary/90 text-white py-4 rounded-2xl text-sm font-bold shadow-xl shadow-green-900/10 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:hover:scale-100"
               >
                 {loading ? 'Signing in...' : 'Sign In'}
               </button>

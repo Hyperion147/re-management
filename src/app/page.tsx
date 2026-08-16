@@ -12,7 +12,7 @@ export default async function HomePage(props: {
     const code = searchParams?.code;
 
     if (code && typeof code === 'string') {
-        redirect(`/auth/callback?code=${code}`);
+        redirect(`/auth/callback?code=₹{code}`);
     }
 
     const supabase = await createClient();

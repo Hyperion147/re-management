@@ -54,8 +54,8 @@ export default function ContactSupportModal({ isOpen, onClose }: ContactSupportM
       // 1. Upload to Supabase Storage if file exists
       if (file) {
         const fileExt = file.name.split('.').pop();
-        const fileName = `${Math.random()}.${fileExt}`;
-        const filePath = `${fileName}`;
+        const fileName = `₹{Math.random()}.₹{fileExt}`;
+        const filePath = `₹{fileName}`;
 
         const { error: uploadError } = await supabase.storage
           .from('support-attachments')
@@ -119,7 +119,7 @@ export default function ContactSupportModal({ isOpen, onClose }: ContactSupportM
 
         <div className="p-8">
           <div className="mb-6">
-            <h2 className="text-xl font-bold text-[#1a2a2a] mb-1">Contact Support</h2>
+            <h2 className="text-xl font-bold text-foreground mb-1">Contact Support</h2>
             <p className="text-sm text-gray-500 font-medium">Let us know what you need help with.</p>
           </div>
 
@@ -133,7 +133,7 @@ export default function ContactSupportModal({ isOpen, onClose }: ContactSupportM
             )}
 
             <div className="space-y-2">
-              <label className="text-sm font-bold text-[#1a2a2a]">Subject <span className="text-red-500">*</span></label>
+              <label className="text-sm font-bold text-foreground">Subject <span className="text-red-500">*</span></label>
               <input 
                 type="text"
                 required
@@ -146,7 +146,7 @@ export default function ContactSupportModal({ isOpen, onClose }: ContactSupportM
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-bold text-[#1a2a2a]">Message <span className="text-red-500">*</span></label>
+              <label className="text-sm font-bold text-foreground">Message <span className="text-red-500">*</span></label>
               <textarea 
                 required
                 value={message}
@@ -159,7 +159,7 @@ export default function ContactSupportModal({ isOpen, onClose }: ContactSupportM
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-bold text-[#1a2a2a]">Attach Screenshot (optional)</label>
+              <label className="text-sm font-bold text-foreground">Attach Screenshot (optional)</label>
               <input 
                 type="file" 
                 ref={fileInputRef} 
@@ -169,7 +169,7 @@ export default function ContactSupportModal({ isOpen, onClose }: ContactSupportM
               />
               <div 
                 onClick={() => !isSubmitting && !authLoading && isAuthenticated && fileInputRef.current?.click()}
-                className={`border-2 border-dashed border-gray-200 rounded-xl p-6 flex flex-col items-center justify-center gap-2 bg-gray-50/50 transition-colors ${isSubmitting || authLoading || !isAuthenticated ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:bg-gray-50'}`}
+                className={`border-2 border-dashed border-gray-200 rounded-xl p-6 flex flex-col items-center justify-center gap-2 bg-gray-50/50 transition-colors ₹{isSubmitting || authLoading || !isAuthenticated ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:bg-gray-50'}`}
               >
                 {file ? (
                   <>
@@ -193,7 +193,7 @@ export default function ContactSupportModal({ isOpen, onClose }: ContactSupportM
               <button 
                 type="submit"
                 disabled={isSubmitting || authLoading || !isAuthenticated}
-                className="w-full bg-[#1c352d] hover:bg-[#152a23] disabled:opacity-50 disabled:cursor-not-allowed text-white py-3.5 rounded-xl text-sm font-bold shadow-lg shadow-black/10 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                className="w-full bg-primary hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed text-white py-3.5 rounded-xl text-sm font-bold shadow-lg shadow-black/10 transition-all hover:scale-[1.02] active:scale-[0.98]"
               >
                 {isSubmitting ? 'Submitting...' : 'Send Request'}
               </button>

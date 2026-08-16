@@ -36,14 +36,14 @@ const SERVICES: ServiceItem[] = [
   {
     name: 'Private Home Showing',
     description: 'Get a licensed agent to show you any property at a time that works for you.',
-    price: 'From $40',
+    price: 'From ₹40',
     category: 'Buying',
     emoji: '🏠',
   },
   {
     name: 'Multi-Home Tour',
     description: 'Tour 2-6 properties in one booking. Bundle & save vs. separate showings.',
-    price: 'From $40/home',
+    price: 'From ₹40/home',
     category: 'Buying',
     emoji: '📍',
   },
@@ -51,21 +51,21 @@ const SERVICES: ServiceItem[] = [
     name: 'Request a Task',
     description:
       'Need someone to check on your home? Book a local agent to complete a quick task at your property.',
-    price: 'From $40',
+    price: 'From ₹40',
     category: 'Homeowner Tasks',
     emoji: '✅',
   },
   {
     name: 'Virtual Walkthrough',
     description: "Can't visit in person? Get a live video walkthrough with an agent.",
-    price: 'From $50',
+    price: 'From ₹50',
     category: 'Buying',
     emoji: '📹',
   },
   {
     name: 'Buyer Consultation',
     description: 'One-on-one strategy session with a licensed agent about your buying journey.',
-    price: 'From $99',
+    price: 'From ₹99',
     category: 'Buying',
     emoji: '🤝',
   },
@@ -80,14 +80,14 @@ const SERVICES: ServiceItem[] = [
   {
     name: 'Market Analysis (CMA)',
     description: 'Get a detailed comparative market analysis report for any property.',
-    price: 'From $60',
+    price: 'From ₹60',
     category: 'Selling',
     emoji: '📊',
   },
   {
     name: 'Listing Consultation',
     description: 'Get expert advice on pricing, staging, and selling your home.',
-    price: 'From $99',
+    price: 'From ₹99',
     category: 'Selling',
     emoji: '📋',
   },
@@ -95,42 +95,42 @@ const SERVICES: ServiceItem[] = [
     name: 'Open House Hosting',
     description:
       'Book a verified agent to professionally host your open house - greet visitors, sign in guests, collect leads.',
-    price: 'From $60',
+    price: 'From ₹60',
     category: 'Selling',
     emoji: '🏡',
   },
   {
     name: 'Property Photography',
     description: 'Professional real estate photography to showcase your home in its best light.',
-    price: 'From $99',
+    price: 'From ₹99',
     category: 'Selling',
     emoji: '📸',
   },
   {
     name: 'Move-In / Move-Out Cleaning',
     description: 'Thorough professional cleaning for move-in or move-out transitions.',
-    price: 'From $75',
+    price: 'From ₹75',
     category: 'Homeowner Tasks',
     emoji: '🧹',
   },
   {
     name: 'Home Staging',
     description: 'Expert home staging to attract buyers and maximize your sale price.',
-    price: 'From $150',
+    price: 'From ₹150',
     category: 'Selling',
     emoji: '🛋️',
   },
   {
     name: 'Inspection Coordination',
     description: 'Coordinate property inspections with qualified inspectors.',
-    price: 'From $75',
+    price: 'From ₹75',
     category: 'Selling',
     emoji: '🔍',
   },
   {
     name: 'Lockbox Access Support',
     description: 'Licensed agent to assist with property access where legally allowed.',
-    price: 'From $45',
+    price: 'From ₹45',
     category: 'Buying',
     emoji: '🔑',
   },
@@ -152,7 +152,7 @@ export default function ServicesPage() {
     <>
       {activeModalService ? (
         <ServiceRequestModal
-          key={`${activeModalService}-${serviceModalVersion}`}
+          key={`₹{activeModalService}-₹{serviceModalVersion}`}
           isOpen
           serviceType={activeModalService}
           minimumCompensation={MODAL_SERVICES[activeModalService].minimumCompensation}
@@ -162,13 +162,13 @@ export default function ServicesPage() {
 
       <div className="mx-auto max-w-5xl space-y-8 px-8 py-10 pb-24">
         <div className="space-y-3">
-          <span className="inline-block rounded-full border border-orange-100 bg-orange-50 px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-[#d69e5e]">
+          <span className="inline-block rounded-full border border-orange-100 bg-orange-50 px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-accent">
             On-Demand
           </span>
-          <h1 className="text-3xl font-bold tracking-tight text-[#1a2a2a]">Real Estate Services</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">Real Estate Services</h1>
           <p className="max-w-xl text-sm font-medium leading-relaxed text-gray-500">
             Instantly connect with licensed agents for{' '}
-            <span className="font-bold text-[#d69e5e]">any</span> real estate need. Choose a
+            <span className="font-bold text-accent">any</span> real estate need. Choose a
             service, pick a time, and get help on demand.
           </p>
         </div>
@@ -179,7 +179,7 @@ export default function ServicesPage() {
               key={category}
               type="button"
               onClick={() => setActiveCategory(category)}
-              className={`rounded-full border px-4 py-2 text-xs font-bold transition-all ${
+              className={`rounded-full border px-4 py-2 text-xs font-bold transition-all ₹{
                 activeCategory === category
                   ? 'border-[#1a2a2a] bg-[#1a2a2a] text-white'
                   : 'border-gray-200 bg-white text-gray-500 hover:border-gray-400 hover:text-gray-700'
@@ -193,11 +193,11 @@ export default function ServicesPage() {
         <div className="flex items-center justify-between rounded-2xl border border-gray-100 bg-white px-6 py-4">
           <p className="text-xs font-medium text-gray-500">
             Are you a licensed agent?{' '}
-            <span className="font-bold text-[#1a2a2a]">Earn by fulfilling these requests.</span>
+            <span className="font-bold text-foreground">Earn by fulfilling these requests.</span>
           </p>
           <Link
             href="/?auth=signup"
-            className="whitespace-nowrap text-xs font-black uppercase tracking-widest text-[#d69e5e] hover:underline"
+            className="whitespace-nowrap text-xs font-black uppercase tracking-widest text-accent hover:underline"
           >
             Join as Agent &rarr;
           </Link>
@@ -246,14 +246,14 @@ function ServiceCard({
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
         </svg>
       </div>
-      <h3 className="mb-1 text-sm font-bold text-[#1a2a2a] transition-colors group-hover:text-green-800">
+      <h3 className="mb-1 text-sm font-bold text-foreground transition-colors group-hover:text-green-800">
         {service.name}
       </h3>
       <p className="mb-4 line-clamp-2 text-xs font-medium leading-relaxed text-gray-400">
         {service.description}
       </p>
       <p
-        className={`text-xs font-bold ${
+        className={`text-xs font-bold ₹{
           service.price === 'Success Fee Only' ? 'text-green-600' : 'text-gray-500'
         }`}
       >
@@ -271,7 +271,7 @@ function ServiceCard({
   }
 
   return (
-    <Link href={`/client/new-request?type=${encodeURIComponent(service.name)}`} className={cardClassName}>
+    <Link href={`/client/new-request?type=₹{encodeURIComponent(service.name)}`} className={cardClassName}>
       {content}
     </Link>
   );

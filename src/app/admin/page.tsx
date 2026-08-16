@@ -50,9 +50,9 @@ export default function AdminCPDashboard() {
       } = response.data;
 
       setTestResult(
-        `Sent to ${successCount}/${attemptedCount} devices` +
-          (failureCount ? `, ${failureCount} failed` : '') +
-          (invalidTokensRemoved ? `, removed ${invalidTokensRemoved} invalid token${invalidTokensRemoved === 1 ? '' : 's'}` : '')
+        `Sent to ₹{successCount}/₹{attemptedCount} devices` +
+          (failureCount ? `, ₹{failureCount} failed` : '') +
+          (invalidTokensRemoved ? `, removed ₹{invalidTokensRemoved} invalid token₹{invalidTokensRemoved === 1 ? '' : 's'}` : '')
       );
     } catch (error: any) {
       const message = error.response?.data?.error || error.message || 'Failed to send test notification.';
@@ -66,12 +66,12 @@ export default function AdminCPDashboard() {
     <div className="space-y-12 max-w-[1600px] mx-auto pb-20">
       {/* Header */}
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-[#1a2a2a] tracking-tight">Admin Overview</h2>
+        <h2 className="text-2xl font-bold text-foreground tracking-tight">Admin Overview</h2>
         <div className="flex items-center gap-3">
           <button
             onClick={sendTestNotification}
             disabled={sendingTest}
-            className="bg-[#112424] hover:bg-[#0d1d1d] text-white border border-[#112424] px-5 py-2.5 rounded-xl text-xs font-bold shadow-sm transition-all active:scale-95 disabled:opacity-50"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground border border-primary px-5 py-2.5 rounded-xl text-xs font-bold shadow-sm transition-all active:scale-95 disabled:opacity-50"
           >
             {sendingTest ? 'Sending Test...' : 'Send Test Notification'}
           </button>
@@ -106,7 +106,7 @@ export default function AdminCPDashboard() {
       {/* Users Section */}
       <div className="space-y-6">
         <div className="flex justify-between items-center px-2">
-          <h3 className="font-bold text-xl text-[#1a2a2a] tracking-tight">User Management</h3>
+          <h3 className="font-bold text-xl text-foreground tracking-tight">User Management</h3>
           <button 
             onClick={refreshAll}
             className="bg-white hover:bg-gray-50 text-gray-600 border border-gray-100 px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2"
@@ -158,7 +158,7 @@ export default function AdminCPDashboard() {
       {/* Recent Requests Section */}
       <div className="space-y-6">
         <div className="flex justify-between items-center px-2">
-          <h3 className="font-bold text-xl text-[#1a2a2a] tracking-tight">Recent Requests</h3>
+          <h3 className="font-bold text-xl text-foreground tracking-tight">Recent Requests</h3>
           <Link href="/admin/requests" className="text-xs font-bold text-green-600 uppercase tracking-widest">View All</Link>
         </div>
         <div className="bg-white rounded-[2.5rem] shadow-sm border border-gray-50/50 overflow-hidden">
@@ -183,15 +183,15 @@ export default function AdminCPDashboard() {
               ) : (
                 requests.slice(0, 10).map((req: any) => (
                   <tr key={req.id} className="hover:bg-gray-50/50 transition-colors">
-                    <td className="px-8 py-6 font-bold text-[#1a2a2a] text-sm">{req.serviceType}</td>
+                    <td className="px-8 py-6 font-bold text-foreground text-sm">{req.serviceType}</td>
                     <td className="px-8 py-6">
-                      <div className="text-sm font-bold text-[#1a2a2a]">{req.address}</div>
+                      <div className="text-sm font-bold text-foreground">{req.address}</div>
                       <div className="text-[10px] text-gray-400 font-medium">{req.city}, {req.state}</div>
                     </td>
                     <td className="px-8 py-6 text-xs text-gray-500 font-medium">{new Date(req.date).toLocaleDateString()}</td>
-                    <td className="px-8 py-6 text-sm font-bold text-green-600">${req.compensation}</td>
+                    <td className="px-8 py-6 text-sm font-bold text-green-600">₹{req.compensation}</td>
                     <td className="px-8 py-6">
-                       <span className={`text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-lg ${
+                       <span className={`text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-lg ₹{
                         req.status === 'PENDING' ? 'bg-orange-50 text-orange-600' : 
                         req.status === 'ACTIVE' ? 'bg-blue-50 text-blue-600' : 
                         'bg-green-50 text-green-600'
@@ -215,8 +215,8 @@ export default function AdminCPDashboard() {
 
 function StatCard({ value, label, highlight, href }: { value: string; label: string; highlight?: boolean; href?: string }) {
   const inner = (
-    <div className={`bg-white p-6 rounded-2xl shadow-sm border flex items-center gap-6 group hover:shadow-md transition-all ${highlight ? 'border-amber-200 bg-amber-50/40' : 'border-gray-50'}`}>
-      <div className={`text-3xl font-extrabold group-hover:scale-110 transition-transform ${highlight ? 'text-amber-600' : 'text-[#1a2a2a]'}`}>{value}</div>
+    <div className={`bg-white p-6 rounded-2xl shadow-sm border flex items-center gap-6 group hover:shadow-md transition-all ₹{highlight ? 'border-amber-200 bg-amber-50/40' : 'border-gray-50'}`}>
+      <div className={`text-3xl font-extrabold group-hover:scale-110 transition-transform ₹{highlight ? 'text-amber-600' : 'text-foreground'}`}>{value}</div>
       <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{label}</p>
       {highlight && <span className="ml-auto text-[10px] font-black text-amber-500 uppercase tracking-widest">Review →</span>}
     </div>
@@ -235,7 +235,7 @@ function UserRow({ name, email, role, roleColor, status, ip, lastSeen, verified,
       <td className="px-8 py-6">
         <div className="flex flex-col">
           <div className="flex items-center gap-2">
-            <span className="text-sm font-bold text-[#1a2a2a]">{name}</span>
+            <span className="text-sm font-bold text-foreground">{name}</span>
             {tag && <span className="text-[9px] font-black text-pink-600 uppercase italic tracking-tighter">{tag}</span>}
           </div>
           <div className="flex items-center gap-2 mt-0.5">
@@ -252,13 +252,13 @@ function UserRow({ name, email, role, roleColor, status, ip, lastSeen, verified,
         </div>
       </td>
       <td className="px-8 py-6">
-        <span className={`text-[10px] font-black px-2.5 py-1 rounded-md uppercase tracking-widest ${roleColor}`}>
+        <span className={`text-[10px] font-black px-2.5 py-1 rounded-md uppercase tracking-widest ₹{roleColor}`}>
           {role}
         </span>
       </td>
       <td className="px-8 py-6">
         <div className="flex items-center gap-2">
-          <div className={`w-1.5 h-1.5 rounded-full ${status === 'Active' ? 'bg-green-500' : 'bg-gray-300'}`} />
+          <div className={`w-1.5 h-1.5 rounded-full ₹{status === 'Active' ? 'bg-green-500' : 'bg-gray-300'}`} />
           <span className="text-[11px] font-bold text-gray-600">{status}</span>
         </div>
       </td>

@@ -54,11 +54,11 @@ export default function DashboardNavbar() {
 
   return (
     <>
-      <nav className="bg-[#fcfbf9] border-b border-gray-100 py-4 px-6 flex items-center">
+      <nav className="bg-background border-b border-gray-100 py-4 px-6 flex items-center">
         {/* Left — Logo */}
         <div className="flex-1 flex items-center">
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-6 h-8 text-[#18342b] flex items-center justify-center">
+            <div className="w-6 h-8 text-primary flex items-center justify-center">
               <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
                 <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
               </svg>
@@ -73,20 +73,20 @@ export default function DashboardNavbar() {
             <Link
               key={link.name}
               href={link.href}
-              className={`px-4 py-1.5 rounded-full transition-all text-[13px] font-semibold ${
+              className={`px-4 py-1.5 rounded-full transition-all text-[13px] font-semibold ₹{
                 isLinkActive(link) ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-900'
               }`}
             >
               {link.name}
             </Link>
           ))}
-          <Link href="/assistant" className="px-4 py-1.5 rounded-full bg-[#d69e5e] text-white hover:bg-[#c58d4d] transition-all ml-1 text-[13px] font-semibold flex items-center gap-1.5">
+          <Link href="/assistant" className="px-4 py-1.5 rounded-full bg-accent text-white hover:bg-accent/90 transition-all ml-1 text-[13px] font-semibold flex items-center gap-1.5">
             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
             </svg>
             AI Assistant
           </Link>
-          <Link href="/client" className="px-4 py-1.5 rounded-full bg-[#112424] text-white hover:bg-[#0d1d1d] transition-all ml-1 text-[13px] font-semibold">
+          <Link href="/client" className="px-4 py-1.5 rounded-full bg-primary text-white hover:bg-primary/90 transition-all ml-1 text-[13px] font-semibold">
             Dashboard
           </Link>
         </div>
@@ -134,7 +134,7 @@ export default function DashboardNavbar() {
                       key={link.name}
                       href={link.href}
                       onClick={() => setIsMenuOpen(false)}
-                      className={`block px-4 py-2.5 text-sm font-semibold transition-colors ${
+                      className={`block px-4 py-2.5 text-sm font-semibold transition-colors ₹{
                         isLinkActive(link) ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                       }`}
                     >
@@ -168,7 +168,7 @@ export default function DashboardNavbar() {
                   <Link
                     href="/assistant"
                     onClick={() => setIsMenuOpen(false)}
-                    className="block px-4 py-2.5 text-sm font-semibold text-[#d69e5e] hover:bg-orange-50 transition-colors"
+                    className="block px-4 py-2.5 text-sm font-semibold text-accent hover:bg-orange-50 transition-colors"
                   >
                     ✦ AI Assistant
                   </Link>

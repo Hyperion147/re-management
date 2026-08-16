@@ -12,7 +12,7 @@ type Application = {
   brokerageName: string;
   mlsId?: string;
   services: string[];
-  zipCode: string;
+  PINCode: string;
   radiusMiles: number;
   willingToTravel: boolean;
   availableDays: string[];
@@ -65,7 +65,7 @@ export default function AdminAgentsPage() {
 
   const action = async (id: string, status: string) => {
     setActing(true);
-    await fetch(`/api/admin/agents/${id}`, {
+    await fetch(`/api/admin/agents/₹{id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ status, adminNote: note }),
@@ -88,7 +88,7 @@ export default function AdminAgentsPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-[#1a2a2a] tracking-tight">Agents</h2>
+          <h2 className="text-2xl font-bold text-foreground tracking-tight">Agents</h2>
           <p className="text-sm text-gray-400 font-medium mt-1">Review applications and manage approved agents</p>
         </div>
         <button onClick={load} className="bg-white border border-gray-100 px-4 py-2 rounded-xl text-xs font-bold text-gray-600 hover:bg-gray-50 flex items-center gap-2 shadow-sm">
@@ -108,7 +108,7 @@ export default function AdminAgentsPage() {
           { label: 'Suspended', count: counts.suspended, color: 'text-gray-500', bg: 'bg-gray-100' },
         ].map(s => (
           <div key={s.label} className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm flex items-center gap-4">
-            <div className={`text-2xl font-extrabold ${s.color}`}>{s.count}</div>
+            <div className={`text-2xl font-extrabold ₹{s.color}`}>{s.count}</div>
             <div className={`text-[10px] font-black uppercase tracking-widest text-gray-400`}>{s.label}</div>
           </div>
         ))}
@@ -120,13 +120,13 @@ export default function AdminAgentsPage() {
           <button
             key={t.key}
             onClick={() => setTab(t.key)}
-            className={`px-5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
-              tab === t.key ? 'bg-white text-[#1a2a2a] shadow-sm' : 'text-gray-500 hover:text-gray-700'
+            className={`px-5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ₹{
+              tab === t.key ? 'bg-white text-foreground shadow-sm' : 'text-gray-500 hover:text-gray-700'
             }`}
           >
             {t.label}
             {counts[t.key] > 0 && (
-              <span className={`text-[10px] font-black px-1.5 py-0.5 rounded-full ${
+              <span className={`text-[10px] font-black px-1.5 py-0.5 rounded-full ₹{
                 t.key === 'pending' ? 'bg-amber-500 text-white' : 'bg-gray-200 text-gray-600'
               }`}>
                 {counts[t.key]}
@@ -140,7 +140,7 @@ export default function AdminAgentsPage() {
       <div className="bg-white rounded-[2.5rem] shadow-sm border border-gray-50 overflow-hidden">
         {loading ? (
           <div className="flex items-center justify-center py-20">
-            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#1a362d]" />
+            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary" />
           </div>
         ) : visible.length === 0 ? (
           <div className="py-20 text-center">
@@ -168,32 +168,32 @@ export default function AdminAgentsPage() {
                       {app.photoUrl ? (
                         <img src={app.photoUrl} alt={app.fullName} className="w-9 h-9 rounded-full object-cover border border-gray-100 flex-shrink-0" />
                       ) : (
-                        <div className="w-9 h-9 rounded-full bg-[#1a362d]/10 flex items-center justify-center text-[#1a362d] font-bold text-sm flex-shrink-0">
+                        <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm flex-shrink-0">
                           {app.fullName.charAt(0)}
                         </div>
                       )}
                       <div>
-                        <p className="font-bold text-[#1a2a2a] text-sm">{app.fullName}</p>
+                        <p className="font-bold text-foreground text-sm">{app.fullName}</p>
                         <p className="text-xs text-gray-400 font-medium">{app.email}</p>
                         <p className="text-xs text-gray-400 font-medium">{app.phone}</p>
                       </div>
                     </div>
                   </td>
                   <td className="px-7 py-5">
-                    <p className="text-sm font-bold text-[#1a2a2a]">{app.licenseNumber}</p>
+                    <p className="text-sm font-bold text-foreground">{app.licenseNumber}</p>
                     <p className="text-xs text-gray-400 font-medium">{app.licenseState}</p>
                     {app.mlsId && <p className="text-xs text-gray-400 font-medium">MLS: {app.mlsId}</p>}
                   </td>
                   <td className="px-7 py-5">
-                    <p className="text-sm font-semibold text-[#1a2a2a]">{app.brokerageName}</p>
+                    <p className="text-sm font-semibold text-foreground">{app.brokerageName}</p>
                     {app.yearsOfExperience && (
                       <p className="text-xs text-gray-400 font-medium">{app.yearsOfExperience} yrs exp.</p>
                     )}
                   </td>
                   <td className="px-7 py-5">
-                    <p className="text-sm font-semibold text-[#1a2a2a]">{app.zipCode} · {app.radiusMiles}mi</p>
+                    <p className="text-sm font-semibold text-foreground">{app.PINCode} · {app.radiusMiles}mi</p>
                     {app.willingToTravel && (
-                      <p className="text-xs text-[#d69e5e] font-bold">Willing to travel</p>
+                      <p className="text-xs text-accent font-bold">Willing to travel</p>
                     )}
                     <p className="text-xs text-gray-400 font-medium mt-0.5">
                       {Array.isArray(app.availableDays) ? app.availableDays.slice(0, 3).join(', ') + (app.availableDays.length > 3 ? '…' : '') : ''}
@@ -203,7 +203,7 @@ export default function AdminAgentsPage() {
                     {new Date(app.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                   </td>
                   <td className="px-7 py-5">
-                    <span className={`text-[10px] font-black px-2.5 py-1 rounded-lg uppercase tracking-widest border ${STATUS_BADGE[app.status]}`}>
+                    <span className={`text-[10px] font-black px-2.5 py-1 rounded-lg uppercase tracking-widest border ₹{STATUS_BADGE[app.status]}`}>
                       {app.status}
                     </span>
                     {app.adminNote && (
@@ -215,7 +215,7 @@ export default function AdminAgentsPage() {
                   <td className="px-7 py-5 text-right">
                     <button
                       onClick={() => { setSelected(app); setNote(app.adminNote || ''); }}
-                      className="bg-[#1a362d] hover:bg-[#112424] text-white px-4 py-2 rounded-xl text-[11px] font-bold transition-all"
+                      className="bg-primary hover:bg-primary text-white px-4 py-2 rounded-xl text-[11px] font-bold transition-all"
                     >
                       Review
                     </button>
@@ -237,13 +237,13 @@ export default function AdminAgentsPage() {
                 {selected.photoUrl ? (
                   <img src={selected.photoUrl} alt={selected.fullName} className="w-12 h-12 rounded-full object-cover border-2 border-gray-100" />
                 ) : (
-                  <div className="w-12 h-12 rounded-full bg-[#1a362d]/10 flex items-center justify-center text-[#1a362d] font-bold text-lg">
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-lg">
                     {selected.fullName.charAt(0)}
                   </div>
                 )}
                 <div>
-                  <h3 className="font-bold text-[#1a2a2a] text-lg">{selected.fullName}</h3>
-                  <span className={`text-[10px] font-black px-2 py-0.5 rounded-md uppercase tracking-widest border ${STATUS_BADGE[selected.status]}`}>
+                  <h3 className="font-bold text-foreground text-lg">{selected.fullName}</h3>
+                  <span className={`text-[10px] font-black px-2 py-0.5 rounded-md uppercase tracking-widest border ₹{STATUS_BADGE[selected.status]}`}>
                     {selected.status}
                   </span>
                 </div>
@@ -269,22 +269,22 @@ export default function AdminAgentsPage() {
                 <Row label="State" value={selected.licenseState} />
                 <Row label="Brokerage" value={selected.brokerageName} />
                 {selected.mlsId && <Row label="MLS ID" value={selected.mlsId} />}
-                {selected.yearsOfExperience && <Row label="Experience" value={`${selected.yearsOfExperience} years`} />}
+                {selected.yearsOfExperience && <Row label="Experience" value={`₹{selected.yearsOfExperience} years`} />}
               </Section>
 
               {/* Services */}
               <Section title="Services Offered">
                 <div className="flex flex-wrap gap-2 mt-1">
                   {(Array.isArray(selected.services) ? selected.services : []).map(s => (
-                    <span key={s} className="bg-[#1a362d]/10 text-[#1a362d] text-xs font-bold px-3 py-1 rounded-full">{s}</span>
+                    <span key={s} className="bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full">{s}</span>
                   ))}
                 </div>
               </Section>
 
               {/* Service Area */}
               <Section title="Service Area">
-                <Row label="ZIP Code" value={selected.zipCode} />
-                <Row label="Radius" value={`${selected.radiusMiles} miles`} />
+                <Row label="PIN code" value={selected.PINCode} />
+                <Row label="Radius" value={`₹{selected.radiusMiles} miles`} />
                 <Row label="Travel" value={selected.willingToTravel ? 'Willing to travel farther' : 'Radius only'} />
                 <Row label="Days" value={(Array.isArray(selected.availableDays) ? selected.availableDays : []).join(', ') || '—'} />
                 <Row label="Same-Day" value={selected.acceptSameDay ? 'Yes' : 'No'} />
@@ -313,7 +313,7 @@ export default function AdminAgentsPage() {
                   onChange={e => setNote(e.target.value)}
                   placeholder="e.g. License verified, proceeding with approval..."
                   rows={3}
-                  className="w-full px-4 py-3 rounded-2xl border border-gray-200 text-sm font-medium text-[#1a2a2a] focus:outline-none focus:ring-2 focus:ring-[#1a362d]/20 focus:border-[#1a362d] resize-none"
+                  className="w-full px-4 py-3 rounded-2xl border border-gray-200 text-sm font-medium text-foreground focus:outline-none focus:ring-2 focus:ring-[#1a362d]/20 focus:border-primary resize-none"
                 />
               </div>
             </div>
@@ -388,7 +388,7 @@ export default function AdminAgentsPage() {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
-      <p className="text-[10px] font-black text-[#d69e5e] uppercase tracking-widest mb-3">{title}</p>
+      <p className="text-[10px] font-black text-accent uppercase tracking-widest mb-3">{title}</p>
       <div className="space-y-2">{children}</div>
     </div>
   );
@@ -398,7 +398,7 @@ function Row({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-start justify-between py-1.5 border-b border-gray-50 last:border-0">
       <span className="text-xs font-bold text-gray-400 uppercase tracking-wide w-28 flex-shrink-0">{label}</span>
-      <span className="text-sm font-semibold text-[#1a2a2a] text-right flex-1 leading-relaxed">{value || '—'}</span>
+      <span className="text-sm font-semibold text-foreground text-right flex-1 leading-relaxed">{value || '—'}</span>
     </div>
   );
 }

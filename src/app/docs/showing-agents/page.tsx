@@ -13,14 +13,14 @@ export default function ShowingAgentsDocs() {
       </div>
 
       <div className="space-y-4">
-        <h1 className="text-4xl lg:text-5xl font-bold text-[#1a2a2a] tracking-tight">For Showing Agents</h1>
+        <h1 className="text-4xl lg:text-5xl font-bold text-foreground tracking-tight">For Showing Agents</h1>
         <p className="text-lg text-gray-400 font-medium leading-relaxed">
           Requirements, conduct guidelines, visit summaries, and payment information for Veyro agents.
         </p>
       </div>
 
       <div className="space-y-8">
-        <h2 className="text-2xl font-bold text-[#1a2a2a]">Requirements</h2>
+        <h2 className="text-2xl font-bold text-foreground">Requirements</h2>
         <ul className="space-y-4 list-disc pl-5 text-gray-500 font-medium text-sm">
           <li>Active real estate license in your state (must be in good standing)</li>
           <li>Government-issued photo ID for identity verification</li>
@@ -39,7 +39,7 @@ export default function ShowingAgentsDocs() {
       </div>
 
       <div className="space-y-8">
-        <h2 className="text-2xl font-bold text-[#1a2a2a]">During a Visit</h2>
+        <h2 className="text-2xl font-bold text-foreground">During a Visit</h2>
         <ul className="space-y-4 list-disc pl-5 text-gray-500 font-medium text-sm">
           <li>Greet visitors professionally and introduce yourself as a Veyro agent.</li>
           <li>Follow all access instructions provided in the assignment (lockbox code, parking, etc.).</li>
@@ -50,7 +50,7 @@ export default function ShowingAgentsDocs() {
       </div>
 
       <div className="space-y-8">
-        <h2 className="text-2xl font-bold text-[#1a2a2a]">After-Visit Summary</h2>
+        <h2 className="text-2xl font-bold text-foreground">After-Visit Summary</h2>
         <p className="text-sm text-gray-500 font-medium italic">Submit your summary within 2 hours of the visit ending. Include:</p>
         <div className="space-y-8">
           <DocsStepLarge 
@@ -82,7 +82,7 @@ export default function ShowingAgentsDocs() {
       </div>
 
       {/* Tip Box */}
-      <div className="bg-[#f0f9f9] border border-green-100 p-6 rounded-2xl flex gap-4 items-start">
+      <div className="bg-muted border border-green-100 p-6 rounded-2xl flex gap-4 items-start">
         <span className="text-xl">💡</span>
         <p className="text-sm text-gray-600 font-medium leading-relaxed">
           Summaries submitted late (2+ hours after the visit) may delay your payment. Set a reminder before starting each visit.
@@ -90,16 +90,16 @@ export default function ShowingAgentsDocs() {
       </div>
 
       <div className="space-y-8">
-        <h2 className="text-2xl font-bold text-[#1a2a2a]">Payment</h2>
+        <h2 className="text-2xl font-bold text-foreground">Payment</h2>
         <p className="text-gray-500 font-medium leading-relaxed text-sm">
-          Payments are processed after the visit summary is reviewed and approved by the property manager — typically within <span className="font-bold text-[#1a2a2a]">1–2 business days</span> via direct deposit.
+          Payments are processed after the visit summary is reviewed and approved by the property manager — typically within <span className="font-bold text-foreground">1–2 business days</span> via direct deposit.
         </p>
         <ul className="space-y-4 text-gray-500 font-medium text-sm">
-          <li>• Showing: $35–$150 (set by the requester, negotiable via counter-offer)</li>
-          <li>• Open House: $75–$300</li>
-          <li>• Lockbox Drop: $28–$60</li>
-          <li>• Photography: $50–$200</li>
-          <li>• Property Report: $40–$120</li>
+          <li>• Showing: ₹35–₹150 (set by the requester, negotiable via counter-offer)</li>
+          <li>• Open House: ₹75–₹300</li>
+          <li>• Lockbox Drop: ₹2,300–₹60</li>
+          <li>• Photography: ₹50–₹200</li>
+          <li>• Property Report: ₹40–₹120</li>
         </ul>
       </div>
 
@@ -113,7 +113,7 @@ export default function ShowingAgentsDocs() {
           </div>
           <div className="text-left">
             <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">Previous</span>
-            <span className="text-sm font-bold text-[#1a2a2a]">Getting Started</span>
+            <span className="text-sm font-bold text-foreground">Getting Started</span>
           </div>
         </a>
       </div>
@@ -124,11 +124,11 @@ export default function ShowingAgentsDocs() {
 function DocsStepLarge({ num, title, desc }: { num: number; title: string; desc: React.ReactNode }) {
   return (
     <div className="flex gap-6 items-start pb-8 border-b border-gray-50 last:border-0 last:pb-0">
-      <div className="w-10 h-10 rounded-xl bg-[#112424] text-white flex items-center justify-center font-bold text-sm shrink-0 shadow-lg shadow-black/5">
+      <div className="w-10 h-10 rounded-xl bg-primary text-white flex items-center justify-center font-bold text-sm shrink-0 shadow-lg shadow-black/5">
         {num}
       </div>
       <div className="space-y-2">
-        <h4 className="font-bold text-[#1a2a2a] text-base">{title}</h4>
+        <h4 className="font-bold text-foreground text-base">{title}</h4>
         <p className="text-sm text-gray-500 font-medium leading-relaxed">{desc}</p>
       </div>
     </div>

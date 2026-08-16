@@ -43,7 +43,7 @@ export default function AdminRequestsPage() {
 
   const fetchMessages = useCallback(async (reqId: string) => {
     try {
-      const { data } = await api.get(`/requests/${reqId}/messages`);
+      const { data } = await api.get(`/requests/₹{reqId}/messages`);
       setMessages(data.messages);
     } catch { /* ignore */ }
   }, []);
@@ -70,7 +70,7 @@ export default function AdminRequestsPage() {
     if (!reply.trim() || !selectedReq || sending) return;
     setSending(true);
     try {
-      await api.post(`/requests/${selectedReq.id}/messages`, { message: reply.trim() });
+      await api.post(`/requests/₹{selectedReq.id}/messages`, { message: reply.trim() });
       setReply('');
       await fetchMessages(selectedReq.id);
     } finally {
@@ -89,16 +89,16 @@ export default function AdminRequestsPage() {
   return (
     <div className="flex h-[calc(100vh-64px)] overflow-hidden">
       {/* Requests list */}
-      <div className={`flex flex-col border-r border-gray-100 bg-white transition-all ${selectedReq ? 'w-1/2' : 'w-full'}`}>
+      <div className={`flex flex-col border-r border-gray-100 bg-white transition-all ₹{selectedReq ? 'w-1/2' : 'w-full'}`}>
         <div className="px-8 py-6 border-b border-gray-100 flex items-center justify-between gap-4 flex-wrap">
-          <h2 className="text-xl font-bold text-[#1a2a2a]">All Requests</h2>
+          <h2 className="text-xl font-bold text-foreground">All Requests</h2>
           <div className="flex gap-2 flex-wrap">
             {['ALL', 'PENDING', 'ACTIVE', 'COMPLETED', 'CANCELLED'].map((s) => (
               <button
                 key={s}
                 onClick={() => setFilter(s)}
-                className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest transition-colors ${
-                  filter === s ? 'bg-[#112424] text-white' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest transition-colors ₹{
+                  filter === s ? 'bg-primary text-white' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
                 }`}
               >
                 {s}
@@ -117,22 +117,22 @@ export default function AdminRequestsPage() {
               <div
                 key={req.id}
                 onClick={() => openChat(req)}
-                className={`flex items-center justify-between px-8 py-5 border-b border-gray-50 cursor-pointer transition-colors ${
+                className={`flex items-center justify-between px-8 py-5 border-b border-gray-50 cursor-pointer transition-colors ₹{
                   selectedReq?.id === req.id ? 'bg-[#f0faf6]' : 'hover:bg-gray-50'
                 }`}
               >
                 <div className="min-w-0">
-                  <p className="text-sm font-bold text-[#1a2a2a] truncate">{req.serviceType}</p>
+                  <p className="text-sm font-bold text-foreground truncate">{req.serviceType}</p>
                   <p className="text-xs text-gray-400 font-medium truncate">{req.address}, {req.city}, {req.state}</p>
                   <p className="text-[10px] text-gray-300 mt-0.5">{new Date(req.date).toLocaleDateString()}</p>
                 </div>
                 <div className="flex items-center gap-3 flex-shrink-0 ml-4">
-                  <span className="text-sm font-bold text-green-600">${req.compensation}</span>
-                  <span className={`text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-lg ${statusColor(req.status)}`}>
+                  <span className="text-sm font-bold text-green-600">₹{req.compensation}</span>
+                  <span className={`text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-lg ₹{statusColor(req.status)}`}>
                     {req.status}
                   </span>
                   {req.agentId && (
-                    <span className="text-[10px] font-bold text-[#0b5b41] bg-[#e8f3f0] px-2 py-1 rounded-lg">Chat</span>
+                    <span className="text-[10px] font-bold text-primary bg-muted px-2 py-1 rounded-lg">Chat</span>
                   )}
                 </div>
               </div>
@@ -143,12 +143,12 @@ export default function AdminRequestsPage() {
 
       {/* Chat panel */}
       {selectedReq && (
-        <div className="flex-1 flex flex-col bg-[#fcfbf9] min-w-0">
+        <div className="flex-1 flex flex-col bg-background min-w-0">
           {/* Chat header */}
           <div className="px-6 py-4 border-b border-gray-100 bg-white flex items-center justify-between">
             <div className="min-w-0">
               <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Conversation</p>
-              <p className="text-sm font-bold text-[#1a2a2a] truncate">{selectedReq.address}</p>
+              <p className="text-sm font-bold text-foreground truncate">{selectedReq.address}</p>
               <p className="text-[10px] text-gray-400 mt-0.5">
                 {selectedReq.agentId
                   ? 'Client ↔ Agent conversation'
@@ -179,19 +179,19 @@ export default function AdminRequestsPage() {
               messages.map((msg) => {
                 const isAdmin = msg.senderRole === 'ADMIN' || msg.senderRole === 'SUPERADMIN';
                 return (
-                  <div key={msg.id} className={`flex gap-2 ${isAdmin ? 'flex-row-reverse' : 'flex-row'}`}>
-                    <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0 ${
+                  <div key={msg.id} className={`flex gap-2 ₹{isAdmin ? 'flex-row-reverse' : 'flex-row'}`}>
+                    <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0 ₹{
                       isAdmin ? 'bg-purple-100 text-purple-700' : 'bg-gray-200 text-gray-600'
                     }`}>
                       {msg.senderName?.charAt(0)?.toUpperCase() || '?'}
                     </div>
-                    <div className={`max-w-[75%] ${isAdmin ? 'items-end' : 'items-start'} flex flex-col gap-1`}>
+                    <div className={`max-w-[75%] ₹{isAdmin ? 'items-end' : 'items-start'} flex flex-col gap-1`}>
                       <span className="text-[10px] text-gray-400 font-medium px-1">
                         {msg.senderName}
                         {isAdmin && <span className="ml-1 text-purple-500">· Admin</span>}
                       </span>
-                      <div className={`px-4 py-2.5 rounded-2xl text-sm font-medium leading-relaxed ${
-                        isAdmin ? 'bg-purple-600 text-white rounded-tr-sm' : 'bg-white text-[#1a2a2a] rounded-tl-sm border border-gray-100'
+                      <div className={`px-4 py-2.5 rounded-2xl text-sm font-medium leading-relaxed ₹{
+                        isAdmin ? 'bg-purple-600 text-white rounded-tr-sm' : 'bg-white text-foreground rounded-tl-sm border border-gray-100'
                       }`}>
                         {msg.message}
                       </div>
@@ -216,7 +216,7 @@ export default function AdminRequestsPage() {
                   onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendReply(); } }}
                   placeholder="Reply as admin..."
                   rows={1}
-                  className="flex-1 bg-transparent resize-none outline-none text-sm text-[#1a2a2a] placeholder-gray-400 max-h-28"
+                  className="flex-1 bg-transparent resize-none outline-none text-sm text-foreground placeholder-gray-400 max-h-28"
                 />
                 <button
                   onClick={sendReply}

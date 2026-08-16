@@ -23,10 +23,10 @@ export default function CreateUserPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 4v16m8-8H4" />
             </svg>
           </div>
-          <h2 className="text-2xl font-bold text-[#1a2a2a] tracking-tight">Create User</h2>
+          <h2 className="text-2xl font-bold text-foreground tracking-tight">Create User</h2>
         </div>
         <div className="flex items-center gap-3">
-          <span className={`text-[10px] font-black px-3 py-1.5 rounded-lg uppercase tracking-widest border ${
+          <span className={`text-[10px] font-black px-3 py-1.5 rounded-lg uppercase tracking-widest border ₹{
             isSuperAdmin
               ? 'bg-purple-100 text-purple-700 border-purple-200/50'
               : 'bg-orange-100 text-orange-600 border-orange-200/50'
@@ -43,7 +43,7 @@ export default function CreateUserPage() {
       <div className="max-w-md">
         <div className="bg-white rounded-[2.5rem] p-10 shadow-sm border border-gray-50/50 space-y-8">
           <div className="space-y-1">
-            <h3 className="text-xl font-bold text-[#1a2a2a]">Create New User</h3>
+            <h3 className="text-xl font-bold text-foreground">Create New User</h3>
             {!isSuperAdmin && !loading && (
               <p className="text-xs text-gray-400 font-medium">
                 As an Admin, you can create Users and Admins. Only a Superadmin can create Superadmin accounts.
@@ -99,7 +99,7 @@ export default function CreateUserPage() {
               </div>
             </div>
 
-            <button className="w-full bg-[#416450] hover:bg-[#345140] text-white py-4 rounded-2xl text-sm font-bold shadow-xl shadow-green-900/10 transition-all hover:scale-[1.02] active:scale-[0.98] mt-4">
+            <button className="w-full bg-primary hover:bg-primary/90 text-white py-4 rounded-2xl text-sm font-bold shadow-xl shadow-green-900/10 transition-all hover:scale-[1.02] active:scale-[0.98] mt-4">
               Create Account
             </button>
           </div>

@@ -8,11 +8,11 @@ export default function DocsLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-[#f8fafb] font-sans text-[#1a2a2a]">
+    <div className="min-h-screen bg-muted font-sans text-foreground">
       <Navbar />
       
       {/* Header Spacer for Sticky Navbar */}
-      <div className="h-24 bg-[#112424]"></div>
+      <div className="h-24 bg-primary"></div>
 
       <div className="max-w-7xl mx-auto px-8 py-16 flex flex-col lg:flex-row gap-12">
         {/* Sidebar */}
@@ -42,7 +42,7 @@ function DocsSidebarLink({ href, label }: { href: string; label: string }) {
   return (
     <a 
       href={href} 
-      className="block px-4 py-3 rounded-xl text-[13px] font-bold text-gray-500 hover:bg-[#f0f9f9] hover:text-[#416450] transition-all"
+      className="block px-4 py-3 rounded-xl text-[13px] font-bold text-gray-500 hover:bg-muted hover:text-primary transition-all"
     >
       {label}
     </a>

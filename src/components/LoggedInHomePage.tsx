@@ -18,7 +18,7 @@ export default function LoggedInHomePage() {
   return (
     <div className="flex flex-col w-full pb-20 relative">
       {/* Hero Section */}
-      <section className="bg-[#1c352d] pt-16 pb-32 px-8">
+      <section className="bg-primary pt-16 pb-32 px-8">
         <div className="max-w-6xl mx-auto">
           <h1 className="text-4xl md:text-[2.75rem] font-bold text-white tracking-tight mb-2">
             Welcome back, {firstName}!
@@ -61,17 +61,17 @@ export default function LoggedInHomePage() {
           
           {/* Quick Access Sidebar */}
           <div className="w-full lg:w-1/3 xl:w-1/4 flex-shrink-0">
-            <h2 className="text-[#1a2a2a] font-bold text-[17px] mb-4">Quick Access</h2>
+            <h2 className="text-foreground font-bold text-[17px] mb-4">Quick Access</h2>
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col">
               {quickAccessLinks.map((link, idx) => (
                 <Link 
                   key={link.name} 
                   href={link.href}
-                  className={`flex items-center justify-between px-5 py-4 hover:bg-gray-50 transition-colors group ${
+                  className={`flex items-center justify-between px-5 py-4 hover:bg-gray-50 transition-colors group ₹{
                     idx !== quickAccessLinks.length - 1 ? 'border-b border-gray-100' : ''
                   }`}
                 >
-                  <div className="flex items-center gap-3 text-[#1a2a2a] font-semibold text-[13px]">
+                  <div className="flex items-center gap-3 text-foreground font-semibold text-[13px]">
                     <span className="text-gray-500 group-hover:text-gray-900 transition-colors">
                       <link.icon />
                     </span>
@@ -87,7 +87,7 @@ export default function LoggedInHomePage() {
 
           {/* Recent Requests */}
           <div className="flex-1 w-full">
-            <h2 className="text-[#1a2a2a] font-bold text-[17px] mb-4">Recent Requests</h2>
+            <h2 className="text-foreground font-bold text-[17px] mb-4">Recent Requests</h2>
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 min-h-[140px] flex items-center justify-center">
               <p className="text-sm font-medium text-gray-500 text-center">
                 No requests yet. Start by booking a service above!
@@ -104,7 +104,7 @@ export default function LoggedInHomePage() {
 function ActionCard({ title, icon, href }: { title: string; icon: React.ReactNode; href: string }) {
   return (
     <Link href={href} className="block group">
-      <div className="bg-[#1e3b32] border border-[#2a4d42] rounded-[1.25rem] p-6 shadow-xl shadow-black/5 hover:bg-[#162d26] transition-all hover:-translate-y-1 hover:shadow-2xl flex flex-col items-center justify-center gap-3 h-[110px]">
+      <div className="bg-primary border border-primary/40 rounded-[1.25rem] p-6 shadow-xl shadow-black/5 hover:bg-primary/90 transition-all hover:-translate-y-1 hover:shadow-2xl flex flex-col items-center justify-center gap-3 h-[110px]">
         <div className="text-white/80 group-hover:text-white transition-colors">
           {icon}
         </div>

@@ -3,7 +3,7 @@ import Navbar from '@/components/Navbar';
 
 export default function NoAccessPage() {
   return (
-    <div className="min-h-screen bg-[#f8fafb] font-sans flex flex-col">
+    <div className="min-h-screen bg-muted font-sans flex flex-col">
       <Navbar />
       
       <main className="flex-1 flex items-center justify-center p-6">
@@ -15,7 +15,7 @@ export default function NoAccessPage() {
           </div>
           
           <div className="space-y-3">
-            <h1 className="text-3xl font-bold text-[#1a2a2a] tracking-tight">Access Denied</h1>
+            <h1 className="text-3xl font-bold text-foreground tracking-tight">Access Denied</h1>
             <p className="text-sm text-gray-400 font-medium leading-relaxed">
               The Admin Control Panel is restricted to authorized personnel only. You need administrative privileges to access this area.
             </p>
@@ -24,7 +24,7 @@ export default function NoAccessPage() {
           <div className="pt-4 space-y-4">
             <a 
               href="/client" 
-              className="block w-full bg-[#112424] hover:bg-[#0d1d1d] text-white py-4 rounded-2xl text-sm font-bold shadow-xl shadow-green-900/10 transition-all hover:scale-[1.02] active:scale-[0.98]"
+              className="block w-full bg-primary hover:bg-primary/90 text-white py-4 rounded-2xl text-sm font-bold shadow-xl shadow-green-900/10 transition-all hover:scale-[1.02] active:scale-[0.98]"
             >
               Back to Client Dashboard
             </a>

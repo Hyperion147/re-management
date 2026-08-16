@@ -11,56 +11,39 @@ type ServiceRequestModalProps = {
 };
 
 const STATES = [
-  'Alabama',
-  'Alaska',
-  'Arizona',
-  'Arkansas',
-  'California',
-  'Colorado',
-  'Connecticut',
-  'Delaware',
-  'Florida',
-  'Georgia',
-  'Hawaii',
-  'Idaho',
-  'Illinois',
-  'Indiana',
-  'Iowa',
-  'Kansas',
-  'Kentucky',
-  'Louisiana',
-  'Maine',
-  'Maryland',
-  'Massachusetts',
-  'Michigan',
-  'Minnesota',
-  'Mississippi',
-  'Missouri',
-  'Montana',
-  'Nebraska',
-  'Nevada',
-  'New Hampshire',
-  'New Jersey',
-  'New Mexico',
-  'New York',
-  'North Carolina',
-  'North Dakota',
-  'Ohio',
-  'Oklahoma',
-  'Oregon',
-  'Pennsylvania',
-  'Rhode Island',
-  'South Carolina',
-  'South Dakota',
-  'Tennessee',
-  'Texas',
-  'Utah',
-  'Vermont',
-  'Virginia',
-  'Washington',
-  'West Virginia',
-  'Wisconsin',
-  'Wyoming',
+  'Andhra Pradesh',
+  'Arunachal Pradesh',
+  'Assam',
+  'Bihar',
+  'Chhattisgarh',
+  'Goa',
+  'Gujarat',
+  'Haryana',
+  'Himachal Pradesh',
+  'Jharkhand',
+  'Karnataka',
+  'Kerala',
+  'Madhya Pradesh',
+  'Maharashtra',
+  'Manipur',
+  'Meghalaya',
+  'Mizoram',
+  'Nagaland',
+  'Odisha',
+  'Punjab',
+  'Rajasthan',
+  'Sikkim',
+  'Tamil Nadu',
+  'Telangana',
+  'Tripura',
+  'Uttar Pradesh',
+  'Uttarakhand',
+  'West Bengal',
+  'Delhi',
+  'Puducherry',
+  'Chandigarh',
+  'Jammu and Kashmir',
+  'Ladakh',
 ];
 
 type FormState = {
@@ -172,7 +155,7 @@ export default function ServiceRequestModal({
     if (!form.preferredDate) nextErrors.preferredDate = 'Required';
     if (!form.preferredTime) nextErrors.preferredTime = 'Required';
     if (form.customAmount && finalAmount < minimumCompensation) {
-      nextErrors.customAmount = `Minimum is $${minimumCompensation}`;
+      nextErrors.customAmount = `Minimum is ₹₹{minimumCompensation}`;
     }
 
     setFieldErrors(nextErrors);
@@ -191,7 +174,7 @@ export default function ServiceRequestModal({
     endDate.setHours(Number(hoursText) || 0, Number(minutesText) || 0, 0, 0);
     endDate.setHours(endDate.getHours() + 1);
 
-    const endTime = `${String(endDate.getHours()).padStart(2, '0')}:${String(
+    const endTime = `₹{String(endDate.getHours()).padStart(2, '0')}:₹{String(
       endDate.getMinutes()
     ).padStart(2, '0')}`;
 
@@ -205,7 +188,7 @@ export default function ServiceRequestModal({
     try {
       await submitRequest(serviceType, finalAmount, {
         address: form.unit.trim()
-          ? `${form.streetAddress.trim()}, Unit ${form.unit.trim()}`
+          ? `₹{form.streetAddress.trim()}, Unit ₹{form.unit.trim()}`
           : form.streetAddress.trim(),
         city: form.city.trim(),
         state: form.state,
@@ -238,18 +221,18 @@ export default function ServiceRequestModal({
       onClick={onClose}
     >
       <div
-        className="w-full max-w-[446px] overflow-hidden rounded-[18px] bg-[#fbfaf7] shadow-[0_30px_80px_rgba(0,0,0,0.28)]"
+        className="w-full max-w-[446px] overflow-hidden rounded-[18px] bg-background shadow-[0_30px_80px_rgba(0,0,0,0.28)]"
         onClick={(event) => event.stopPropagation()}
       >
-        <div className="flex items-center justify-between border-b border-[#efe6da] px-6 py-5">
-          <h2 className="text-[18px] font-semibold tracking-[-0.03em] text-[#173f33]">
+        <div className="flex items-center justify-between border-b border-border px-6 py-5">
+          <h2 className="text-[18px] font-semibold tracking-[-0.03em] text-primary">
             Book: {serviceType}
           </h2>
           <button
             type="button"
             onClick={onClose}
-            aria-label={`Close ${serviceType} form`}
-            className="rounded-full p-1 text-[#7e8f8b] transition hover:bg-[#f2ede6] hover:text-[#173f33]"
+            aria-label={`Close ₹{serviceType} form`}
+            className="rounded-full p-1 text-muted-foreground transition hover:bg-muted hover:text-primary"
           >
             <svg className="h-5 w-5" viewBox="0 0 20 20" fill="none" aria-hidden="true">
               <path
@@ -264,7 +247,7 @@ export default function ServiceRequestModal({
 
         <form onSubmit={handleSubmit} className="max-h-[86vh] overflow-y-auto px-6 py-5">
           <section className="space-y-4">
-            <h3 className="text-[15px] font-semibold text-[#29473e]">Property Address</h3>
+            <h3 className="text-[15px] font-semibold text-foreground">Property Address</h3>
 
             <div className="grid grid-cols-[minmax(0,1fr)_102px] gap-3">
               <Field label="Street Address" required error={fieldErrors.streetAddress}>
@@ -313,7 +296,7 @@ export default function ServiceRequestModal({
                     ))}
                   </select>
                   <svg
-                    className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#8aa09a]"
+                    className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
                     viewBox="0 0 16 16"
                     fill="none"
                     aria-hidden="true"
@@ -329,14 +312,14 @@ export default function ServiceRequestModal({
                 </div>
               </Field>
 
-              <Field label="ZIP Code" required error={fieldErrors.zip}>
+              <Field label="PIN code" required error={fieldErrors.zip}>
                 <input
                   type="text"
                   inputMode="numeric"
                   maxLength={5}
                   value={form.zip}
                   onChange={(event) =>
-                    handleChange('zip', event.target.value.replace(/\D/g, '').slice(0, 5))
+                    handleChange('zip', event.target.value.replace(/\D/g, '').slice(0, 6))
                   }
                   placeholder="78701"
                   className={inputClass(fieldErrors.zip)}
@@ -380,17 +363,17 @@ export default function ServiceRequestModal({
                 value={form.notes}
                 onChange={(event) => handleChange('notes', event.target.value)}
                 placeholder="Any details about your request..."
-                className={`${inputClass()} min-h-[110px] resize-y py-3`}
+                className={`₹{inputClass()} min-h-[110px] resize-y py-3`}
               />
             </Field>
           </section>
 
-          <section className="mt-6 rounded-[16px] border border-[#efe6da] bg-white px-4 py-4">
-            <h3 className="text-[15px] font-semibold text-[#29473e]">
-              Payout Amount <span className="text-[#de6f63]">*</span>
+          <section className="mt-6 rounded-[16px] border border-border bg-background px-4 py-4">
+            <h3 className="text-[15px] font-semibold text-foreground">
+              Payout Amount <span className="text-destructive">*</span>
             </h3>
-            <p className="mt-1 text-[13px] text-[#80948d]">
-              Minimum ${minimumCompensation}. Offer more to get accepted faster.
+            <p className="mt-1 text-[13px] text-muted-foreground">
+              Minimum ₹{minimumCompensation}. Offer more to get accepted faster.
             </p>
 
             <div className="mt-4 flex flex-wrap gap-2">
@@ -405,13 +388,13 @@ export default function ServiceRequestModal({
                       setSelectedAmount(amount);
                       handleChange('customAmount', '');
                     }}
-                    className={`min-w-[64px] rounded-[12px] border px-4 py-2 text-[14px] font-semibold transition ${
+                    className={`min-w-[64px] rounded-[12px] border px-4 py-2 text-[14px] font-semibold transition ₹{
                       active
-                        ? 'border-[#173f33] bg-[#173f33] text-white'
-                        : 'border-[#e6dccf] bg-[#fbfaf7] text-[#29473e] hover:border-[#cfc0ad]'
+                        ? 'border-primary bg-primary text-primary-foreground'
+                        : 'border-border bg-background text-foreground hover:border-muted'
                     }`}
                   >
-                    ${amount}
+                    ₹{amount}
                   </button>
                 );
               })}
@@ -419,8 +402,8 @@ export default function ServiceRequestModal({
 
             <div className="mt-3">
               <div className="relative">
-                <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[22px] text-[#90a19b]">
-                  $
+                <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[22px] text-muted-foreground">
+                  ₹
                 </span>
                 <input
                   type="number"
@@ -428,12 +411,12 @@ export default function ServiceRequestModal({
                   step={1}
                   value={form.customAmount}
                   onChange={(event) => handleChange('customAmount', event.target.value)}
-                  placeholder={`Custom amount (min $${minimumCompensation})`}
-                  className={`${inputClass(fieldErrors.customAmount)} pl-9`}
+                  placeholder={`Custom amount (min ₹₹{minimumCompensation})`}
+                  className={`₹{inputClass(fieldErrors.customAmount)} pl-9`}
                 />
               </div>
               {fieldErrors.customAmount ? (
-                <p className="mt-1 text-[11px] font-medium text-[#cc5f5f]">
+                <p className="mt-1 text-[11px] font-medium text-destructive">
                   {fieldErrors.customAmount}
                 </p>
               ) : null}
@@ -442,17 +425,17 @@ export default function ServiceRequestModal({
             <button
               type="button"
               onClick={() => handleChange('allowCounterOffer', !form.allowCounterOffer)}
-              className={`mt-4 flex w-full items-start gap-3 rounded-[14px] border px-4 py-4 text-left transition ${
+              className={`mt-4 flex w-full items-start gap-3 rounded-[14px] border px-4 py-4 text-left transition ₹{
                 form.allowCounterOffer
-                  ? 'border-[#d8cab9] bg-[#faf7f2]'
-                  : 'border-[#efe6da] bg-[#fffdfb]'
+                  ? 'border-primary/30 bg-primary/5'
+                  : 'border-border bg-background'
               }`}
             >
               <span
-                className={`mt-0.5 flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[4px] border ${
+                className={`mt-0.5 flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[4px] border ₹{
                   form.allowCounterOffer
-                    ? 'border-[#173f33] bg-[#173f33]'
-                    : 'border-[#cdbfae] bg-white'
+                    ? 'border-primary bg-primary'
+                    : 'border-border bg-background'
                 }`}
               >
                 {form.allowCounterOffer ? (
@@ -468,10 +451,10 @@ export default function ServiceRequestModal({
                 ) : null}
               </span>
               <span>
-                <span className="block text-[14px] font-semibold text-[#29473e]">
+                <span className="block text-[14px] font-semibold text-foreground">
                   Allow counter offer
                 </span>
-                <span className="mt-1 block text-[13px] leading-5 text-[#80948d]">
+                <span className="mt-1 block text-[13px] leading-5 text-muted-foreground">
                   Agents may propose a different rate before accepting.
                 </span>
               </span>
@@ -479,7 +462,7 @@ export default function ServiceRequestModal({
           </section>
 
           {error ? (
-            <div className="mt-4 rounded-[14px] border border-[#efc7c7] bg-[#fff2f2] px-4 py-3 text-[12px] font-medium text-[#b24040]">
+            <div className="mt-4 rounded-[14px] border border-destructive bg-destructive/10 px-4 py-3 text-[12px] font-medium text-destructive">
               {error}
             </div>
           ) : null}
@@ -487,7 +470,7 @@ export default function ServiceRequestModal({
           <button
             type="submit"
             disabled={loading}
-            className="mt-6 flex h-[52px] w-full items-center justify-center rounded-[14px] bg-[#173f33] text-[15px] font-semibold text-white transition hover:bg-[#123429] disabled:cursor-not-allowed disabled:opacity-60"
+            className="mt-6 flex h-[52px] w-full items-center justify-center rounded-[14px] bg-primary text-[15px] font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {loading ? 'Submitting...' : 'Submit & Pay ->'}
           </button>
@@ -510,22 +493,22 @@ function Field({
 }) {
   return (
     <label className="block space-y-1.5">
-      <span className="text-[14px] font-medium text-[#29473e]">
+      <span className="text-[14px] font-medium text-foreground">
         {label}
-        {required ? <span className="text-[#de6f63]"> *</span> : null}
+        {required ? <span className="text-destructive"> *</span> : null}
       </span>
       {children}
-      {error ? <span className="text-[11px] font-medium text-[#cc5f5f]">{error}</span> : null}
+      {error ? <span className="text-[11px] font-medium text-destructive">{error}</span> : null}
     </label>
   );
 }
 
 function inputClass(error?: string, isSelect = false) {
   return [
-    'h-[44px] w-full rounded-[14px] border bg-white px-4 text-[14px] text-[#173f33] outline-none transition',
-    'placeholder:text-[#93a39f] focus:border-[#173f33] focus:ring-3 focus:ring-[#173f33]/8',
-    isSelect ? 'appearance-none pr-10 text-[#6f8780]' : '',
-    error ? 'border-[#d97a7a]' : 'border-[#dfd5c8]',
+    'h-[44px] w-full rounded-[14px] border bg-background px-4 text-[14px] text-foreground outline-none transition',
+    'placeholder:text-muted-foreground focus:border-primary focus:ring-3 focus:ring-primary/10',
+    isSelect ? 'appearance-none pr-10 text-muted-foreground' : '',
+    error ? 'border-destructive' : 'border-border',
   ]
     .filter(Boolean)
     .join(' ');

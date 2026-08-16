@@ -5,7 +5,7 @@ import React from 'react';
 export default function AvailabilityPage() {
   return (
     <div className="flex flex-col w-full pb-20">
-      <section className="bg-[#1c352d] pt-16 pb-32 px-8">
+      <section className="bg-primary pt-16 pb-32 px-8">
         <div className="max-w-6xl mx-auto">
           <h1 className="text-4xl md:text-[2.75rem] font-bold text-white tracking-tight mb-2">
             Availability
@@ -24,7 +24,7 @@ export default function AvailabilityPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <h3 className="text-xl font-bold text-[#1a2a2a] mb-2">Availability Settings</h3>
+            <h3 className="text-xl font-bold text-foreground mb-2">Availability Settings</h3>
             <p className="text-gray-500 text-center max-w-md">
               Set your default working hours and block off time when you're unavailable.
               (Coming soon)
