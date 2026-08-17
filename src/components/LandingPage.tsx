@@ -28,6 +28,7 @@ export default function LandingPage() {
     type: string;
     compensation: number;
   } | null>(null);
+  const [mounted, setMounted] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
   const bentoRef = useRef<HTMLDivElement>(null);
@@ -43,6 +44,11 @@ export default function LandingPage() {
   };
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
     // Small delay to ensure DOM is fully painted before GSAP reads positions
     const ctx = gsap.context(() => {
 
@@ -102,7 +108,7 @@ export default function LandingPage() {
     });
 
     return () => ctx.revert(); // clean up all ScrollTriggers on unmount
-  }, []);
+  }, [mounted]);
 
   return (
     <div className="relative min-h-screen bg-[#F5F7F5] font-sans text-[#000101] overflow-hidden scroll-smooth">
@@ -170,8 +176,8 @@ export default function LandingPage() {
             ].map((stat, i) => (
               <div key={i} className="text-center">
                 <div className="text-4xl md:text-5xl font-black text-[#39FF14] mb-2">
-                  <span className="stat-number" data-target={stat.value}>
-                    0
+                  <span className="stat-number" data-target={stat.value} suppressHydrationWarning>
+                    {mounted ? 0 : stat.value}
                   </span>
                   {stat.suffix}
                 </div>
